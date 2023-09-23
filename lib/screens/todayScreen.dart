@@ -6,13 +6,149 @@ import 'package:my_habit_app/drawerPages/settings.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/pages/habitCategory.dart';
 import 'package:my_habit_app/pages/taskAddingPage.dart';
+import 'package:my_habit_app/utils/colors_utils.dart';
+import 'package:my_habit_app/utils/date_utils.dart' as date_util;
 
-class TodayScreen extends StatelessWidget {
-  const TodayScreen({super.key});
+class TodayScreen extends StatefulWidget {
+  final String title;
+  const TodayScreen({Key? key, required this.title}) : super(key: key);
+
+  @override
+  State<TodayScreen> createState() => _TodayScreenState();
+}
+
+class _TodayScreenState extends State<TodayScreen> {
+   double width = 0.0;
+  double height = 0.0;
+  late ScrollController scrollController;
+  List<DateTime> currentMonthList = List.empty();
+  DateTime currentDateTime = DateTime.now();
+  List<String> todos = <String>[];
+  TextEditingController controller = TextEditingController();
+
+  @override
+  void initState() {
+    currentMonthList = date_util.DateUtils.daysInMonth(currentDateTime);
+    currentMonthList.sort((a, b) => a.day.compareTo(b.day));
+    currentMonthList = currentMonthList.toSet().toList();
+    scrollController =  ScrollController(initialScrollOffset: 70.0 * currentDateTime.day);
+    super.initState();
+  }
+
+
+  Widget titleView() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+      child: Text(
+        date_util.DateUtils.months[currentDateTime.month - 1] + ' ' +
+            currentDateTime.year.toString(),
+        style: const TextStyle(
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+      ),
+    );
+  }
+
+  Widget hrizontalCapsuleListView() {
+    return Container(
+      width: width,
+      height: 100,
+        child: ListView.builder(
+        controller: scrollController,
+        scrollDirection: Axis.horizontal,
+        physics: const ClampingScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: currentMonthList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return capsuleView(index);
+        },
+      ),
+    );
+  }
+
+  Widget capsuleView(int index) {
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+        child: GestureDetector(
+          onTap: () {
+            setState(() {
+              currentDateTime = currentMonthList[index];
+            });
+          },
+          child: Container(
+            width: 80,
+            height: 140,
+            decoration: BoxDecoration(
+                
+                color: Colors.amber,
+                borderRadius: BorderRadius.circular(10),
+                
+                ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    currentMonthList[index].day.toString(),
+                    style: TextStyle(
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                        color:
+                            (currentMonthList[index].day != currentDateTime.day)
+                                ? HexColor("465876")
+                                : Colors.white),
+                  ),
+                  Text(
+                    date_util.DateUtils
+                        .weekdays[currentMonthList[index].weekday - 1],
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color:
+                            (currentMonthList[index].day != currentDateTime.day)
+                                ? HexColor("465876")
+                                : Colors.white),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ));
+  }
+
+  Widget topView() {
+    return Container(
+      height: height * 0.2,
+      width: width,
+      decoration: const BoxDecoration(
+        color: bggreyisue,
+       
+        
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(20),
+          bottomLeft: Radius.circular(20),
+        ),
+      ),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            titleView(),
+            hrizontalCapsuleListView(),
+          ]),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+     width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
+      body:  Stack(
+          children: <Widget>[
+            // backgroundView(), 
+            topView(),
+            // todoList()
+          ],
+        ),
       backgroundColor: bggrey,
       appBar: AppBar(
         title: Text(
@@ -44,7 +180,7 @@ class TodayScreen extends StatelessWidget {
         child: Container(
           color: Colors.amber,
           child: ListView(
-            children:  [
+            children: [
               DrawerHeader(
                 decoration: BoxDecoration(
                     // image: DecorationImage(
@@ -57,47 +193,48 @@ class TodayScreen extends StatelessWidget {
                     "MYHABIT",
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
-                  
                 ),
-                
               ),
               ListTile(
-                leading: Icon(Icons.home),
-                title: Text("Home ",style: TextStyle(fontSize: 20),
-                ),
-              
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>TodayScreen()));
-                }
-              ),
+                  leading: Icon(Icons.home),
+                  title: Text(
+                    "Home ",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (ctx) => TodayScreen(title: '',)));
+                  }),
               ListTile(
-                leading: Icon(Icons.settings),
-                title: Text("Settings",style: TextStyle(fontSize: 20),
-                ),
-              
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>SettingsPage()));
-                }
-              ),
+                  leading: Icon(Icons.settings),
+                  title: Text(
+                    "Settings",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (ctx) => SettingsPage()));
+                  }),
               ListTile(
-                leading: Icon(Icons.privacy_tip),
-                title: Text("Privacy policy",style: TextStyle(fontSize: 20),
-                ),
-              
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>PrivacyPolicy()));
-                }
-              ),
+                  leading: Icon(Icons.privacy_tip),
+                  title: Text(
+                    "Privacy policy",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (ctx) => PrivacyPolicy()));
+                  }),
               ListTile(
-                leading: Icon(Icons.contact_emergency),
-                title: Text("Contact Us",style: TextStyle(fontSize: 20),
-                ),
-              
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>ContactUsPage()));
-                }
-              ),
-              
+                  leading: Icon(Icons.contact_emergency),
+                  title: Text(
+                    "Contact Us",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (ctx) => ContactUsPage()));
+                  }),
             ],
           ),
         ),

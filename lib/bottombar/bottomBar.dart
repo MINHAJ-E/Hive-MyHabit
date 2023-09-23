@@ -22,7 +22,7 @@ void _navigationbottombar(int index){{
   });
 }}
 final List<Widget>_pages=[
-   TodayScreen(),
+   TodayScreen(title: '',),
    HabitScreen(),
    TaskScreen(),
    ChartScreen(),
