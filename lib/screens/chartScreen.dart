@@ -11,7 +11,7 @@ class ChartScreen extends StatelessWidget {
     return  DefaultTabController(
         length: 2,
         child: Scaffold(
-          backgroundColor: Color.fromARGB(240, 7, 7, 7),
+          backgroundColor:const Color.fromARGB(240, 7, 7, 7),
           appBar: AppBar(
             
            backgroundColor: bggreyisue,
@@ -20,7 +20,7 @@ class ChartScreen extends StatelessWidget {
             children: [
               Container(
                 // color: Color.fromARGB(100, 100, 231, 198),
-                child: TabBar(
+                child: const TabBar(
                   tabs: [
                     Tab(
                       text: 'Habit Chart',
@@ -34,7 +34,7 @@ class ChartScreen extends StatelessWidget {
                   // unselectedLabelColor: Colors.green,
                 ),
               ),
-              Expanded(
+              const Expanded(
                 child: TabBarView(children: [
                   // first Tab
                  

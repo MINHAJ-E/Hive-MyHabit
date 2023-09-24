@@ -17,23 +17,23 @@ class HabitCategory extends StatelessWidget {
         children: [
           Column(
             children: [
-              categoryMethod(text: "Football",Categoryimage:'assets/gym symbol.png' ,context: context),
-              categoryMethod(text: "Sports",Categoryimage:'assets/gym symbol.png' ,context: context),
-              categoryMethod(text: "health",Categoryimage:'assets/gym symbol.png' ,context: context),
-              categoryMethod(text: "Home",Categoryimage:'assets/gym symbol.png' ,context: context),
-              categoryMethod(text: "Entertainment",Categoryimage:'assets/gym symbol.png' ,context: context),
-              categoryMethod(text: "Study",Categoryimage:'assets/gym symbol.png' ,context: context),
+              categoryMethod(text: "Football",Categoryimage:'assets/football.png' ,context: context),
+              categoryMethod(text: "Sports",Categoryimage:'assets/sports.png' ,context: context),
+              categoryMethod(text: "health",Categoryimage:'assets/health.png' ,context: context),
+              categoryMethod(text: "Home",Categoryimage:'assets/Home.png' ,context: context),
+              categoryMethod(text: "Entertainment",Categoryimage:'assets/entertainment.png' ,context: context),
+              categoryMethod(text: "Study",Categoryimage:'assets/study.png' ,context: context),
               
             ],
           ),
           Column(
             children: [
-              categoryMethod(text: "Work",Categoryimage:'assets/gym symbol.png' ,context: context),
-              categoryMethod(text: "Meditation",Categoryimage:'assets/gym symbol.png' ,context: context),
-              categoryMethod(text: "Nutrtion",Categoryimage:'assets/gym symbol.png' ,context: context),
+              categoryMethod(text: "Work",Categoryimage:'assets/work.png' ,context: context),
+              categoryMethod(text: "Meditation",Categoryimage:'assets/meditation.png' ,context: context),
+              categoryMethod(text: "Nutrtion",Categoryimage:'assets/nutrition.png' ,context: context),
               categoryMethod(text: "Gym",Categoryimage:'assets/gym symbol.png' ,context: context),
-              categoryMethod(text: "Others",Categoryimage:'assets/gym symbol.png' ,context: context),
-              categoryMethod(text: "ADD",Categoryimage:'assets/gym symbol.png' ,context: context),
+              categoryMethod(text: "Others",Categoryimage:'assets/others.png' ,context: context),
+              categoryMethod(text: "ADD",Categoryimage:'assets/adddd habit category.png' ,context: context),
             
               
             ],
@@ -44,15 +44,6 @@ class HabitCategory extends StatelessWidget {
     );
   }
 
-  // Row categoryRow({required String text,String? Categoryimage}) {
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //     children: [
-  //       categoryMethod(text: "dsfsd",Categoryimage: 'assets/gym symbol.png' ),
-  //     // categoryMethod(text),
-  //     ],
-  //   );
-  // }
 
   Padding categoryMethod({required String text, String? Categoryimage, required BuildContext context}) {
     return Padding(
@@ -63,14 +54,15 @@ class HabitCategory extends StatelessWidget {
         },
         child: Container(
           height: 50,
-          width: 140,
+          width: 150,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(text),
-                Image.asset(Categoryimage!),
+                CircleAvatar(child: Image.asset(Categoryimage!,cacheHeight: 30, // Set the desired height
+                  cacheWidth: 30, )),
               ],
             ),
           ),

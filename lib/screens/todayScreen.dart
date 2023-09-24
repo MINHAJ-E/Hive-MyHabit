@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_habit_app/bottombar/bottomBar.dart';
+import 'package:my_habit_app/db/functions/dbFunctions.dart';
 import 'package:my_habit_app/drawerPages/contactUs.dart';
 import 'package:my_habit_app/drawerPages/privacyPolicy.dart';
-import 'package:my_habit_app/drawerPages/settings.dart';
+import 'package:my_habit_app/drawerPages/about.dart';
 import 'package:my_habit_app/helpers/colors.dart';
+import 'package:my_habit_app/model/dataModel.dart';
 import 'package:my_habit_app/pages/habitCategory.dart';
 import 'package:my_habit_app/pages/taskAddingPage.dart';
 import 'package:my_habit_app/utils/colors_utils.dart';
@@ -18,7 +21,7 @@ class TodayScreen extends StatefulWidget {
 }
 
 class _TodayScreenState extends State<TodayScreen> {
-   double width = 0.0;
+  double width = 0.0;
   double height = 0.0;
   late ScrollController scrollController;
   List<DateTime> currentMonthList = List.empty();
@@ -31,16 +34,17 @@ class _TodayScreenState extends State<TodayScreen> {
     currentMonthList = date_util.DateUtils.daysInMonth(currentDateTime);
     currentMonthList.sort((a, b) => a.day.compareTo(b.day));
     currentMonthList = currentMonthList.toSet().toList();
-    scrollController =  ScrollController(initialScrollOffset: 70.0 * currentDateTime.day);
+    scrollController =
+        ScrollController(initialScrollOffset: 70.0 * currentDateTime.day);
     super.initState();
   }
-
 
   Widget titleView() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
       child: Text(
-        date_util.DateUtils.months[currentDateTime.month - 1] + ' ' +
+        date_util.DateUtils.months[currentDateTime.month - 1] +
+            ' ' +
             currentDateTime.year.toString(),
         style: const TextStyle(
             color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
@@ -52,7 +56,7 @@ class _TodayScreenState extends State<TodayScreen> {
     return Container(
       width: width,
       height: 100,
-        child: ListView.builder(
+      child: ListView.builder(
         controller: scrollController,
         scrollDirection: Axis.horizontal,
         physics: const ClampingScrollPhysics(),
@@ -78,11 +82,9 @@ class _TodayScreenState extends State<TodayScreen> {
             width: 80,
             height: 140,
             decoration: BoxDecoration(
-                
-                color: Colors.amber,
-                borderRadius: BorderRadius.circular(10),
-                
-                ),
+              color: Colors.amber,
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -121,8 +123,6 @@ class _TodayScreenState extends State<TodayScreen> {
       width: width,
       decoration: const BoxDecoration(
         color: bggreyisue,
-       
-        
         borderRadius: BorderRadius.only(
           bottomRight: Radius.circular(20),
           bottomLeft: Radius.circular(20),
@@ -139,19 +139,26 @@ class _TodayScreenState extends State<TodayScreen> {
 
   @override
   Widget build(BuildContext context) {
-     width = MediaQuery.of(context).size.width;
+    width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body:  Stack(
-          children: <Widget>[
-            // backgroundView(), 
-            topView(),
-            // todoList()
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // ListView.builder(itemBuilder: ),
+            Stack(
+              children: <Widget>[
+                // backgroundView(),
+                topView(),
+                // todoList()
+              ],
+            ),
           ],
         ),
+      ),
       backgroundColor: bggrey,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Today",
           style: TextStyle(
             color: Colors.white,
@@ -162,18 +169,18 @@ class _TodayScreenState extends State<TodayScreen> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
               color: Colors.white,
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.calendar_month,
-              color: Colors.white,
-            ),
-          ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: const Icon(
+          //     Icons.calendar_month,
+          //     color: Colors.white,
+          //   ),
+          // ),
         ],
       ),
       drawer: Drawer(
@@ -181,7 +188,7 @@ class _TodayScreenState extends State<TodayScreen> {
           color: Colors.amber,
           child: ListView(
             children: [
-              DrawerHeader(
+              const DrawerHeader(
                 decoration: BoxDecoration(
                     // image: DecorationImage(
                     // image: AssetImage('assets/gym symbol.png'),
@@ -197,27 +204,29 @@ class _TodayScreenState extends State<TodayScreen> {
               ),
               ListTile(
                   leading: Icon(Icons.home),
-                  title: Text(
+                  title: const Text(
                     "Home ",
                     style: TextStyle(fontSize: 20),
                   ),
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (ctx) => TodayScreen(title: '',)));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => BottomBar(
+                              title: '',
+                            )));
                   }),
               ListTile(
-                  leading: Icon(Icons.settings),
-                  title: Text(
-                    "Settings",
+                  leading: Icon(Icons.adobe_outlined),
+                  title: const Text(
+                    "About",
                     style: TextStyle(fontSize: 20),
                   ),
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (ctx) => SettingsPage()));
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (ctx) => AboutPage()));
                   }),
               ListTile(
                   leading: Icon(Icons.privacy_tip),
-                  title: Text(
+                  title: const Text(
                     "Privacy policy",
                     style: TextStyle(fontSize: 20),
                   ),
@@ -227,7 +236,7 @@ class _TodayScreenState extends State<TodayScreen> {
                   }),
               ListTile(
                   leading: Icon(Icons.contact_emergency),
-                  title: Text(
+                  title: const Text(
                     "Contact Us",
                     style: TextStyle(fontSize: 20),
                   ),
@@ -249,12 +258,33 @@ class _TodayScreenState extends State<TodayScreen> {
     );
   }
 
+  Widget habitList() {
+    return ValueListenableBuilder<List<HabitModel>>(
+      valueListenable: habitListnotifier,
+      builder: (BuildContext ctx, List<HabitModel> habitList, Widget? child) {
+        return ListView.separated(
+          itemCount: habitList.length,
+          separatorBuilder: (BuildContext context, int index) => Divider(),
+          itemBuilder: (BuildContext context, int index) {
+            // Access habit from habitList using index
+            HabitModel data = habitList[index];
+
+            return ListTile(
+              title: Text('Habit ${data.habit}'),
+              subtitle: Text('Note ${data.note}'),
+            );
+          },
+        );
+      },
+    );
+  }
+
   bottomsheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return Container(
-          color: bggrey,
+          color: Color.fromARGB(255, 34, 32, 32),
           height: 320.0,
           width: MediaQuery.of(context).size.width,
           child: Column(
@@ -263,7 +293,10 @@ class _TodayScreenState extends State<TodayScreen> {
                 padding: EdgeInsets.all(8.0),
                 child: Text(
                   "choose your daily rutine",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 102, 91, 91)),
                 ),
               ),
               Column(

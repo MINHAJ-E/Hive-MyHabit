@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
           title: "MY HABIT",
-          home: BottomBar(),
+          home: BottomBar(title: '',),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:my_habit_app/helpers/colors.dart';
 
 class TimerScreen extends StatefulWidget {
   const TimerScreen({Key? key});
@@ -48,9 +49,10 @@ class _TimerScreenState extends State<TimerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: bggrey,
       appBar: AppBar(
         backgroundColor: Colors.amber,
-        title: Text('Beautiful Clock'),
+        title: const Text('Timer'),
       ),
       body: Center(
         child: Column(
@@ -58,25 +60,35 @@ class _TimerScreenState extends State<TimerScreen> {
           children: <Widget>[
             Text(
               getFormattedTime(),
-              style: TextStyle(fontSize: 64.0, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+              style: const TextStyle(
+                  fontSize: 64.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.amber),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 ElevatedButton(
                   onPressed: _isActive ? null : _startTimer,
-                  child: Text('Start', style: TextStyle(fontSize: 18.0)),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.amber, // Set your primary color here
+                  ),
+                  child: const Text('Start', style: TextStyle(fontSize: 18.0)),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 ElevatedButton(
-                  onPressed: _isActive ? _stopTimer : null,
-                  child: Text('Stop', style: TextStyle(fontSize: 18.0)),
+                  onPressed: _isActive ? _stopTimer : null,style: ElevatedButton.styleFrom(
+                    primary: Colors.amber, // Set your primary color here
+                  ),
+                  child: const Text('Stop', style: TextStyle(fontSize: 18.0)),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 ElevatedButton(
-                  onPressed: _resetTimer,
-                  child: Text('Reset', style: TextStyle(fontSize: 18.0)),
+                  onPressed: _resetTimer,style: ElevatedButton.styleFrom(
+                    primary: Colors.amber, // Set your primary color here
+                  ),
+                  child: const Text('Reset', style: TextStyle(fontSize: 18.0)),
                 ),
               ],
             ),
@@ -85,7 +97,7 @@ class _TimerScreenState extends State<TimerScreen> {
       ),
     );
   }
-
+   
   @override
   void dispose() {
     _timer.cancel(); // cancel the timer when the widget is disposed
