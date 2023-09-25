@@ -200,5 +200,6 @@ class _HabitAddingState extends State<HabitAdding> {
     // print('$_habit $_note');
    final habitt= HabitModel(habit: _habit, note: _note);
     addhabit(habitt);
+    Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>TodayScreen(title: "")));
   }
 }

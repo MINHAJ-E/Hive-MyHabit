@@ -6,11 +6,14 @@ import 'package:my_habit_app/drawerPages/contactUs.dart';
 import 'package:my_habit_app/drawerPages/privacyPolicy.dart';
 import 'package:my_habit_app/drawerPages/about.dart';
 import 'package:my_habit_app/helpers/colors.dart';
+import 'package:my_habit_app/logIn_Screens/logIn_Screen.dart';
+import 'package:my_habit_app/logIn_Screens/splashScree.dart';
 import 'package:my_habit_app/model/dataModel.dart';
 import 'package:my_habit_app/pages/habitCategory.dart';
 import 'package:my_habit_app/pages/taskAddingPage.dart';
 import 'package:my_habit_app/utils/colors_utils.dart';
 import 'package:my_habit_app/utils/date_utils.dart' as date_util;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TodayScreen extends StatefulWidget {
   final String title;
@@ -143,17 +146,14 @@ class _TodayScreenState extends State<TodayScreen> {
     height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // ListView.builder(itemBuilder: ),
-            Stack(
-              children: <Widget>[
-                // backgroundView(),
-                topView(),
-                // todoList()
-              ],
-            ),
-          ],
+        child: Expanded(
+          child: Column(
+            children: [
+              // ListView.builder(itemBuilder: ),
+              topView(),
+              // habitList(context)
+            ],
+          ),
         ),
       ),
       backgroundColor: bggrey,
@@ -244,6 +244,18 @@ class _TodayScreenState extends State<TodayScreen> {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (ctx) => ContactUsPage()));
                   }),
+              SizedBox(
+                height: 250,
+              ),
+              ListTile(
+                  trailing: Icon(Icons.logout_outlined),
+                  title: const Text(
+                    "Logout",
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                  onTap: () {
+                    signout(context);
+                  }),
             ],
           ),
         ),
@@ -258,7 +270,15 @@ class _TodayScreenState extends State<TodayScreen> {
     );
   }
 
-  Widget habitList() {
+  signout(BuildContext ctx) async {
+    final _sharedpref = await SharedPreferences.getInstance();
+    await _sharedpref.clear();
+
+    Navigator.of(ctx).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (ctx1) => ScreenLogin()), (route) => false);
+  }
+
+  Widget habitList(BuildContext context) {
     return ValueListenableBuilder<List<HabitModel>>(
       valueListenable: habitListnotifier,
       builder: (BuildContext ctx, List<HabitModel> habitList, Widget? child) {
