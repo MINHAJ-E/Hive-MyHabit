@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_habit_app/bottombar/bottomBar.dart';
 import 'package:my_habit_app/db/functions/dbFunctions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/dataModel.dart';
@@ -94,6 +95,7 @@ class _HabitAddingState extends State<HabitAdding> {
                         child: TextFormField(
                           controller: _habitNoteController,
                           decoration: InputDecoration(
+                            
                             border: InputBorder.none,
                             hintText: 'give small description',
                           ),
@@ -178,6 +180,7 @@ class _HabitAddingState extends State<HabitAdding> {
                     ElevatedButton(
                       onPressed: () {
                        onAddHabitButtonClicked();
+                      //  Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.amber,
@@ -200,6 +203,7 @@ class _HabitAddingState extends State<HabitAdding> {
     // print('$_habit $_note');
    final habitt= HabitModel(habit: _habit, note: _note);
     addhabit(habitt);
-    Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>TodayScreen(title: "")));
+    Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>BottomBar(title: "")));
+    // Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>bott))
   }
 }

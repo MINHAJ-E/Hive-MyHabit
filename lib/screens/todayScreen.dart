@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:my_habit_app/bottombar/bottomBar.dart';
 import 'package:my_habit_app/db/functions/dbFunctions.dart';
+import 'package:my_habit_app/drawerPages/about.dart';
 import 'package:my_habit_app/drawerPages/contactUs.dart';
 import 'package:my_habit_app/drawerPages/privacyPolicy.dart';
-import 'package:my_habit_app/drawerPages/about.dart';
 import 'package:my_habit_app/helpers/colors.dart';
+import 'package:my_habit_app/logIn_Screens/appFirstScreen.dart';
 import 'package:my_habit_app/logIn_Screens/logIn_Screen.dart';
-import 'package:my_habit_app/logIn_Screens/splashScree.dart';
 import 'package:my_habit_app/model/dataModel.dart';
 import 'package:my_habit_app/pages/habitCategory.dart';
 import 'package:my_habit_app/pages/taskAddingPage.dart';
@@ -29,7 +28,7 @@ class _TodayScreenState extends State<TodayScreen> {
   late ScrollController scrollController;
   List<DateTime> currentMonthList = List.empty();
   DateTime currentDateTime = DateTime.now();
-  List<String> todos = <String>[];
+  List<String> myhabit = <String>[];
   TextEditingController controller = TextEditingController();
 
   @override
@@ -42,13 +41,13 @@ class _TodayScreenState extends State<TodayScreen> {
     super.initState();
   }
 
+//title view
   Widget titleView() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
       child: Text(
-        date_util.DateUtils.months[currentDateTime.month - 1] +
-            ' ' +
-            currentDateTime.year.toString(),
+// changed to string interpolatattion
+        '${date_util.DateUtils.months[currentDateTime.month - 1]} ${currentDateTime.year}',
         style: const TextStyle(
             color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
       ),
@@ -74,50 +73,51 @@ class _TodayScreenState extends State<TodayScreen> {
 
   Widget capsuleView(int index) {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-        child: GestureDetector(
-          onTap: () {
-            setState(() {
-              currentDateTime = currentMonthList[index];
-            });
-          },
-          child: Container(
-            width: 80,
-            height: 140,
-            decoration: BoxDecoration(
-              color: Colors.amber,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    currentMonthList[index].day.toString(),
-                    style: TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                        color:
-                            (currentMonthList[index].day != currentDateTime.day)
-                                ? HexColor("465876")
-                                : Colors.white),
+      padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            currentDateTime = currentMonthList[index];
+          });
+        },
+        child: Container(
+          width: 80,
+          height: 140,
+          decoration: BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  currentMonthList[index].day.toString(),
+                  style: TextStyle(
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                    color: (currentMonthList[index].day != currentDateTime.day)
+                        ? HexColor("465876")
+                        : Colors.white,
                   ),
-                  Text(
-                    date_util.DateUtils
-                        .weekdays[currentMonthList[index].weekday - 1],
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color:
-                            (currentMonthList[index].day != currentDateTime.day)
-                                ? HexColor("465876")
-                                : Colors.white),
-                  )
-                ],
-              ),
+                ),
+                Text(
+                  date_util
+                      .DateUtils.weekdays[currentMonthList[index].weekday - 1],
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: (currentMonthList[index].day != currentDateTime.day)
+                        ? HexColor("465876")
+                        : Colors.white,
+                  ),
+                ),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Widget topView() {
@@ -132,29 +132,121 @@ class _TodayScreenState extends State<TodayScreen> {
         ),
       ),
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            titleView(),
-            hrizontalCapsuleListView(),
-          ]),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          titleView(),
+          hrizontalCapsuleListView(),
+        ],
+      ),
     );
   }
 
-  @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Expanded(
-          child: Column(
-            children: [
-              // ListView.builder(itemBuilder: ),
-              topView(),
-              // habitList(context)
-            ],
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: topView(),
           ),
-        ),
+          SliverToBoxAdapter(
+            child: Expanded(
+              child: Column(
+                children: [
+                  Container(
+                    height: height * 0.8,
+                    child: ValueListenableBuilder<List<HabitModel>>(
+                      valueListenable: habitListnotifier,
+                      builder: (BuildContext ctx, List<HabitModel> habitList,
+                          Widget? child) {
+                        return ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: habitList.length,
+                          separatorBuilder: (BuildContext context, int index) =>
+                              SizedBox(height: 0), // Return an empty container
+                          itemBuilder: (BuildContext context, int index) {
+                            HabitModel data = habitList[index];
+
+                            return Container(
+                              width: 200,
+                              height: 100,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Card(
+                                  color: Colors.amber,
+                                  child: ListTile(
+                                    title: Text(
+                                      ' ${data.habit}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 23,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      ' ${data.note}',
+                                      style: TextStyle(color: bggrey),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  Container(
+                    height: height * 0.8,
+                    child: ValueListenableBuilder<List<TaskModel>>(
+                      valueListenable: taskListnotifier,
+                      builder: (BuildContext ctx, List<TaskModel> taskList,
+                          Widget? child) {
+                        return ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: taskList.length,
+                          separatorBuilder: (BuildContext context, int index) =>
+                              SizedBox(height: 0), // Return an empty container
+                          itemBuilder: (BuildContext context, int index) {
+                            TaskModel data = taskList[index];
+
+                            return Container(
+                              width: 200,
+                              height: 100,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Card(
+                                  color: Colors.amber,
+                                  child: ListTile(
+                                    title: Text(
+                                      ' ${data.task}',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 23),
+                                    ),
+                                    subtitle: Text(
+                                      ' ${data.note2}',
+                                      style: TextStyle(color: bggrey),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
       backgroundColor: bggrey,
       appBar: AppBar(
@@ -174,13 +266,6 @@ class _TodayScreenState extends State<TodayScreen> {
               color: Colors.white,
             ),
           ),
-          // IconButton(
-          //   onPressed: () {},
-          //   icon: const Icon(
-          //     Icons.calendar_month,
-          //     color: Colors.white,
-          //   ),
-          // ),
         ],
       ),
       drawer: Drawer(
@@ -189,12 +274,7 @@ class _TodayScreenState extends State<TodayScreen> {
           child: ListView(
             children: [
               const DrawerHeader(
-                decoration: BoxDecoration(
-                    // image: DecorationImage(
-                    // image: AssetImage('assets/gym symbol.png'),
-                    // fit: BoxFit.cover,
-                    // ),
-                    ),
+                decoration: BoxDecoration(),
                 child: Center(
                   child: Text(
                     "MYHABIT",
@@ -203,59 +283,74 @@ class _TodayScreenState extends State<TodayScreen> {
                 ),
               ),
               ListTile(
-                  leading: Icon(Icons.home),
-                  title: const Text(
-                    "Home ",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) => BottomBar(
-                              title: '',
-                            )));
-                  }),
+                leading: Icon(Icons.home),
+                title: const Text(
+                  "Home ",
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => BottomBar(
+                      title: '',
+                    ),
+                  ));
+                },
+              ),
               ListTile(
-                  leading: Icon(Icons.adobe_outlined),
-                  title: const Text(
-                    "About",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (ctx) => AboutPage()));
-                  }),
+                leading: Icon(Icons.adobe_outlined),
+                title: const Text(
+                  "About",
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => AboutPage(),
+                    ),
+                  );
+                },
+              ),
               ListTile(
-                  leading: Icon(Icons.privacy_tip),
-                  title: const Text(
-                    "Privacy policy",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (ctx) => PrivacyPolicy()));
-                  }),
+                leading: Icon(Icons.privacy_tip),
+                title: const Text(
+                  "Privacy policy",
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => PrivacyPolicy(),
+                    ),
+                  );
+                },
+              ),
               ListTile(
-                  leading: Icon(Icons.contact_emergency),
-                  title: const Text(
-                    "Contact Us",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (ctx) => ContactUsPage()));
-                  }),
+                leading: Icon(Icons.contact_emergency),
+                title: const Text(
+                  "Contact Us",
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => ContactUsPage(),
+                    ),
+                  );
+                },
+              ),
               SizedBox(
                 height: 250,
               ),
               ListTile(
-                  trailing: Icon(Icons.logout_outlined),
-                  title: const Text(
-                    "Logout",
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-                  onTap: () {
-                    signout(context);
-                  }),
+                trailing: Icon(Icons.logout_outlined),
+                title: const Text(
+                  "Logout",
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+                onTap: () {
+                  signout(context);
+                },
+              ),
             ],
           ),
         ),
@@ -275,27 +370,8 @@ class _TodayScreenState extends State<TodayScreen> {
     await _sharedpref.clear();
 
     Navigator.of(ctx).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (ctx1) => ScreenLogin()), (route) => false);
-  }
-
-  Widget habitList(BuildContext context) {
-    return ValueListenableBuilder<List<HabitModel>>(
-      valueListenable: habitListnotifier,
-      builder: (BuildContext ctx, List<HabitModel> habitList, Widget? child) {
-        return ListView.separated(
-          itemCount: habitList.length,
-          separatorBuilder: (BuildContext context, int index) => Divider(),
-          itemBuilder: (BuildContext context, int index) {
-            // Access habit from habitList using index
-            HabitModel data = habitList[index];
-
-            return ListTile(
-              title: Text('Habit ${data.habit}'),
-              subtitle: Text('Note ${data.note}'),
-            );
-          },
-        );
-      },
+      MaterialPageRoute(builder: (ctx1) => AppFirstScreen()),
+      (route) => false,
     );
   }
 
@@ -312,11 +388,12 @@ class _TodayScreenState extends State<TodayScreen> {
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                  "choose your daily rutine",
+                  "choose your daily routine",
                   style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 102, 91, 91)),
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 102, 91, 91),
+                  ),
                 ),
               ),
               Column(
@@ -345,7 +422,9 @@ class _TodayScreenState extends State<TodayScreen> {
                             Text(
                               'create your own habit',
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),
@@ -379,7 +458,9 @@ class _TodayScreenState extends State<TodayScreen> {
                             Text(
                               'create your own Task',
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),
