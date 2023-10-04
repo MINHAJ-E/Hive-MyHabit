@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_habit_app/db/functions/db_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
+import 'package:my_habit_app/model/data_model.dart';
 import 'package:my_habit_app/utils/colors_utils.dart';
 import 'package:my_habit_app/utils/date_utils.dart' as date_util;
 
@@ -35,8 +37,7 @@ class _MyHomePageState extends State<TaskScreen> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
       child: Text(
-        date_util.DateUtils.months[currentDateTime.month - 1] + ' ' +
-            currentDateTime.year.toString(),
+        '${date_util.DateUtils.months[currentDateTime.month - 1]} ${currentDateTime.year}',
         style: const TextStyle(
             color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
       ),
@@ -106,7 +107,7 @@ class _MyHomePageState extends State<TaskScreen> {
                 ],
               ),
             ),
-          ),
+          ),  
         ));
   }
 
@@ -138,14 +139,56 @@ class _MyHomePageState extends State<TaskScreen> {
     height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: bggrey,
-        body: Stack(
-          children: <Widget>[
-            // backgroundView(), 
-            topView(),
-            // todoList()
-          ],
-        ),
+        body:CustomScrollView(
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: topView(),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              height: height * 0.8,
+              child: ValueListenableBuilder<List<TaskModel>>(
+                valueListenable: taskListnotifier,
+                builder: (BuildContext ctx, List<TaskModel> taskList,
+                    Widget? child) {
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: taskList.length,
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(height: 0), // Return an empty container
+                    itemBuilder: (BuildContext context, int index) {
+                      TaskModel data = taskList[index];
+
+                      return Container(
+                        width: 200,
+                        height: 100,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            color: Colors.amber,
+                            child: ListTile(
+                              title: Text(
+                                ' ${data.task}',
+                                style: const TextStyle(color: Colors.white, fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.bold,fontSize: 23),
+                              ),
+                              subtitle: Text(
+                                ' ${data.note2}',
+                                style: const TextStyle(color: bggrey),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
         // floatingActionButton: floatingActionBtn()
         );
   }
-}
+} 

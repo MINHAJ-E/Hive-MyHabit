@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:my_habit_app/bottombar/bottomBar.dart';
-import 'package:my_habit_app/db/functions/dbFunctions.dart';
+import 'package:my_habit_app/bottombar/bottom_bar.dart';
+import 'package:my_habit_app/db/functions/db_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/model/dataModel.dart';
-import 'package:my_habit_app/screens/todayScreen.dart';
+import 'package:my_habit_app/model/data_model.dart';
 
-class HabitAdding extends StatefulWidget {
-  const HabitAdding({super.key});
+class TaskAdding extends StatefulWidget {
+  const TaskAdding({super.key});
 
   @override
-  State<HabitAdding> createState() => _HabitAddingState();
+  State<TaskAdding> createState() => _TaskAddingState();
 }
 
-class _HabitAddingState extends State<HabitAdding> {
-  TextEditingController _habitAddController = TextEditingController();
-  TextEditingController _habitNoteController = TextEditingController();
+class _TaskAddingState extends State<TaskAdding> {
+   TextEditingController _taskAddController = TextEditingController();
+  TextEditingController _taskNoteController = TextEditingController();
 
   DateTime _dateTime = DateTime.now();
 
@@ -44,7 +43,7 @@ class _HabitAddingState extends State<HabitAdding> {
     });
   }
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: bggrey,
@@ -68,10 +67,10 @@ class _HabitAddingState extends State<HabitAdding> {
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: TextFormField(
-                          controller: _habitAddController,
+                          controller: _taskAddController,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'Make your own Habit',
+                            hintText: 'Make your own Task',
                           ),
                         ),
                       ),
@@ -93,7 +92,7 @@ class _HabitAddingState extends State<HabitAdding> {
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: TextFormField(
-                          controller: _habitNoteController,
+                          controller: _taskNoteController,
                           decoration: InputDecoration(
                             
                             border: InputBorder.none,
@@ -194,15 +193,16 @@ class _HabitAddingState extends State<HabitAdding> {
           ),
         ));
   }
+
   Future<void>onAddHabitButtonClicked()async{
-    final _habit = _habitAddController.text.trim();
-    final _note = _habitNoteController.text.trim();
-    if(_habit.isEmpty || _note.isEmpty){
+    final _task = _taskAddController.text.trim();
+    final _note2 = _taskNoteController.text.trim();
+    if(_task.isEmpty || _note2.isEmpty){
       return;
     }
     // print('$_habit $_note');
-   final habitt= HabitModel(habit: _habit, note: _note);
-    addhabit(habitt);
+   final taaskk= TaskModel(task: _task, note2: _note2);
+    addTask(taaskk);
     Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>BottomBar(title: "")));
     // Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>bott))
   }

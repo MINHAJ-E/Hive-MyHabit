@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_habit_app/db/functions/db_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
+import 'package:my_habit_app/model/data_model.dart';
 import 'package:my_habit_app/utils/colors_utils.dart';
 import 'package:my_habit_app/utils/date_utils.dart' as date_util;
+// import 'package:my_habit_app/widgets/calender.dart';
 
 
 class HabitScreen extends StatefulWidget {
@@ -91,7 +94,7 @@ class _MyHomePageState extends State<HabitScreen> {
                             (currentMonthList[index].day != currentDateTime.day)
                                 ? HexColor("465876")
                                 : Colors.white),
-                  ),
+                  ), 
                   Text(
                     date_util.DateUtils
                         .weekdays[currentMonthList[index].weekday - 1],
@@ -137,14 +140,57 @@ class _MyHomePageState extends State<HabitScreen> {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
+      
       backgroundColor:bggrey,
-        body: Stack(
-          children: <Widget>[
-            // backgroundView(), 
-            topView(),
-            // todoList()
-          ],
-        ),
+        body: CustomScrollView(
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: topView(),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              height: height * 0.8,
+              child: ValueListenableBuilder<List<HabitModel>>(
+                valueListenable: habitListnotifier,
+                builder: (BuildContext ctx, List<HabitModel> habitList,
+                    Widget? child) {
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: habitList.length,
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(height: 0), // Return an empty container
+                    itemBuilder: (BuildContext context, int index) {
+                      HabitModel data = habitList[index];
+
+                      return Container(
+                        width: 200,
+                        height: 100,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            color: Colors.amber,
+                            child: ListTile(
+                              title: Text(
+                                ' ${data.habit}',
+                                style: const TextStyle(color: Colors.white, fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.bold,fontSize: 23),
+                              ),
+                              subtitle: Text(
+                                ' ${data.note}',
+                                style: const TextStyle(color: bggrey),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
         // floatingActionButton: floatingActionBtn()
         );
   }

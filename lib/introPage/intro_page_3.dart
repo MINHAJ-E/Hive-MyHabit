@@ -11,7 +11,7 @@ class IntroPage3 extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/gym 1.jpg"),
+                image: AssetImage("assets/splash3.jpg"),
                 fit: BoxFit.cover,
               ),
             ),

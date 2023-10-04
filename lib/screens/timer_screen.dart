@@ -11,6 +11,7 @@ class TimerScreen extends StatefulWidget {
 }
 
 class _TimerScreenState extends State<TimerScreen> {
+
   late Timer _timer;
   bool _isActive = false;
   DateTime _startTime = DateTime.now();

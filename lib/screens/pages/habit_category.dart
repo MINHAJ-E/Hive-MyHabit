@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/pages/habitAddingPage.dart';
+import 'package:my_habit_app/screens/pages/habit_addingpage.dart';
 
 class HabitCategory extends StatelessWidget {
   const HabitCategory({super.key});
@@ -26,7 +26,7 @@ class HabitCategory extends StatelessWidget {
               
             ],
           ),
-          Column(
+          Column(  
             children: [
               categoryMethod(text: "Work",Categoryimage:'assets/work.png' ,context: context),
               categoryMethod(text: "Meditation",Categoryimage:'assets/meditation.png' ,context: context),
@@ -55,6 +55,9 @@ class HabitCategory extends StatelessWidget {
         child: Container(
           height: 50,
           width: 150,
+          decoration: BoxDecoration(
+            color: whtgrey,
+            borderRadius: BorderRadius.circular(25)),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -66,9 +69,6 @@ class HabitCategory extends StatelessWidget {
               ],
             ),
           ),
-          decoration: BoxDecoration(
-            color: whtgrey,
-            borderRadius: BorderRadius.circular(25)),
         ),
       ),
     );

@@ -1,15 +1,18 @@
+// import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:my_habit_app/bottombar/bottomBar.dart';
-import 'package:my_habit_app/db/functions/dbFunctions.dart';
-import 'package:my_habit_app/drawerPages/about.dart';
-import 'package:my_habit_app/drawerPages/contactUs.dart';
-import 'package:my_habit_app/drawerPages/privacyPolicy.dart';
+import 'package:my_habit_app/bottombar/bottom_bar.dart';
+import 'package:my_habit_app/db/functions/db_functions.dart';
+import 'package:my_habit_app/screens/pages/drawerPages/about.dart';
+import 'package:my_habit_app/screens/pages/drawerPages/contact_us.dart';
+import 'package:my_habit_app/screens/pages/drawerPages/privacy_policy.dart';
 import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/logIn_Screens/appFirstScreen.dart';
-import 'package:my_habit_app/logIn_Screens/logIn_Screen.dart';
-import 'package:my_habit_app/model/dataModel.dart';
-import 'package:my_habit_app/pages/habitCategory.dart';
-import 'package:my_habit_app/pages/taskAddingPage.dart';
+import 'package:my_habit_app/logIn_Screens/app_firstscreen.dart';
+// import 'package:my_habit_app/logIn_Screens/logIn_screen.dart';
+import 'package:my_habit_app/model/data_model.dart';
+// import 'package:my_habit_app/screens/pages/taskAddingPage.dart';
+import 'package:my_habit_app/screens/pages/habit_category.dart';
+import 'package:my_habit_app/screens/pages/task_addingPage.dart';
 import 'package:my_habit_app/utils/colors_utils.dart';
 import 'package:my_habit_app/utils/date_utils.dart' as date_util;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -165,7 +168,7 @@ class _TodayScreenState extends State<TodayScreen> {
                           shrinkWrap: true,
                           itemCount: habitList.length,
                           separatorBuilder: (BuildContext context, int index) =>
-                              SizedBox(height: 0), // Return an empty container
+                              const SizedBox(height: 0), // Return an empty container
                           itemBuilder: (BuildContext context, int index) {
                             HabitModel data = habitList[index];
 
@@ -179,7 +182,7 @@ class _TodayScreenState extends State<TodayScreen> {
                                   child: ListTile(
                                     title: Text(
                                       ' ${data.habit}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.bold,
@@ -188,9 +191,9 @@ class _TodayScreenState extends State<TodayScreen> {
                                     ),
                                     subtitle: Text(
                                       ' ${data.note}',
-                                      style: TextStyle(color: bggrey),
+                                      style: const TextStyle(color: bggrey),
                                     ),
-                                  ),
+                                  ), 
                                 ),
                               ),
                             );
@@ -199,49 +202,8 @@ class _TodayScreenState extends State<TodayScreen> {
                       },
                     ),
                   ),
-                  Container(
-                    height: height * 0.8,
-                    child: ValueListenableBuilder<List<TaskModel>>(
-                      valueListenable: taskListnotifier,
-                      builder: (BuildContext ctx, List<TaskModel> taskList,
-                          Widget? child) {
-                        return ListView.separated(
-                          shrinkWrap: true,
-                          itemCount: taskList.length,
-                          separatorBuilder: (BuildContext context, int index) =>
-                              SizedBox(height: 0), // Return an empty container
-                          itemBuilder: (BuildContext context, int index) {
-                            TaskModel data = taskList[index];
-
-                            return Container(
-                              width: 200,
-                              height: 100,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Card(
-                                  color: Colors.amber,
-                                  child: ListTile(
-                                    title: Text(
-                                      ' ${data.task}',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontStyle: FontStyle.italic,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 23),
-                                    ),
-                                    subtitle: Text(
-                                      ' ${data.note2}',
-                                      style: TextStyle(color: bggrey),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
+                 
+                
                 ],
               ),
             ),
@@ -257,10 +219,12 @@ class _TodayScreenState extends State<TodayScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Color.fromARGB(31, 73, 62, 62),
+        backgroundColor: const Color.fromARGB(31, 73, 62, 62),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              search();
+            },
             icon: const Icon(
               Icons.search,
               color: Colors.white,
@@ -283,21 +247,21 @@ class _TodayScreenState extends State<TodayScreen> {
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.home),
+                leading: const Icon(Icons.home),
                 title: const Text(
                   "Home ",
                   style: TextStyle(fontSize: 20),
                 ),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => BottomBar(
+                    builder: (ctx) => const BottomBar(
                       title: '',
                     ),
                   ));
                 },
               ),
               ListTile(
-                leading: Icon(Icons.adobe_outlined),
+                leading: const Icon(Icons.info_outline),
                 title: const Text(
                   "About",
                   style: TextStyle(fontSize: 20),
@@ -305,13 +269,13 @@ class _TodayScreenState extends State<TodayScreen> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (ctx) => AboutPage(),
+                      builder: (ctx) => const AboutPage(),
                     ),
                   );
                 },
               ),
               ListTile(
-                leading: Icon(Icons.privacy_tip),
+                leading: const Icon(Icons.privacy_tip),
                 title: const Text(
                   "Privacy policy",
                   style: TextStyle(fontSize: 20),
@@ -319,13 +283,13 @@ class _TodayScreenState extends State<TodayScreen> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (ctx) => PrivacyPolicy(),
+                      builder: (ctx) => const PrivacyPolicy(),
                     ),
                   );
                 },
               ),
               ListTile(
-                leading: Icon(Icons.contact_emergency),
+                leading: const Icon(Icons.contact_emergency),
                 title: const Text(
                   "Contact Us",
                   style: TextStyle(fontSize: 20),
@@ -333,16 +297,16 @@ class _TodayScreenState extends State<TodayScreen> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (ctx) => ContactUsPage(),
+                      builder: (ctx) => const ContactUsPage(),
                     ),
                   );
                 },
               ),
-              SizedBox(
-                height: 250,
+              const SizedBox(
+              height: 250,
               ),
               ListTile(
-                trailing: Icon(Icons.logout_outlined),
+                trailing: const Icon(Icons.logout_outlined),
                 title: const Text(
                   "Logout",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -360,7 +324,7 @@ class _TodayScreenState extends State<TodayScreen> {
           bottomsheet(context);
         },
         backgroundColor: Colors.amber,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -368,9 +332,8 @@ class _TodayScreenState extends State<TodayScreen> {
   signout(BuildContext ctx) async {
     final _sharedpref = await SharedPreferences.getInstance();
     await _sharedpref.clear();
-
     Navigator.of(ctx).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (ctx1) => AppFirstScreen()),
+      MaterialPageRoute(builder: (ctx1) => const AppFirstScreen()),
       (route) => false,
     );
   }
@@ -380,7 +343,7 @@ class _TodayScreenState extends State<TodayScreen> {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          color: Color.fromARGB(255, 34, 32, 32),
+          color: const Color.fromARGB(255, 34, 32, 32),
           height: 320.0,
           width: MediaQuery.of(context).size.width,
           child: Column(
@@ -404,7 +367,7 @@ class _TodayScreenState extends State<TodayScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (ctx) => HabitCategory()),
+                          MaterialPageRoute(builder: (ctx) => const HabitCategory()),
                         );
                       },
                       child: Container(
@@ -440,7 +403,7 @@ class _TodayScreenState extends State<TodayScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (ctx) => TaskAdding()),
+                          MaterialPageRoute(builder: (ctx) => const TaskAdding()),
                         );
                       },
                       child: Container(
@@ -474,5 +437,22 @@ class _TodayScreenState extends State<TodayScreen> {
         );
       },
     );
+  }
+  search(){
+return const TextField(
+  decoration: InputDecoration(
+    labelText: 'Enter your text',  // Add a label
+    hintText: 'Type something here',  // Add a hint text
+    border: OutlineInputBorder(
+      // borderRadius: BorderRadius.circular(10.0),  // Add rounded border
+      borderSide: BorderSide(color: Colors.teal, width: 2.0),  // Add border color and width
+    ),
+    filled: true,  // Add a background color
+    // fillColor: Colors.grey[200],  // Set background color
+    prefixIcon: Icon(Icons.person),  // Add an icon as a prefix
+   
+  ),
+);
+
   }
 }
