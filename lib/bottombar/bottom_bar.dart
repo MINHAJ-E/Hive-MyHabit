@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/screens/chart_screen.dart';
-import 'package:my_habit_app/screens/habit_screen.dart';
-import 'package:my_habit_app/screens/task_screen.dart';
+import 'package:my_habit_app/screens/checked_screen.dart';
+import 'package:my_habit_app/screens/uncked_screen.dart';
 import 'package:my_habit_app/screens/timer_screen.dart';
 import 'package:my_habit_app/screens/today_screen.dart';
 
@@ -41,8 +41,8 @@ final List<Widget>_pages=[
             onTap: _navigationbottombar,
                 items:const [
               BottomNavigationBarItem(icon: Icon(Icons.today),label: 'Today'),
-              BottomNavigationBarItem(icon: Icon(Icons.person),label: 'Habit'),
-              BottomNavigationBarItem(icon: Icon(Icons.task),label: 'Task'),
+              BottomNavigationBarItem(icon: Icon(Icons.task),label: 'Checked'),
+              BottomNavigationBarItem(icon: Icon(Icons.update_disabled_rounded),label: 'unchecked'),
               BottomNavigationBarItem(icon: Icon(Icons.bar_chart_rounded),label: 'Chart'),
               BottomNavigationBarItem(icon: Icon(Icons.timer),label: 'Timer'),
                      ],

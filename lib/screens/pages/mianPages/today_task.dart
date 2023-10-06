@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:my_habit_app/db/functions/db_functions.dart';
+import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
+import 'package:my_habit_app/db/functions/taskfunctions/dbtask_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/model/data_model.dart';
+import 'package:my_habit_app/model/task/data_model.dart';
 import 'package:my_habit_app/utils/colors_utils.dart';
 import 'package:my_habit_app/utils/date_utils.dart' as date_util;
-// import 'package:my_habit_app/widgets/calender.dart';
 
 
-class HabitScreen extends StatefulWidget {
-  final String title;
-  const HabitScreen({Key? key, required this.title}) : super(key: key);
+class TodayTAsk extends StatefulWidget {
+  const TodayTAsk({super.key});
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<TodayTAsk> createState() => _TodayTAskState();
 }
 
-class _MyHomePageState extends State<HabitScreen> {
+class _TodayTAskState extends State<TodayTAsk> {
   double width = 0.0;
   double height = 0.0;
   late ScrollController scrollController;
@@ -38,8 +37,7 @@ class _MyHomePageState extends State<HabitScreen> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
       child: Text(
-        date_util.DateUtils.months[currentDateTime.month - 1] + ' ' +
-            currentDateTime.year.toString(),
+        '${date_util.DateUtils.months[currentDateTime.month - 1]} ${currentDateTime.year}',
         style: const TextStyle(
             color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
       ),
@@ -94,7 +92,7 @@ class _MyHomePageState extends State<HabitScreen> {
                             (currentMonthList[index].day != currentDateTime.day)
                                 ? HexColor("465876")
                                 : Colors.white),
-                  ), 
+                  ),
                   Text(
                     date_util.DateUtils
                         .weekdays[currentMonthList[index].weekday - 1],
@@ -109,7 +107,7 @@ class _MyHomePageState extends State<HabitScreen> {
                 ],
               ),
             ),
-          ),
+          ),  
         ));
   }
 
@@ -135,14 +133,12 @@ class _MyHomePageState extends State<HabitScreen> {
     );
   }
 
-  @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
-      
-      backgroundColor:bggrey,
-        body: CustomScrollView(
+      backgroundColor: bggrey,
+        body:CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(
             child: topView(),
@@ -150,17 +146,17 @@ class _MyHomePageState extends State<HabitScreen> {
           SliverToBoxAdapter(
             child: Container(
               height: height * 0.8,
-              child: ValueListenableBuilder<List<HabitModel>>(
-                valueListenable: habitListnotifier,
-                builder: (BuildContext ctx, List<HabitModel> habitList,
+              child: ValueListenableBuilder<List<TaskModel>>(
+                valueListenable: taskListnotifier,
+                builder: (BuildContext ctx, List<TaskModel> tasktList,
                     Widget? child) {
                   return ListView.separated(
                     shrinkWrap: true,
-                    itemCount: habitList.length,
+                    itemCount: tasktList.length,
                     separatorBuilder: (BuildContext context, int index) =>
-                        const SizedBox(height: 0), // Return an empty container
+                        const SizedBox(height: 0), 
                     itemBuilder: (BuildContext context, int index) {
-                      HabitModel data = habitList[index];
+                      TaskModel data = tasktList[index];
 
                       return Container(
                         width: 200,
@@ -171,14 +167,32 @@ class _MyHomePageState extends State<HabitScreen> {
                             color: Colors.amber,
                             child: ListTile(
                               title: Text(
-                                ' ${data.habit}',
+                                ' ${data.task}',
                                 style: const TextStyle(color: Colors.white, fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.bold,fontSize: 23),
                               ),
                               subtitle: Text(
-                                ' ${data.note}',
+                                ' ${data.note2}',
                                 style: const TextStyle(color: bggrey),
                               ),
+                               trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+
+                                      children: [
+                                         IconButton(
+                              onPressed: () {
+                                deletetask(index);
+                              },
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                            ),
+                             IconButton(
+                                onPressed: () {
+                                
+                                },
+                                icon: Icon(Icons.edit)),
+                                      ],
+                                    ),
+                                    leading: Checkbox(value: true, onChanged: (bool){}),
                             ),
                           ),
                         ),
@@ -191,7 +205,9 @@ class _MyHomePageState extends State<HabitScreen> {
           ),
         ],
       ),
-        // floatingActionButton: floatingActionBtn()
+        
         );
   }
+
+
 }

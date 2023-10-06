@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/screens/pages/habit_chart.dart';
-import 'package:my_habit_app/screens/pages/task_chart.dart';
+import 'package:my_habit_app/screens/pages/mianPages/habit_chart.dart';
+import 'package:my_habit_app/screens/pages/mianPages/task_chart.dart';
+
 
 
 
@@ -14,7 +15,8 @@ class ChartScreen extends StatelessWidget {
     return  DefaultTabController(
         length: 2,
         child: Scaffold(
-          backgroundColor:const Color.fromARGB(240, 7, 7, 7),
+          // backgroundColor:const Color.fromARGB(240, 7, 7, 7),
+          backgroundColor: bggrey,
           appBar: AppBar(
             
            backgroundColor: bggreyisue,

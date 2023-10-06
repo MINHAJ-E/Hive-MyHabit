@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
-import 'package:my_habit_app/db/functions/db_functions.dart';
+import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/model/data_model.dart';
+import 'package:my_habit_app/model/habit/data_model.dart';
 // import 'package:my_habit_app/screens/today_screen.dart';
 
 class HabitAdding extends StatefulWidget {
@@ -70,7 +70,7 @@ class _HabitAddingState extends State<HabitAdding> {
                         padding: const EdgeInsets.all(15.0),
                         child: TextFormField(
                           controller: _habitAddController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: 'Make your own Habit',
                           ),
@@ -95,15 +95,14 @@ class _HabitAddingState extends State<HabitAdding> {
                         padding: const EdgeInsets.all(15.0),
                         child: TextFormField(
                           controller: _habitNoteController,
-                          decoration: InputDecoration(
-                            
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: 'give small description',
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
@@ -112,8 +111,9 @@ class _HabitAddingState extends State<HabitAdding> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                             _formattDate(_dateTime), // Format date here
-                      style: TextStyle(fontSize: 25, color: Colors.white),
+                            _formattDate(_dateTime), // Format date here
+                            style: const TextStyle(
+                                fontSize: 25, color: Colors.white),
                           ),
                         ),
                         Padding(
@@ -126,7 +126,7 @@ class _HabitAddingState extends State<HabitAdding> {
                                 color: Colors.amber,
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              child: Center(
+                              child: const Center(
                                 child: Icon(
                                   Icons.calendar_today,
                                   color: Colors.black,
@@ -140,7 +140,7 @@ class _HabitAddingState extends State<HabitAdding> {
                         ),
                       ],
                     ),
-                    Divider(
+                    const Divider(
                       color: Colors.black,
                     ),
                     Row(
@@ -150,7 +150,8 @@ class _HabitAddingState extends State<HabitAdding> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             _formattDate(_dateTime), // Format date here
-                      style: TextStyle(fontSize: 25, color: Colors.white),
+                            style: const TextStyle(
+                                fontSize: 25, color: Colors.white),
                           ),
                         ),
                         Padding(
@@ -163,7 +164,7 @@ class _HabitAddingState extends State<HabitAdding> {
                                 color: Colors.amber,
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              child: Center(
+                              child: const Center(
                                 child: Icon(
                                   Icons.calendar_today,
                                   color: Colors.black,
@@ -177,16 +178,22 @@ class _HabitAddingState extends State<HabitAdding> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     ElevatedButton(
                       onPressed: () {
-                       onAddHabitButtonClicked();
-                      //  Navigator.pop(context);
+                        setState(() {
+                          // saved();
+                          onAddHabitButtonClicked();
+                        });
+
+                        //  Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.amber,
                       ),
-                      child: Text("Add Habit"),
+                      child: const Text("Add Habit"),
                     )
                   ],
                 ),
@@ -195,19 +202,38 @@ class _HabitAddingState extends State<HabitAdding> {
           ),
         ));
   }
-  String _formattDate(DateTime date){
+
+  String _formattDate(DateTime date) {
     return DateFormat('MM/dd/yyyy').format(date);
   }
-  Future<void>onAddHabitButtonClicked()async{
-    final _habit = _habitAddController.text.trim();
-    final _note = _habitNoteController.text.trim();
-    if(_habit.isEmpty || _note.isEmpty){
-      return;
-    }
-    // print('$_habit $_note');
-   final habitt= HabitModel(habit: _habit, note: _note);
-    addhabit(habitt);
-    Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>BottomBar(title: "")));
-    // Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>bott))
+
+ Future<void> onAddHabitButtonClicked() async {
+  final _habit = _habitAddController.text.trim();
+  final _note = _habitNoteController.text.trim();
+  if (_habit.isEmpty || _note.isEmpty) {
+    return;
   }
+  final habitt = HabitModel(habit: _habit, note: _note, isDone: false);
+  addhabit(habitt);
+
+  // Trigger a rebuild of the widget to refresh the list
+  setState(() {});
+
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text('Habit added successfully!'),
+    ),
+  );
+  
+  Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => BottomBar(title: "")));
+}
+  //  Future<void> saved() async {
+  //   final _habit = _habitAddController.text.trim();
+  //   final _note = _habitNoteController.text.trim();
+  //   if (_habit.isEmpty||_note.isEmpty) {
+  //     return;
+  //   }
+  //   final Habit = HabitModel(habit: _habit,note: _note, isDone: false);
+  //   addhabit(Habit);
+  // }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/screens/pages/habit_addingpage.dart';
+import 'package:my_habit_app/screens/pages/mianPages/habit_addingpage.dart';
 
 class HabitCategory extends StatelessWidget {
   const HabitCategory({super.key});

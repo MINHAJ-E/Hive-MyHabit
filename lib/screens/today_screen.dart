@@ -2,20 +2,24 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
-import 'package:my_habit_app/db/functions/db_functions.dart';
+import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
+import 'package:my_habit_app/db/functions/taskfunctions/dbtask_functions.dart';
+import 'package:my_habit_app/model/habit/data_model.dart';
 import 'package:my_habit_app/screens/pages/drawerPages/about.dart';
 import 'package:my_habit_app/screens/pages/drawerPages/contact_us.dart';
 import 'package:my_habit_app/screens/pages/drawerPages/privacy_policy.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/logIn_Screens/app_firstscreen.dart';
+import 'package:my_habit_app/screens/pages/edited_habit.dart';
 // import 'package:my_habit_app/logIn_Screens/logIn_screen.dart';
-import 'package:my_habit_app/model/data_model.dart';
 // import 'package:my_habit_app/screens/pages/taskAddingPage.dart';
-import 'package:my_habit_app/screens/pages/habit_category.dart';
-import 'package:my_habit_app/screens/pages/task_addingPage.dart';
+import 'package:my_habit_app/screens/pages/mianPages/habit_category.dart';
+import 'package:my_habit_app/screens/pages/mianPages/task_addingPage.dart';
 import 'package:my_habit_app/utils/colors_utils.dart';
 import 'package:my_habit_app/utils/date_utils.dart' as date_util;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
+
 
 class TodayScreen extends StatefulWidget {
   final String title;
@@ -145,65 +149,101 @@ class _TodayScreenState extends State<TodayScreen> {
   }
 
   Widget build(BuildContext context) {
+    getAllHabit();
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: CustomScrollView(
+      body:CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(
             child: topView(),
           ),
           SliverToBoxAdapter(
             child: Expanded(
+              // Wrap your Column with Expanded to make it scrollable
               child: Column(
                 children: [
                   Container(
                     height: height * 0.8,
-                    child: ValueListenableBuilder<List<HabitModel>>(
-                      valueListenable: habitListnotifier,
-                      builder: (BuildContext ctx, List<HabitModel> habitList,
-                          Widget? child) {
-                        return ListView.separated(
-                          shrinkWrap: true,
-                          itemCount: habitList.length,
-                          separatorBuilder: (BuildContext context, int index) =>
-                              const SizedBox(height: 0), // Return an empty container
-                          itemBuilder: (BuildContext context, int index) {
-                            HabitModel data = habitList[index];
+                    child: Builder(
+                      builder: (context) {
+                        return ValueListenableBuilder<List<HabitModel>>(
+                          valueListenable: habitListnotifier,
+                          builder: (BuildContext ctx, List<HabitModel> habitList,
+                              Widget? child) {
+                            return ListView.separated(
+                              shrinkWrap: true,
+                              itemCount: habitList.length,
+                              separatorBuilder: (BuildContext context, int index) =>
+                                  const SizedBox(height: 0),
+                              itemBuilder: (BuildContext context, int index) {
+                                HabitModel data = habitList[index];
 
-                            return Container(
-                              width: 200,
-                              height: 100,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Card(
-                                  color: Colors.amber,
-                                  child: ListTile(
-                                    title: Text(
-                                      ' ${data.habit}',
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontStyle: FontStyle.italic,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 23,
+                                return Container(
+                                  width: 200,
+                                  height: 100,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Card(
+                                      color: Colors.amber,
+                                      child: ListTile(
+                                        title: Text(
+                                          ' ${data.habit}',
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontStyle: FontStyle.italic,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 23,
+                                          ),
+                                        ),
+                                        subtitle: Text(
+                                          ' ${data.note}',
+                                          style: const TextStyle(color: bggrey),
+                                        ),
+                                        leading: Checkbox(
+                                          value: data.isDone,
+                                          onChanged: (newvalue) {
+                                            setState(() async {
+                                              data.isDone = newvalue!;
+                                              // You may need to call your update function here.
+                                            });
+                                          },
+                                        ),
+                                        trailing: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            IconButton(
+                                              onPressed: () {
+                                                deletehabit(index);
+                                              },
+                                              icon: const Icon(Icons.delete, color: Colors.red),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                Navigator.of(context).push(MaterialPageRoute(
+                                                  builder: (ctx) => UpdateStudent(
+                                                    habit: data.habit,
+                                                    note: data.note,
+                                                    index: index,
+                                                  ),
+                                                ));
+                                              },
+                                              icon: Icon(Icons.edit),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                    subtitle: Text(
-                                      ' ${data.note}',
-                                      style: const TextStyle(color: bggrey),
-                                    ),
-                                  ), 
-                                ),
-                              ),
+                                  ),
+                                );
+                              },
                             );
                           },
                         );
                       },
                     ),
                   ),
-                 
-                
                 ],
               ),
             ),
@@ -328,6 +368,8 @@ class _TodayScreenState extends State<TodayScreen> {
       ),
     );
   }
+  
+ 
 
   signout(BuildContext ctx) async {
     final _sharedpref = await SharedPreferences.getInstance();
@@ -403,7 +445,7 @@ class _TodayScreenState extends State<TodayScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (ctx) => const TaskAdding()),
+                          MaterialPageRoute(builder: (ctx) =>  TaskAdding()),
                         );
                       },
                       child: Container(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
-import 'package:my_habit_app/db/functions/db_functions.dart';
+import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
+import 'package:my_habit_app/db/functions/taskfunctions/dbtask_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/model/data_model.dart';
+import 'package:my_habit_app/model/task/data_model.dart';
+import 'package:my_habit_app/screens/pages/mianPages/today_task.dart';
 
 class TaskAdding extends StatefulWidget {
   const TaskAdding({super.key});
@@ -178,13 +180,13 @@ class _TaskAddingState extends State<TaskAdding> {
                     SizedBox(height: 20,),
                     ElevatedButton(
                       onPressed: () {
-                       onAddHabitButtonClicked();
+                       onAddtaskButtonClicked();
                       //  Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.amber,
                       ),
-                      child: Text("Add Habit"),
+                      child: Text("Add Task"),
                     )
                   ],
                 ),
@@ -194,16 +196,18 @@ class _TaskAddingState extends State<TaskAdding> {
         ));
   }
 
-  Future<void>onAddHabitButtonClicked()async{
-    final _task = _taskAddController.text.trim();
-    final _note2 = _taskNoteController.text.trim();
-    if(_task.isEmpty || _note2.isEmpty){
+ Future<void>onAddtaskButtonClicked()async{
+    final _habit = _taskAddController.text.trim();
+    final _note = _taskNoteController.text.trim();
+    if(_habit.isEmpty || _note.isEmpty){
       return;
     }
     // print('$_habit $_note');
-   final taaskk= TaskModel(task: _task, note2: _note2);
-    addTask(taaskk);
-    Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>BottomBar(title: "")));
+   final tassk= TaskModel(task: _habit, note2: _note,
+  //  isDone: false
+   );
+    addtask(tassk);
+    Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> BottomBar(title: "")));
     // Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>bott))
   }
 }
