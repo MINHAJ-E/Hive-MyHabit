@@ -1,58 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/screens/pages/mianPages/habit_chart.dart';
-import 'package:my_habit_app/screens/pages/mianPages/task_chart.dart';
+// import 'package:my_habit_app/widgets/calender.dart';
 
+class HabitChart extends StatelessWidget {
+  const HabitChart({super.key});
 
+  @override
+ Widget build(BuildContext context) {
+ 
+    return Scaffold(
+      backgroundColor: bggrey,
+      appBar: AppBar(
+        backgroundColor: bggreyisue,
+        title: Text('Habit Chart'),
+      ),
+      body: Center(
+        child: BarChart(),
+      ),
+    );
+  }
+}
 
+class BarChart extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 300,
+      width: 300,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Bar(color: Colors.blue, height: 300),
+          Bar(color: Colors.green, height: 300),
+          Bar(color: Colors.orange, height: 300),
+          Bar(color: Colors.red, height: 300),
+        ],
+      ),
+    );
+  }
+}
 
-class ChartScreen extends StatelessWidget {
-  const ChartScreen({super.key});
+class Bar extends StatelessWidget {
+  final Color color;
+  final double height;
+
+  Bar({required this.color, required this.height});
 
   @override
   Widget build(BuildContext context) {
-    
-    return  DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          // backgroundColor:const Color.fromARGB(240, 7, 7, 7),
-          backgroundColor: bggrey,
-          appBar: AppBar(
-            
-           backgroundColor: bggreyisue,
-          ),
-          body: Column(
-            children: [
-              Container(
-                // color: Color.fromARGB(100, 100, 231, 198),
-                child: const TabBar(
-                  tabs: [
-                    Tab(
-                      text: 'Habit Chart',
-                    ),
-                    Tab(
-                      text: 'Task Chart',
-                    ),
-                   
-                  ],
-                  indicatorColor: Colors.amber,
-                  // unselectedLabelColor: Colors.green,
-                ),
-              ),
-              const Expanded(
-                child: TabBarView(children: [
-                  // first Tab
-                 
-                 //second Tab
-                 HabitChart(),
-
-                 TaskChart(),
-                 
-                ]),
-              )
-            ],
-          ),
-        ));
+    return Container(
+      color: color,
+      width: 50,
+      height: height,
+    );
   }
- 
 }
+

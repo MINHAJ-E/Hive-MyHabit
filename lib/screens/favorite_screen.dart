@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
-import 'package:my_habit_app/db/functions/taskfunctions/dbtask_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/model/task/data_model.dart';
 import 'package:my_habit_app/utils/colors_utils.dart';
 import 'package:my_habit_app/utils/date_utils.dart' as date_util;
+import 'package:my_habit_app/widgets/calender.dart';
 
 
-class HabitScreen extends StatefulWidget {
+class FavoritteScreen extends StatefulWidget {
   final String title;
-  const HabitScreen({Key? key, required this.title}) : super(key: key);
+  const FavoritteScreen({Key? key, required this.title}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<HabitScreen> {
+class _MyHomePageState extends State<FavoritteScreen> {
   double width = 0.0;
   double height = 0.0;
   late ScrollController scrollController;
@@ -140,6 +139,13 @@ class _MyHomePageState extends State<HabitScreen> {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: topView(),
+          ),]
+      ),
+      
       backgroundColor: bggrey,
        
         );

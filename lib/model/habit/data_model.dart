@@ -4,18 +4,31 @@ part 'data_model.g.dart';
 @HiveType(typeId: 1)
 class HabitModel {
   @HiveField(0)
-  final String habit;
+  late String habit;
 
   @HiveField(1)
-  final String note;
+  late String note;
+
+  // @HiveField(2)
+  // late String category;
+
+  // @HiveField(2)
+  // late String feedback;
+
+  // @HiveField(2)
+  // late bool isDone;
+
+  
+  
 
   @HiveField(2)
-  late bool isDone;
-
-  @HiveField(3)
   int? id;
 
-  HabitModel({required this.habit, required this.note,required this.isDone });
+  HabitModel({required this.habit, required this.note,
+  // required this.feedback
+  // required this.category
+  // required this.isDone 
+  });
 }
 
 

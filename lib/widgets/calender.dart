@@ -1,21 +1,22 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/utils/colors_utils.dart';
 import 'package:my_habit_app/utils/date_utils.dart' as date_util;
 
-class Calendar extends StatefulWidget {
+class Calender extends StatefulWidget {
+  const Calender({Key? key});
+
   @override
-  _CalendarState createState() => _CalendarState();
+  State<Calender> createState() => _CalenderState();
 }
 
-class _CalendarState extends State<Calendar> {
+class _CalenderState extends State<Calender> {
   double width = 0.0;
   double height = 0.0;
   late ScrollController scrollController;
   List<DateTime> currentMonthList = List.empty();
   DateTime currentDateTime = DateTime.now();
-  List<String> myhabit = <String>[];
-  TextEditingController controller = TextEditingController();
 
   @override
   void initState() {
@@ -38,24 +39,7 @@ class _CalendarState extends State<Calendar> {
     );
   }
 
-  Widget hrizontalCapsuleListView() {
-    return Container(
-      width: width,
-      height: 100,
-      child: ListView.builder(
-        controller: scrollController,
-        scrollDirection: Axis.horizontal,
-        physics: const ClampingScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: currentMonthList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return capsuleView(index);
-        },
-      ),
-    );
-  }
-
-  Widget capsuleView(int index) {
+    Widget capsuleView(int index) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
       child: GestureDetector(
@@ -104,12 +88,29 @@ class _CalendarState extends State<Calendar> {
     );
   }
 
+  Widget horizontalCapsuleListView() {
+    return Container(
+      width: width,
+      height: 100,
+      child: ListView.builder(
+        controller: scrollController,
+        scrollDirection: Axis.horizontal,
+        physics: const ClampingScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: currentMonthList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return capsuleView(index);
+        },
+      ),
+    );
+  }
+
   Widget topView() {
     return Container(
       height: height * 0.2,
       width: width,
       decoration: const BoxDecoration(
-        color: bggreyisue,
+        color: Colors.grey, // Change to the desired color
         borderRadius: BorderRadius.only(
           bottomRight: Radius.circular(20),
           bottomLeft: Radius.circular(20),
@@ -119,7 +120,7 @@ class _CalendarState extends State<Calendar> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           titleView(),
-          hrizontalCapsuleListView(),
+          horizontalCapsuleListView(),
         ],
       ),
     );
@@ -128,21 +129,7 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Calendar App'),
-      ),
-      body: Column(
-        children: <Widget>[
-          topView(),
-          // Add any additional widgets or functionality here
-        ],
-      ),
+      body: topView(),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: Calendar(),
-  ));
 }

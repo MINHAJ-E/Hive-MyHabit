@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_habit_app/introPage/onBodyScreens/onbody_screens.dart';
+import 'package:my_habit_app/screens/introPage/onBodyScreens/onbody_screens.dart';
 
 class AppFirstScreen extends StatefulWidget {
   const AppFirstScreen({super.key});

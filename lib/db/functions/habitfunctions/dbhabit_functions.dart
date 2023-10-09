@@ -8,11 +8,11 @@ void addhabit(HabitModel value) async {
   final habitdb = await Hive.openBox<HabitModel>('student_db');
   final id =await habitdb.add(value);
   value.id = id;
- habitListnotifier.value.add(value);
+  habitListnotifier.value.add(value);
   habitListnotifier.notifyListeners();
 }
 
-getAllHabit() async {
+void getAllHabit() async {
   final studentdb = await Hive.openBox<HabitModel>('student_db');
   habitListnotifier.value.clear();
   habitListnotifier.value.addAll(studentdb.values);

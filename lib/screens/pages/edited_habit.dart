@@ -6,10 +6,8 @@ import 'package:my_habit_app/bottombar/bottom_bar.dart';
 import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/habit/data_model.dart';
+import 'package:my_habit_app/screens/pages/mianPages/habit_addingpage.dart';
 import 'package:my_habit_app/screens/pages/mianPages/habit_category.dart';
-import 'package:my_habit_app/screens/pages/mianPages/task_addingPage.dart';
-import 'package:my_habit_app/screens/pages/mianPages/today_habit.dart';
-import 'package:my_habit_app/screens/today_screen.dart';
 
 class UpdateStudent extends StatefulWidget {
   final String habit;
@@ -188,7 +186,7 @@ class _UpdateStudentState extends State<UpdateStudent> {
                       style: ElevatedButton.styleFrom(
                         primary: Colors.amber,
                       ),
-                      child: const Text("Add Habit"),
+                      child: const Text("Edited Habit"),
                     )
                   ],
                 ),
@@ -229,7 +227,7 @@ class _UpdateStudentState extends State<UpdateStudent> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (ctx) => const HabitCategory()),
+                              builder: (ctx) => const HabitAdding()),
                         );
                       },
                       child: Container(
@@ -265,7 +263,7 @@ class _UpdateStudentState extends State<UpdateStudent> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (ctx) => TaskAdding()),
+                          MaterialPageRoute(builder: (ctx) => HabitAdding()),
                         );
                       },
                       child: Container(
@@ -304,16 +302,21 @@ class _UpdateStudentState extends State<UpdateStudent> {
   Future<void> update() async {
     final edited_habit = habitController.text.trim();
     final edited_note = noteController.text.trim();
+    final edited_category = noteController.text.trim();
+    final edited_feedback = noteController.text.trim();
 
     // final edited_image = selectedimage?.path;
 
-    if (edited_habit.isEmpty || edited_note.isEmpty) {
+    if (edited_habit.isEmpty || edited_note.isEmpty||edited_category.isEmpty) {
       return;
     } else {
       final updated = HabitModel(
-        isDone: false,
+        // isDone: false,
         habit: edited_habit,
         note: edited_note,
+        // feedback: edited_feedback
+        // category: edited_category
+
       );
 
       editList(widget.index, updated);
