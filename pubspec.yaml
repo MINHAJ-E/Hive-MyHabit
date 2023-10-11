@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  anim_search_bar: ^2.0.3
   cupertino_icons: ^1.0.2
   fl_chart: ^0.63.0
   flutter:

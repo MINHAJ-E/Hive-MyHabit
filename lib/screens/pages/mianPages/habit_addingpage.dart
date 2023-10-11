@@ -114,20 +114,20 @@ class _HabitAddingState extends State<HabitAdding> {
                     //     color: Colors.amber,
                     //     borderRadius: BorderRadius.circular(5),
                     //   ),
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.all(15.0),
-                    //     child: TextFormField(
-                    //       controller: _habitfeedbackController,
-                    //       decoration: const InputDecoration(
-                    //         border: InputBorder.none,
-                    //         hintText: 'give small feedback',
-                    //       ),
-                    //     ),
-                    //   ),
+                      // child: Padding(
+                      //   padding: const EdgeInsets.all(15.0),
+                      //   child: TextFormField(
+                      //     controller: _habitfeedbackController,
+                      //     decoration: const InputDecoration(
+                      //       border: InputBorder.none,
+                      //       hintText: 'give small feedback',
+                      //     ),
+                      //   ),
+                      // ),
                     // ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

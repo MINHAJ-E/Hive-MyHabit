@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/screens/chart_screen.dart';
-import 'package:my_habit_app/screens/favorite_screen.dart';
+import 'package:my_habit_app/screens/regular_screen.dart';
 import 'package:my_habit_app/screens/timer_screen.dart';
 import 'package:my_habit_app/screens/today_screen.dart';
 
@@ -23,7 +23,7 @@ class _BottomBarState extends State<BottomBar> {
 
   final List<Widget> _pages = [
     TodayScreen(title: ''),
-    FavoritteScreen(title: ''),
+    RegularWork(title: ''),
     HabitChart(),
     TimerScreen(),
   ];
@@ -39,7 +39,7 @@ class _BottomBarState extends State<BottomBar> {
         onTap: _navigationbottombar,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.today), label: 'Today'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorites'),
+          BottomNavigationBarItem(icon: Icon(Icons.accessibility_new_sharp), label: 'Regular'),
           BottomNavigationBarItem(icon: Icon(Icons.bar_chart_rounded), label: 'Chart'),
           BottomNavigationBarItem(icon: Icon(Icons.timer), label: 'Timer'),
         ],

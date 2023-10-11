@@ -21,7 +21,7 @@ class HabitModel {
   
   
 
-  @HiveField(2)
+  @HiveField(3)
   int? id;
 
   HabitModel({required this.habit, required this.note,

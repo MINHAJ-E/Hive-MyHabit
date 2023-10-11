@@ -19,7 +19,7 @@ class HabitModelAdapter extends TypeAdapter<HabitModel> {
     return HabitModel(
       habit: fields[0] as String,
       note: fields[1] as String,
-    )..id = fields[2] as int?;
+    )..id = fields[3] as int?;
   }
 
   @override
@@ -30,7 +30,7 @@ class HabitModelAdapter extends TypeAdapter<HabitModel> {
       ..write(obj.habit)
       ..writeByte(1)
       ..write(obj.note)
-      ..writeByte(2)
+      ..writeByte(3)
       ..write(obj.id);
   }
 

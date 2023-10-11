@@ -1,4 +1,5 @@
 // import 'dart:async';
+import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -13,6 +14,7 @@ import 'package:my_habit_app/screens/logIn_Screens/app_firstscreen.dart';
 import 'package:my_habit_app/screens/pages/edited_habit.dart';
 import 'package:my_habit_app/screens/pages/mianPages/added_items.dart';
 import 'package:my_habit_app/screens/pages/mianPages/habit_addingpage.dart';
+import 'package:my_habit_app/screens/pages/search.dart';
 // import 'package:my_habit_app/logIn_Screens/logIn_screen.dart';
 // import 'package:my_habit_app/screens/pages/taskAddingPage.dart';
 import 'package:my_habit_app/utils/colors_utils.dart';
@@ -21,10 +23,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class TodayScreen extends StatefulWidget {
   final String title;
-  const TodayScreen({Key? key, required this.title}) : super(key: key);
+
+  TodayScreen({Key? key, required this.title}) : super(key: key);
   @override
   State<TodayScreen> createState() => _TodayScreenState();
 }
+
 class _TodayScreenState extends State<TodayScreen> {
   double width = 0.0;
   double height = 0.0;
@@ -43,6 +47,7 @@ class _TodayScreenState extends State<TodayScreen> {
         ScrollController(initialScrollOffset: 70.0 * currentDateTime.day);
     super.initState();
   }
+
 //title view
   Widget titleView() {
     return Padding(
@@ -55,6 +60,7 @@ class _TodayScreenState extends State<TodayScreen> {
       ),
     );
   }
+
   Widget hrizontalCapsuleListView() {
     return Container(
       width: width,
@@ -71,6 +77,7 @@ class _TodayScreenState extends State<TodayScreen> {
       ),
     );
   }
+
   Widget capsuleView(int index) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
@@ -151,8 +158,38 @@ class _TodayScreenState extends State<TodayScreen> {
       _cardColor = Colors.blue;
     });
   }
-  int selectedCardIndex = -1;
 
+  int selectedCardIndex = -1;
+  String _search = '';
+  List<HabitModel> searchedlist = [];
+
+  void searchResult() {
+    setState(() {
+      void searchResult() {
+        setState(() {
+          searchedlist = habitListnotifier.value
+              .where((incomigModel) => incomigModel.habit
+                  .toLowerCase()
+                  .contains(_search.toLowerCase()))
+              .toList();
+        });
+      }
+    });
+  }
+
+// void filterTasks(String search) {
+//     final filteredBySearch = search.isEmpty
+//         ? habitlis
+//         : todolist
+//             .where((task) =>
+//                 task.taskName.toLowerCase().contains(search.toLowerCase()))
+//             .toList();
+//     final filteredByCriteria =
+//         filterTasksByCriteria(filteredBySearch, selectedFilter, search);
+
+//     setState(() => filteredTasks = filteredByCriteria);
+//   }
+  TextEditingController textcontroller = TextEditingController();
   Widget build(BuildContext context) {
     getAllHabit();
     width = MediaQuery.of(context).size.width;
@@ -186,103 +223,111 @@ class _TodayScreenState extends State<TodayScreen> {
                                 itemBuilder: (BuildContext context, int index) {
                                   HabitModel data = habitList[index];
                                   return Container(
-                                      width: 200,
-                                      height: 100,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Slidable(
-                                          endActionPane: ActionPane(
-                                              motion: DrawerMotion(),
-                                              children: [
-                                                SlidableAction(
-                                                  onPressed: ((context) => {}),
-                                                  backgroundColor: Colors.white,
-                                                  icon: Icons
-                                                      .favorite_outline_outlined,
-                                                ),
-                                              ]),
-                                          startActionPane: ActionPane(
-                                            motion: StretchMotion(),
+                                    width: 200,
+                                    height: 100,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Slidable(
+                                        endActionPane: ActionPane(
+                                            motion: DrawerMotion(),
                                             children: [
                                               SlidableAction(
-                                                onPressed: ((context) =>
-                                                    {deletehabit(index)}),
-                                                backgroundColor: Colors.red,
-                                                icon: Icons.delete,
-                                              ),
-                                              SlidableAction(
                                                 onPressed: ((context) => {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                              MaterialPageRoute(
-                                                        builder: (ctx) =>
-                                                            UpdateStudent(
-                                                          habit: data.habit,
-                                                          note: data.note,
-                                                          index: index,
-                                                        ),
-                                                      ))
+                                                      addtoregularwork(data),
                                                     }),
                                                 backgroundColor: Colors.white,
-                                                icon: Icons.edit,
-                                              )
-                                            ],
-                                          ),
-                                          child: GestureDetector(
-                                            onLongPress: () {
-                                              setState(() {
-                                                selectedCardIndex = index;
-                                                  isSelected = !isSelected; // Toggle isSelected
-                                              });
-                                            },
-                                          onDoubleTap           : () {
-                                               setState(() {
-                                                selectedCardIndex = -1;
-                                                  color: isSelected ? Colors.blue : Colors.green;
-                                              });  },  
-                                                           child: Card(
-                                                      color: selectedCardIndex == index ? Color.fromARGB(255, 117, 109, 72) : Colors.amber,
-                                                      
-                                                child: SingleChildScrollView(
-                                                  child: ListTile(
-                                                    onTap: () {
-                                                      Navigator.of(context)
-                                                          .push(MaterialPageRoute(
-                                                        builder: (ctx) =>
-                                                            AddedItems(
-                                                          habit: data.habit,
-                                                          note: data.note,
-                                                          //  category: data.category,
-                                                        ),
-                                                      ));
-                                                    },
-                                                    title: Center(
-                                                      child: Text(
-                                                        ' ${data.habit}',
-                                                        style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontStyle:
-                                                              FontStyle.italic,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 23,
-                                                        ),
+                                                icon: Icons
+                                                    .accessibility_new_sharp,
+                                              ),
+                                            ]),
+                                        startActionPane: ActionPane(
+                                          motion: StretchMotion(),
+                                          children: [
+                                            SlidableAction(
+                                              onPressed: ((context) =>
+                                                  {deletehabit(index)}),
+                                              backgroundColor: Colors.red,
+                                              icon: Icons.delete,
+                                            ),
+                                            SlidableAction(
+                                              onPressed: ((context) => {
+                                                    Navigator.of(context)
+                                                        .push(MaterialPageRoute(
+                                                      builder: (ctx) =>
+                                                          UpdateStudent(
+                                                        habit: data.habit,
+                                                        note: data.note,
+                                                        index: index,
                                                       ),
+                                                    ))
+                                                  }),
+                                              backgroundColor: Colors.white,
+                                              icon: Icons.edit,
+                                            )
+                                          ],
+                                        ),
+                                        child: GestureDetector(
+                                          onLongPress: () {
+                                            setState(() {
+                                              selectedCardIndex = index;
+                                              isSelected =
+                                                  !isSelected; // Toggle isSelected
+                                            });
+                                          },
+                                          onDoubleTap: () {
+                                            setState(() {
+                                              selectedCardIndex = -1;
+                                              isSelected
+                                                  ? Colors.blue
+                                                  : Colors.green;
+                                            });
+                                          },
+                                          child: Card(
+                                            color: selectedCardIndex == index
+                                                ? Color.fromARGB(
+                                                    255, 117, 109, 72)
+                                                : Colors.amber,
+                                            child: SingleChildScrollView(
+                                              child: ListTile(
+                                                onTap: () {
+                                                  Navigator.of(context)
+                                                      .push(MaterialPageRoute(
+                                                    builder: (ctx) =>
+                                                        AddedItems(
+                                                      habit: data.habit,
+                                                      note: data.note,
+                                                      // feedback: data.feedback,
+                                                      //  category: data.category,
                                                     ),
-                                                    subtitle: Center(
-                                                      child: Text(
-                                                        ' ${data.note}',
-                                                        style: const TextStyle(
-                                                            color: bggrey),
-                                                      ),
+                                                  ));
+                                                },
+                                                title: Center(
+                                                  child: Text(
+                                                    ' ${data.habit}',
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontStyle:
+                                                          FontStyle.italic,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 23,
                                                     ),
-                                                      ),
+                                                  ),
+                                                ),
+                                                subtitle: Center(
+                                                  child: Text(
+                                                    ' ${data.note}',
+                                                    style: const TextStyle(
+                                                        color: bggrey),
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      );
+                                      ),
+                                    ),
+                                  );
                                 },
                               );
                             },
@@ -308,13 +353,31 @@ class _TodayScreenState extends State<TodayScreen> {
         ),
         backgroundColor: const Color.fromARGB(31, 73, 62, 62),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.search,
+          Padding(
+            padding: const EdgeInsets.only(
+              right: 25,
+              bottom: 10,
+              left: 10,
+              top: 10,
+            ),
+            child: AnimSearchBar(
+              width: 200,
+              textController: textcontroller,
+              onSuffixTap: (value) {
+                setState(() {
+                  _search = value;
+                });
+                searchResult();
+              },
+              onSubmitted: (value) {
+                setState(() {
+                  _search = value;
+                });
+                searchResult(); // This is where you handle the submission action
+              },
               color: Colors.white,
             ),
-          ),
+          )
         ],
       ),
       drawer: Drawer(
@@ -325,9 +388,24 @@ class _TodayScreenState extends State<TodayScreen> {
               const DrawerHeader(
                 decoration: BoxDecoration(),
                 child: Center(
-                  child: Text(
-                    "MYHABIT",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.amber,
+                        radius: 40, // Adjust the radius as per your preference
+                        backgroundImage: AssetImage(
+                            'assets/gym symbol.png'), // Add your asset image path here
+                      ),
+                      SizedBox(
+                          height:
+                              10), // Add some space between the CircleAvatar and Text
+                      Text(
+                        "MYHABIT",
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -387,8 +465,21 @@ class _TodayScreenState extends State<TodayScreen> {
                   );
                 },
               ),
+              ListTile(
+                leading: const Icon(Icons.restart_alt),
+                title: const Text(
+                  "Reset",
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  resethabit(selectedCardIndex);
+                  resetregular(selectedCardIndex);
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => BottomBar(title: "")));
+                },
+              ),
               const SizedBox(
-                height: 250,
+                height: 200,
               ),
               ListTile(
                 trailing: const Icon(Icons.logout_outlined),
@@ -422,7 +513,32 @@ class _TodayScreenState extends State<TodayScreen> {
       (route) => false,
     );
   }
+  // AlertDialog alert(BuildContext context) {
+  //   return AlertDialog(
+  //     title: Text('reset  your values'),
 
+  //     actions: [
+  //       TextButton(
+  //         onPressed: () {
+  //          reset(selectedCardIndex);
+  //           Navigator.of(context).pop();
+  //         },
+  //         child: Text('RESET'),
+  //       ),
+  //       TextButton(
+  //         onPressed: () {
+  //           Navigator.of(context).pop();
+  //         },
+  //         child: Text('CANCEL'),
+  //       ),
+  //     ],
+  //     elevation: 24.0,
+  //     backgroundColor: Colors.amber,
+  //     shape: RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.circular(10),
+  //     ),
+  //   );
+  // }
   bottomsheet(BuildContext context) {
     showModalBottomSheet(
       context: context,

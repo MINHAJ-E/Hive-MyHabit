@@ -4,11 +4,13 @@ class AddedItems extends StatelessWidget {
   final String habit;
   final String note;
   // final String category;
+  // final String feedback;
 
 
   const AddedItems({
     required this .habit,
     required this.note,
+    // required this.feedback,
     // required this.category,
    
   });
@@ -41,9 +43,13 @@ class AddedItems extends StatelessWidget {
                 
               ),
               CardItem(
-                title: 'note',
+                title: 'description',
                 content: note,
               ),
+              // CardItem(
+              //   title: 'feedback',
+              //   content: feedback,
+              // ),
               // CardItem(
               //   title: 'category',
               //   content: category,
