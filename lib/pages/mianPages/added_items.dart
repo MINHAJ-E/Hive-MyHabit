@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 class AddedItems extends StatelessWidget {
   final String habit;
   final String note;
-  // final String category;
-  // final String feedback;
+  final String category;
+  final String feedback;
 
 
   const AddedItems({
     required this .habit,
     required this.note,
-    // required this.feedback,
-    // required this.category,
+    required this.feedback,
+    required this.category,
    
   });
    
@@ -46,14 +46,14 @@ class AddedItems extends StatelessWidget {
                 title: 'description',
                 content: note,
               ),
-              // CardItem(
-              //   title: 'feedback',
-              //   content: feedback,
-              // ),
-              // CardItem(
-              //   title: 'category',
-              //   content: category,
-              // ),
+              CardItem(
+                title: 'feedback',
+                content: feedback,
+              ),
+              CardItem(
+                title: 'category',
+                content: category,
+              ),
              
             ],
           ),

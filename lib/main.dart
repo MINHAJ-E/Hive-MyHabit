@@ -15,7 +15,7 @@ Future<void> main()async{
  if (!Hive.isAdapterRegistered(HabitModelAdapter().typeId)) {
     Hive.registerAdapter(HabitModelAdapter());
   }
-  
+  //  final habitdb = await Hive.openBox<HabitModel>('student_db');
 
   runApp(const MyApp());
 }
@@ -28,7 +28,9 @@ class MyApp extends StatelessWidget {
     return  const MaterialApp(
       debugShowCheckedModeBanner: false,
           title: "MY HABIT",
+
           home: Screensplash(),
+         
     );
   }
 }

@@ -6,7 +6,7 @@ import 'package:my_habit_app/screens/timer_screen.dart';
 import 'package:my_habit_app/screens/today_screen.dart';
 
 class BottomBar extends StatefulWidget {
-  const BottomBar({Key? key, required String title}) : super(key: key);
+  const BottomBar({Key? key}) : super(key: key);
 
   @override
   State<BottomBar> createState() => _BottomBarState();
@@ -22,8 +22,8 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   final List<Widget> _pages = [
-    TodayScreen(title: ''),
-    RegularWork(title: ''),
+    TodayScreen(),
+    RegularWork(),
     HabitChart(),
     TimerScreen(),
   ];

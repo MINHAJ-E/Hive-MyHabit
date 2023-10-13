@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
+import 'package:my_habit_app/screens/introPage/intro_page_1.dart';
+import 'package:my_habit_app/screens/introPage/intro_page_2.dart';
+import 'package:my_habit_app/screens/introPage/intro_page_3.dart';
 import 'package:my_habit_app/screens/logIn_Screens/logIn_screen.dart';
-import 'package:my_habit_app/screens/pages/introPage/intro_page_1.dart';
-import 'package:my_habit_app/screens/pages/introPage/intro_page_2.dart';
-import 'package:my_habit_app/screens/pages/introPage/intro_page_3.dart';
-// import 'package:my_habit_app/screens/introPage/intro_page_1.dart';
-// import 'package:my_habit_app/screens/introPage/intro_page_2.dart';
-// import 'package:my_habit_app/screens/introPage/intro_page_3.dart';
+// import 'package:my_habit_app/screens/pages/introPage/intro_page_1.dart';
+// import 'package:my_habit_app/screens/pages/introPage/intro_page_2.dart';
+// import 'package:my_habit_app/screens/pages/introPage/intro_page_3.dart';
 // import 'package:my_habit_app/bottombar/bottom_bar.dart';
 // import 'package:my_habit_app/introPage/intro_page_1.dart';
 // import 'package:my_habit_app/introPage/intro_page_2.dart';
@@ -35,7 +35,7 @@ class _OnBodyScreenState extends State<OnBodyScreen> {
               onLastPage = (index == 2);
             });
           },
-          children: const [
+          children:  const [
             IntroPage1(),
             IntroPage2(),
             IntroPage3(),

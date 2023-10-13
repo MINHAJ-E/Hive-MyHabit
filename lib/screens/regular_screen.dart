@@ -7,8 +7,8 @@ import 'package:my_habit_app/utils/date_utils.dart' as date_util;
 import 'package:my_habit_app/widgets/calender.dart';
 
 class RegularWork extends StatefulWidget {
-  final String title;
-  const RegularWork({Key? key, required this.title}) : super(key: key);
+  // final String title;
+  const RegularWork({Key? key, }) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -160,6 +160,7 @@ class _MyHomePageState extends State<RegularWork> {
                               }),
                           backgroundColor: Colors.red,
                           icon: Icons.delete,
+                          borderRadius: BorderRadius.circular(20),
                         ),
                       ]),
                       child: Card(

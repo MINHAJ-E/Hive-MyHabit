@@ -6,8 +6,8 @@ import 'package:my_habit_app/bottombar/bottom_bar.dart';
 import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/habit/data_model.dart';
-import 'package:my_habit_app/screens/pages/mianPages/habit_addingpage.dart';
-import 'package:my_habit_app/screens/pages/mianPages/habit_category.dart';
+import 'package:my_habit_app/pages/mianPages/habit_addingpage.dart';
+import 'package:my_habit_app/pages/mianPages/habit_category.dart';
 
 class UpdateStudent extends StatefulWidget {
   final String habit;
@@ -314,14 +314,15 @@ class _UpdateStudentState extends State<UpdateStudent> {
         // isDone: false,
         habit: edited_habit,
         note: edited_note,
-        // feedback: edited_feedback
-        // category: edited_category
+        // startdate: "",
+        feedback: edited_feedback,
+        category: edited_category
 
       );
 
       editList(widget.index, updated);
       Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => BottomBar( title: '')));
+          builder: (context) => BottomBar()));
     }
   }
 }

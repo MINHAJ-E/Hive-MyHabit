@@ -33,11 +33,11 @@ Future<void>editList(index,HabitModel value)async {
  getAllHabit();
  
 }
-// void addCheck(int id,HabitModel data) async {
-//   final habitdb = await Hive.openBox<HabitModel>('student_db');
-//   await habitdb.putAt(id,data);
-//   getAllHabit();
-// }
+void addCheck(int id,HabitModel data) async {
+  final habitdb = await Hive.openBox<HabitModel>('student_db');
+  await habitdb.putAt(id,data);
+  getAllHabit();
+}
 addtoregularwork(HabitModel data) async {
   final favDB = await Hive.openBox<HabitModel>('fav_db');
   if (!regularwork.contains(data)) {
@@ -66,3 +66,8 @@ final favDB = await Hive.openBox<HabitModel>('fav_db');
 favDB.clear();
 getallregularwork();
 }
+// addDateToHive(DateTime date) async {
+//   var datedb = await Hive.openBox<HabitModel>('dates');
+//   await datedb.add(date as HabitModel);
+// }
+

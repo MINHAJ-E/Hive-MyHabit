@@ -5,16 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
 import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
+import 'package:my_habit_app/helpers/colors.dart';
+import 'package:my_habit_app/helpers/colors.dart';
+import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/habit/data_model.dart';
-import 'package:my_habit_app/screens/pages/drawerPages/about.dart';
-import 'package:my_habit_app/screens/pages/drawerPages/contact_us.dart';
-import 'package:my_habit_app/screens/pages/drawerPages/privacy_policy.dart';
+import 'package:my_habit_app/pages/drawerPages/about.dart';
+import 'package:my_habit_app/pages/drawerPages/contact_us.dart';
+import 'package:my_habit_app/pages/drawerPages/privacy_policy.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/screens/logIn_Screens/app_firstscreen.dart';
-import 'package:my_habit_app/screens/pages/edited_habit.dart';
-import 'package:my_habit_app/screens/pages/mianPages/added_items.dart';
-import 'package:my_habit_app/screens/pages/mianPages/habit_addingpage.dart';
-import 'package:my_habit_app/screens/pages/search.dart';
+import 'package:my_habit_app/pages/edited_habit.dart';
+import 'package:my_habit_app/pages/mianPages/added_items.dart';
+import 'package:my_habit_app/pages/mianPages/habit_addingpage.dart';
+import 'package:my_habit_app/pages/search.dart';
 // import 'package:my_habit_app/logIn_Screens/logIn_screen.dart';
 // import 'package:my_habit_app/screens/pages/taskAddingPage.dart';
 import 'package:my_habit_app/utils/colors_utils.dart';
@@ -22,9 +25,9 @@ import 'package:my_habit_app/utils/date_utils.dart' as date_util;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TodayScreen extends StatefulWidget {
-  final String title;
+  // final String title;
 
-  TodayScreen({Key? key, required this.title}) : super(key: key);
+  TodayScreen({Key? key, required}) : super(key: key);
   @override
   State<TodayScreen> createState() => _TodayScreenState();
 }
@@ -45,9 +48,21 @@ class _TodayScreenState extends State<TodayScreen> {
     currentMonthList = currentMonthList.toSet().toList();
     scrollController =
         ScrollController(initialScrollOffset: 70.0 * currentDateTime.day);
+          getAllHabit();
+    searchedlist = habitListnotifier.value;
     super.initState();
   }
+ String _search = '';
+  List<HabitModel> searchedlist = [];
 
+ void searchResult() {
+  setState(() {
+    searchedlist = habitListnotifier.value
+        .where((incomingModel) =>
+            incomingModel.habit.toLowerCase().contains(_search.toLowerCase()))
+        .toList();
+  });
+}
 //title view
   Widget titleView() {
     return Padding(
@@ -160,40 +175,16 @@ class _TodayScreenState extends State<TodayScreen> {
   }
 
   int selectedCardIndex = -1;
-  String _search = '';
-  List<HabitModel> searchedlist = [];
-
-  void searchResult() {
-    setState(() {
-      void searchResult() {
-        setState(() {
-          searchedlist = habitListnotifier.value
-              .where((incomigModel) => incomigModel.habit
-                  .toLowerCase()
-                  .contains(_search.toLowerCase()))
-              .toList();
-        });
-      }
-    });
-  }
-
-// void filterTasks(String search) {
-//     final filteredBySearch = search.isEmpty
-//         ? habitlis
-//         : todolist
-//             .where((task) =>
-//                 task.taskName.toLowerCase().contains(search.toLowerCase()))
-//             .toList();
-//     final filteredByCriteria =
-//         filterTasksByCriteria(filteredBySearch, selectedFilter, search);
-
-//     setState(() => filteredTasks = filteredByCriteria);
-//   }
+ 
+ 
   TextEditingController textcontroller = TextEditingController();
+ 
   Widget build(BuildContext context) {
-    getAllHabit();
+ 
+
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+     
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -205,23 +196,64 @@ class _TodayScreenState extends State<TodayScreen> {
               // Wrap your Column with Expanded to make it scrollable
               child: SingleChildScrollView(
                 child: Column(
+                  
                   children: [
+                    Padding(
+              padding: const EdgeInsets.only(left: 15, top: 5),
+              child: Row(
+                children: [
+                  Container(
+                    height: 40,
+                    width: 260,
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'search...',
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _search = value;
+                          });
+                          searchResult();
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        bottomsheet(context);
+                      },
+                      backgroundColor: Colors.amber,
+                      mini: true,
+                      child: const Icon(Icons.add),
+                    ),
+                  ),
+                ],
+              ),
+            ),
                     Container(
-                      height: height * 0.8,
+                         height: 440,
                       child: Builder(
                         builder: (context) {
                           return ValueListenableBuilder<List<HabitModel>>(
                             valueListenable: habitListnotifier,
-                            builder: (BuildContext ctx,
-                                List<HabitModel> habitList, Widget? child) {
-                              return ListView.separated(
+                            builder: (BuildContext ctx,List<HabitModel> habitList, Widget? child) {
+                              return ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: habitList.length,
-                                separatorBuilder:
-                                    (BuildContext context, int index) =>
-                                        const SizedBox(height: 0),
+                                itemCount: searchedlist.length,
+                                // separatorBuilder:
+                                //     (BuildContext context, int index) =>
+                                //         const SizedBox(height: 0),
                                 itemBuilder: (BuildContext context, int index) {
-                                  HabitModel data = habitList[index];
+                                  HabitModel data = searchedlist[index];
                                   return Container(
                                     width: 200,
                                     height: 100,
@@ -229,25 +261,27 @@ class _TodayScreenState extends State<TodayScreen> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Slidable(
                                         endActionPane: ActionPane(
-                                            motion: DrawerMotion(),
+                                            motion: const DrawerMotion(),
                                             children: [
                                               SlidableAction(
                                                 onPressed: ((context) => {
                                                       addtoregularwork(data),
                                                     }),
-                                                backgroundColor: Colors.white,
+                                                backgroundColor: Colors.white70,
                                                 icon: Icons
                                                     .accessibility_new_sharp,
+                                                    borderRadius: BorderRadius.circular(20),
                                               ),
                                             ]),
                                         startActionPane: ActionPane(
-                                          motion: StretchMotion(),
+                                          motion: const StretchMotion(),
                                           children: [
                                             SlidableAction(
                                               onPressed: ((context) =>
                                                   {deletehabit(index)}),
                                               backgroundColor: Colors.red,
                                               icon: Icons.delete,
+                                              borderRadius: BorderRadius.circular(20),
                                             ),
                                             SlidableAction(
                                               onPressed: ((context) => {
@@ -262,6 +296,7 @@ class _TodayScreenState extends State<TodayScreen> {
                                                     ))
                                                   }),
                                               backgroundColor: Colors.white,
+                                              borderRadius: BorderRadius.circular(20),
                                               icon: Icons.edit,
                                             )
                                           ],
@@ -284,7 +319,7 @@ class _TodayScreenState extends State<TodayScreen> {
                                           },
                                           child: Card(
                                             color: selectedCardIndex == index
-                                                ? Color.fromARGB(
+                                                ? const Color.fromARGB(
                                                     255, 117, 109, 72)
                                                 : Colors.amber,
                                             child: SingleChildScrollView(
@@ -296,8 +331,8 @@ class _TodayScreenState extends State<TodayScreen> {
                                                         AddedItems(
                                                       habit: data.habit,
                                                       note: data.note,
-                                                      // feedback: data.feedback,
-                                                      //  category: data.category,
+                                                      feedback: data.feedback,
+                                                       category: data.category,
                                                     ),
                                                   ));
                                                 },
@@ -344,6 +379,7 @@ class _TodayScreenState extends State<TodayScreen> {
       ),
       backgroundColor: bggrey,
       appBar: AppBar(
+        toolbarHeight: 70,
         title: const Text(
           "Today",
           style: TextStyle(
@@ -352,33 +388,36 @@ class _TodayScreenState extends State<TodayScreen> {
           ),
         ),
         backgroundColor: const Color.fromARGB(31, 73, 62, 62),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(
-              right: 25,
-              bottom: 10,
-              left: 10,
-              top: 10,
-            ),
-            child: AnimSearchBar(
-              width: 200,
-              textController: textcontroller,
-              onSuffixTap: (value) {
-                setState(() {
-                  _search = value;
-                });
-                searchResult();
-              },
-              onSubmitted: (value) {
-                setState(() {
-                  _search = value;
-                });
-                searchResult(); // This is where you handle the submission action
-              },
-              color: Colors.white,
-            ),
-          )
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.only(
+        //       right: 25,
+        //       bottom: 10,
+        //       left: 10,
+        //       top: 10,
+        //     ),
+        //     child: AnimSearchBar(
+        //       textFieldColor: const Color.fromARGB(255, 46, 45, 42),
+        //       searchIconColor: Colors.black,
+        //       textFieldIconColor: Colors.amber,
+        //       width: 200,
+        //       textController: textcontroller,
+        //       onSuffixTap: (value) {
+        //         setState(() {
+        //           _search = value;
+        //         });
+        //         searchResult();
+        //       },
+        //       onSubmitted: (value) {
+        //         setState(() {
+        //           _search = value;
+        //         });
+        //         searchResult(); // This is where you handle the submission action
+        //       },
+        //       color: Colors.white,
+        //     ),
+        //   )
+        // ],
       ),
       drawer: Drawer(
         child: Container(
@@ -418,7 +457,7 @@ class _TodayScreenState extends State<TodayScreen> {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => const BottomBar(
-                      title: '',
+                     
                     ),
                   ));
                 },
@@ -475,7 +514,7 @@ class _TodayScreenState extends State<TodayScreen> {
                   resethabit(selectedCardIndex);
                   resetregular(selectedCardIndex);
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) => BottomBar(title: "")));
+                      builder: (ctx) => const BottomBar()));
                 },
               ),
               const SizedBox(
@@ -495,13 +534,7 @@ class _TodayScreenState extends State<TodayScreen> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          bottomsheet(context);
-        },
-        backgroundColor: Colors.amber,
-        child: const Icon(Icons.add),
-      ),
+  
     );
   }
 

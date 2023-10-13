@@ -19,18 +19,24 @@ class HabitModelAdapter extends TypeAdapter<HabitModel> {
     return HabitModel(
       habit: fields[0] as String,
       note: fields[1] as String,
-    )..id = fields[3] as int?;
+      category: fields[2] as String,
+      feedback: fields[3] as String,
+    )..id = fields[4] as int?;
   }
 
   @override
   void write(BinaryWriter writer, HabitModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.habit)
       ..writeByte(1)
       ..write(obj.note)
+      ..writeByte(2)
+      ..write(obj.category)
       ..writeByte(3)
+      ..write(obj.feedback)
+      ..writeByte(4)
       ..write(obj.id);
   }
 

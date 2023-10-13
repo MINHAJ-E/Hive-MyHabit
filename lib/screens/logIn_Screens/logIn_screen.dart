@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/main.dart';
+import 'package:my_habit_app/screens/introPage/onBodyScreens/onBody_Screens.dart';
 import 'package:my_habit_app/screens/today_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -101,7 +102,9 @@ class ScreenLogin extends StatelessWidget {
                       },
                       
                       icon: Icon(Icons.check),
-                      label: Text("Log in"),style: ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.amber)),),
+                      label: Text("Log in"),style: ButtonStyle(
+                        backgroundColor:MaterialStatePropertyAll(Colors.amber)
+                        ),),
                       
                 ],
               ),
@@ -120,7 +123,7 @@ class ScreenLogin extends StatelessWidget {
       await _sharedpref.setBool(SAVE_KEY_NAME, true);
 
       Navigator.of(ctx)
-          .pushReplacement(MaterialPageRoute(builder: (ctx1) => BottomBar(title: '',)));
+          .pushReplacement(MaterialPageRoute(builder: (ctx1) => BottomBar()));
    
       // ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
       //     margin: EdgeInsets.all(10),

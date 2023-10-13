@@ -11,14 +11,14 @@ class TimerScreen extends StatefulWidget {
 }
 
 class _TimerScreenState extends State<TimerScreen> {
-
   late Timer _timer;
   bool _isActive = false;
   DateTime _startTime = DateTime.now();
 
   String getFormattedTime() {
     Duration difference = DateTime.now().difference(_startTime);
-    int seconds = difference.inSeconds;
+    int milliseconds = difference.inMilliseconds;
+    int seconds = (milliseconds / 1000).truncate();
     int minutes = (seconds / 60).truncate();
     int hours = (minutes / 60).truncate();
 
@@ -31,7 +31,7 @@ class _TimerScreenState extends State<TimerScreen> {
   void _startTimer() {
     _isActive = true;
     _startTime = DateTime.now();
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
       setState(() {});
     });
   }
@@ -42,66 +42,74 @@ class _TimerScreenState extends State<TimerScreen> {
   }
 
   void _resetTimer() {
-    _isActive = false;
-    _timer.cancel();
+    _startTime = DateTime.now();
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel(); // cancel the timer when the widget is disposed
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       backgroundColor: bggrey,
       appBar: AppBar(
         backgroundColor: Colors.amber,
         title: const Text('Timer'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              getFormattedTime(),
-              style: const TextStyle(
-                  fontSize: 64.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.amber),
-            ),
-            const SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: _isActive ? null : _startTimer,
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.amber, // Set your primary color here
+      body: Container(
+        decoration: BoxDecoration(  
+           image: DecorationImage(
+              image: AssetImage('assetsfoottball2.jpg'), // Replace with your own image path
+              fit: BoxFit.cover,
+        ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                getFormattedTime(),
+                style: const TextStyle(
+                    fontSize: 64.0,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 14, 179, 49)),
+              ),
+              const SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ElevatedButton(
+                    onPressed: _isActive ? null : _startTimer,
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red, // Set your primary color here
+                    ),
+                    child: const Text('Start', style: TextStyle(fontSize: 18.0)),
                   ),
-                  child: const Text('Start', style: TextStyle(fontSize: 18.0)),
-                ),
-                const SizedBox(width: 20),
-                ElevatedButton(
-                  onPressed: _isActive ? _stopTimer : null,style: ElevatedButton.styleFrom(
-                    primary: Colors.amber, // Set your primary color here
+                  const SizedBox(width: 20),
+                  ElevatedButton(
+                    onPressed: _isActive ? _stopTimer : null,style: ElevatedButton.styleFrom(
+                      primary: Colors.green, // Set your primary color here
+                    ),
+                    child: const Text('Stop', style: TextStyle(fontSize: 18.0)),
                   ),
-                  child: const Text('Stop', style: TextStyle(fontSize: 18.0)),
-                ),
-                const SizedBox(width: 20),
-                ElevatedButton(
-                  onPressed: _resetTimer,style: ElevatedButton.styleFrom(
-                    primary: Colors.amber, // Set your primary color here
+                  const SizedBox(width: 20),
+                  ElevatedButton(
+                    onPressed: _resetTimer,style: ElevatedButton.styleFrom(
+                      primary: Colors.lightBlueAccent // Set your primary color here
+                    ),
+                    child: const Text('Reset', style: TextStyle(fontSize: 18.0)),
                   ),
-                  child: const Text('Reset', style: TextStyle(fontSize: 18.0)),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
-  }
-   
-  @override
-  void dispose() {
-    _timer.cancel(); // cancel the timer when the widget is disposed
-    super.dispose();
   }
 }

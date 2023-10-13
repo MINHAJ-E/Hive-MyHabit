@@ -57,7 +57,7 @@ class _ScreensplashState extends State<Screensplash> {
       gotoLogin();
     } else {
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (ctx1) => BottomBar(title: "")));
+          .pushReplacement(MaterialPageRoute(builder: (ctx1) => BottomBar()));
     }
   }
 }
