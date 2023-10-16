@@ -4,11 +4,13 @@ import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart'
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/utils/colors_utils.dart';
 import 'package:my_habit_app/utils/date_utils.dart' as date_util;
-import 'package:my_habit_app/widgets/calender.dart';
+// import 'package:my_habit_app/widgets/calender.dart';
 
 class RegularWork extends StatefulWidget {
   // final String title;
-  const RegularWork({Key? key, }) : super(key: key);
+  const RegularWork({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -25,12 +27,15 @@ class _MyHomePageState extends State<RegularWork> {
 
   @override
   void initState() {
+      getallregularwork();
     currentMonthList = date_util.DateUtils.daysInMonth(currentDateTime);
     currentMonthList.sort((a, b) => a.day.compareTo(b.day));
     currentMonthList = currentMonthList.toSet().toList();
     scrollController =
         ScrollController(initialScrollOffset: 70.0 * currentDateTime.day);
+        
     super.initState();
+   
   }
 
   Widget titleView() {
@@ -133,7 +138,7 @@ class _MyHomePageState extends State<RegularWork> {
 
   @override
   Widget build(BuildContext context) {
-    getallregularwork();
+   
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -146,27 +151,31 @@ class _MyHomePageState extends State<RegularWork> {
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 final data = regularwork[index];
-                return Container(
-                  width: 200,
-                  height: 100,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Slidable(
-                      startActionPane:
-                          ActionPane(motion: DrawerMotion(), children: [
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Slidable(
+                    startActionPane: ActionPane(
+                      motion: DrawerMotion(),
+                      children: [
                         SlidableAction(
-                          onPressed: ((context) => {
-                               deleteregularwork(index),
-                              }),
+                          onPressed: (context) {
+                            setState(() {
+                              // Assuming deleteregularwork is an asynchronous function
+                              // Make sure it's defined correctly
+                              deleteregularwork(index);
+                            });
+                          },
                           backgroundColor: Colors.red,
                           icon: Icons.delete,
                           borderRadius: BorderRadius.circular(20),
                         ),
-                      ]),
-                      child: Card(
-                        color: Colors.amber,
-                        child: ListTile(
-                          title: Text(
+                      ],
+                    ),
+                    child: Card(
+                      color: Colors.amber,
+                      child: ListTile(
+                        title: Center(
+                          child: Text(
                             data.habit,
                             style: const TextStyle(
                               fontStyle: FontStyle.italic,
@@ -175,7 +184,9 @@ class _MyHomePageState extends State<RegularWork> {
                               fontSize: 26,
                             ),
                           ),
-                          subtitle: Text(
+                        ),
+                        subtitle: Center(
+                          child: Text(
                             data.note,
                             style: const TextStyle(
                               fontStyle: FontStyle.italic,
@@ -183,6 +194,16 @@ class _MyHomePageState extends State<RegularWork> {
                               fontSize: 16,
                             ),
                           ),
+                        ),
+                        trailing: Checkbox(
+                          value: data.taskcomplete,
+                          onChanged: (newvalue) {
+                            setState(() {
+                              data.taskcomplete = newvalue!;
+                            });
+
+                            addCheckregular(index, data); 
+                          },
                         ),
                       ),
                     ),

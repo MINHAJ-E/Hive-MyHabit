@@ -18,8 +18,11 @@ class _HabitAddingState extends State<HabitAdding> {
   TextEditingController _habitAddController = TextEditingController();
   TextEditingController _habitNoteController = TextEditingController();
   TextEditingController _habitfeedbackController = TextEditingController();
+  TextEditingController _startdateController = TextEditingController();
+  TextEditingController _enddateController = TextEditingController();
 
-  DateTime _dateTime = DateTime.now();
+  DateTime _startdateTime = DateTime.now();
+  DateTime _enddateTime = DateTime.now();
 
   void _showDatePickerStart() {
     showDatePicker(
@@ -29,7 +32,8 @@ class _HabitAddingState extends State<HabitAdding> {
             lastDate: DateTime(2025))
         .then((value) {
       setState(() {
-        _dateTime = value!;
+        _startdateTime = value!;
+        _startdateController.text=formattDate(value);
       });
     });
   }
@@ -42,11 +46,14 @@ class _HabitAddingState extends State<HabitAdding> {
             lastDate: DateTime(2025))
         .then((value) {
       setState(() {
-        _dateTime = value!;
+        _enddateTime = value!;
+        _enddateController.text=formattDate(value);
       });
     });
   }
-
+  String formattDate(DateTime date) {
+    return DateFormat('dd/MM/yyyy').format(date);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +94,7 @@ class _HabitAddingState extends State<HabitAdding> {
                 child: Column(
                   children: [
                     Container(
-                      height: 80,
+                      height: 60,
                       width: 320,
                       decoration: BoxDecoration(
                         color: Colors.amber,
@@ -105,10 +112,10 @@ class _HabitAddingState extends State<HabitAdding> {
                       ),
                     ),
                     const SizedBox(
-                      height: 40,
+                      height: 25,
                     ),
                     Container(
-                      height: 80,
+                      height: 55,
                       width: 320,
                       decoration: BoxDecoration(
                         color: Colors.amber,
@@ -126,159 +133,195 @@ class _HabitAddingState extends State<HabitAdding> {
                       ),
                     ),
                     const SizedBox(
-                      height: 40,
+                      height: 20,
                     ),
-                    // Container(
-                    //   height: 80,
-                    //   width: 320,
-                    //   decoration: BoxDecoration(
-                    //     color: const Color.fromARGB(255, 37, 37, 34),
-                    //     borderRadius: BorderRadius.circular(5),
-                    //   ),
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.all(15.0),
-                    //     child: TextFormField(
-                    //       // controller: _habitfeedbackController,
-                    //       decoration:  InputDecoration(
-                    //         border: InputBorder.none,
-                    //         suffixIcon: IconButton(
-                    //           icon: const Icon(Icons.calendar_month),
-                    //           onPressed: () {
-                    //             _formattDate(
-                    //                 _dateTime); // Changed comma to semicolon here
-                    //           },
-                    //         ),
-                    //         hintText: 'Starting date',
-                    //         hintStyle: TextStyle(color: Colors.white),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+                    Container(
+                      height: 55,
+                      width: 320,
+                    
+                      decoration: BoxDecoration(
+                        color:  Colors.amber,
+                        borderRadius: BorderRadius.circular(30),
+                         
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: TextFormField(
+                          controller: _startdateController,
+                          
+                          decoration:  InputDecoration(
+                            border: InputBorder.none,
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.calendar_month),
+                              onPressed: () {
+                              _showDatePickerStart(); // Changed comma to semicolon here
+                              },
+                            ),
+                            hintText: 'Starting date',
+                            hintStyle: const TextStyle(color: Colors.white),
+                            
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20,),
+                    Container(
+                      height: 55,
+                      width: 320,
+                    
+                      decoration: BoxDecoration(
+                        color:  Colors.amber,
+                        borderRadius: BorderRadius.circular(30),
+                         
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: TextFormField(
+                          controller: _enddateController,
+                          
+                          decoration:  InputDecoration(
+                            border: InputBorder.none,
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.calendar_month),
+                              onPressed: () {
+                              _showDatePickerEnd(); // Changed comma to semicolon here
+                              },
+                            ),
+                            hintText: 'End date',
+                            hintStyle: const TextStyle(color: Colors.white),
+                            
+                          ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              const Text(
-                                "Start date : ",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                _formattDate(_dateTime), // Format date here
-                                style: const TextStyle(
-                                    fontSize: 20, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            child: Container(
-                              height: 30,
-                              width: 55,
-                              decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.calendar_today,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            onTap: () {
-                              _showDatePickerEnd();
-                            },
-                          ),
-                        ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Padding(
+                    //       padding: const EdgeInsets.all(8.0),
+                    //       child: Row(
+                    //         children: [
+                    //           const Text(
+                    //             "Start date : ",
+                    //             style: TextStyle(
+                    //                 color: Colors.white,
+                    //                 fontSize: 20,
+                    //                 fontWeight: FontWeight.bold),
+                    //           ),
+                    //           Text(
+                    //             _formattDate(_dateTime), // Format date here
+                    //             style: const TextStyle(
+                    //                 fontSize: 20, color: Colors.white),
+                    //           ),
+                    //         ],
+                    //       ),
+                    // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: GestureDetector(
+                        //     child: Container(
+                        //       height: 30,
+                        //       width: 55,
+                        //       decoration: BoxDecoration(
+                        //         color: Colors.amber,
+                        //         borderRadius: BorderRadius.circular(5),
+                        //       ),
+                        //       child: const Center(
+                        //         child: Icon(
+                        //           Icons.calendar_today,
+                        //           color: Colors.black,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     onTap: () {
+                        //       _showDatePickerEnd();
+                        //     },
+                        //   ),
+                        // ),
                       ],
                     ),
+                    // const Divider(
+                      // color: Colors.black,
+                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Padding(
+                    //       padding: const EdgeInsets.all(8.0),
+                    //       child: Row(
+                    //         children: [
+                    //           const Text(
+                    //             "End date  : ",
+                    //             style: TextStyle(
+                    //                 color: Colors.white,
+                    //                 fontSize: 20,
+                    //                 fontWeight: FontWeight.bold),
+                    //           ),
+                    //           Text(
+                    //             formattDate(_dateTime), // Format date here
+                    //             style: const TextStyle(
+                    //                 fontSize: 20, color: Colors.white),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //     Padding(
+                    //       padding: const EdgeInsets.all(8.0),
+                    //       child: GestureDetector(
+                    //         child: Container(
+                    //           height: 30,
+                    //           width: 55,
+                    //           decoration: BoxDecoration(
+                    //             color: Colors.amber,
+                    //             borderRadius: BorderRadius.circular(5),
+                    //           ),
+                    //           child: const Center(
+                    //             child: Icon(
+                    //               Icons.calendar_today,
+                    //               color: Colors.black,
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         onTap: () {
+                    //           _showDatePickerEnd();
+                    //         },
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     const Divider(
                       color: Colors.black,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              const Text(
-                                "End date  : ",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                _formattDate(_dateTime), // Format date here
-                                style: const TextStyle(
-                                    fontSize: 20, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
+                         const Padding(
+                           padding: EdgeInsets.only(left: 30),
+                           child: Text(
+                             "Add category",
+                             style: TextStyle(
+                                 fontSize: 25,
+                                 color: Colors.white,
+                                 fontWeight: FontWeight.bold),
+                           ),
+                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: GestureDetector(
-                            child: Container(
-                              height: 30,
-                              width: 55,
-                              decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.calendar_today,
-                                  color: Colors.black,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: Container(
+                                height: 30,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                  color: Colors.amber,
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
+                                child: const Center(child: Text("category")),
                               ),
-                            ),
-                            onTap: () {
-                              _showDatePickerEnd();
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Divider(
-                      color: Colors.black,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "Add category",
-                            style: TextStyle(
-                                fontSize: 25,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            child: Container(
-                              height: 30,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: const Center(child: Text("category")),
                             ),
                             onTap: () {
                               showDialog(
@@ -297,7 +340,7 @@ class _HabitAddingState extends State<HabitAdding> {
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          // saved();
+                          
                           onAddHabitButtonClicked();
                         });
 
@@ -311,19 +354,18 @@ class _HabitAddingState extends State<HabitAdding> {
                   ],
                 ),
               ),
-            ],
-          ),
-        ));
+  
+          );
+        
   }
 
-  String _formattDate(DateTime date) {
-    return DateFormat('MM/dd/yyyy').format(date);
-  }
+
 
  Future<void> onAddHabitButtonClicked() async {
   final _habit = _habitAddController.text.trim();
   final _note = _habitNoteController.text.trim();
-  // final _startdate = _dateTime;
+  final _startdate = _startdateTime;
+  final _enddate = _enddateTime;
   final _category = _habitNoteController.text.trim();
   final _feedback = _habitfeedbackController.text.trim();
 
@@ -331,7 +373,8 @@ class _HabitAddingState extends State<HabitAdding> {
    _note.isEmpty ||
    _category.isEmpty ||
     _feedback.isEmpty 
-    //  _startdate.isBefore(_dateTime)
+    //  _startdate.isAfter(_dateTime)||
+    //  _enddate.isBefore(_dateTime)
      ) {
     return;
   }
@@ -339,10 +382,12 @@ class _HabitAddingState extends State<HabitAdding> {
   final habitt = HabitModel(
     habit: _habit, 
     note: _note, 
-  //   startdate: _formattDate(_startdate),
+    startdate: formattDate(_startdate),
+    enddate:formattDate(_enddate),
     feedback: _feedback,
     category: _category,
-  );
+    taskcomplete:false,
+    date: DateTime.now() );
   
   addhabit(habitt);
 

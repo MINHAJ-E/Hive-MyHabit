@@ -10,7 +10,8 @@ class AboutPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: bggrey,
         appBar: AppBar(
-          backgroundColor: bggreyisue,
+          // backgroundColor: bggreyisue,
+          backgroundColor: Colors.amber,
           // backgroundColor: themeManager.primaryColor,
           title: Text('About'),
         ),

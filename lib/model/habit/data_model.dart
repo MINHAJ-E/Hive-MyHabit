@@ -15,14 +15,30 @@ class HabitModel {
   @HiveField(3)
   final String feedback;
 
-
   @HiveField(4)
+  late bool taskcomplete;
+
+  @HiveField(5)
+  final String startdate;
+
+  @HiveField(6)
+  final String enddate;
+ 
+ @HiveField(7)
+ final DateTime date;
+
+  @HiveField(8)
   int? id;
 
 
-  HabitModel({required this.habit, required this.note,
+  HabitModel({required this.habit, 
+  required this.note,
   required this.category,
-  required this.feedback
+  required this.feedback,
+  required this.taskcomplete,
+  required this.startdate,
+  required this.enddate,
+  required this.date,
   });
 }
 

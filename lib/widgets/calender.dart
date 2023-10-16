@@ -132,4 +132,35 @@ class _CalenderState extends State<Calender> {
       body: topView(),
     );
   }
+    // child: GestureDetector(
+   // onLongPress: () {
+                                          //   setState(() {
+                                          //     selectedCardIndex = index;
+                                          //     isSelected =
+                                          //         !isSelected; // Toggle isSelected
+                                          //   });
+                                          // },
+                                          // onDoubleTap: () {
+                                          //   setState(() {
+                                          //     selectedCardIndex = -1;
+                                          //     isSelected
+                                          //         ? Colors.blue
+                                          //         : Colors.green;
+                                          //   });
+                                          // },
+                                          // child: Card(
+                                            // color: selectedCardIndex == index
+                                            //     ? const Color.fromARGB(
+                                            //         255, 117, 109, 72)
+                                            //     : Colors.amber,
 }
+  // bool? isDone = false;
+  // // Color _cardColor = Colors.red;
+  // bool isLongPressed = false;
+  // bool isSelected = false;
+
+  // // void _changeColor() {
+  // //   setState(() {
+  // //     _cardColor = Colors.blue;
+  // //   });
+  // // }

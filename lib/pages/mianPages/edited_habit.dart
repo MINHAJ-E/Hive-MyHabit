@@ -312,11 +312,14 @@ class _UpdateStudentState extends State<UpdateStudent> {
     } else {
       final updated = HabitModel(
         // isDone: false,
+        taskcomplete: false,
         habit: edited_habit,
         note: edited_note,
-        // startdate: "",
+        startdate: "HI",
+        enddate: "HI",
         feedback: edited_feedback,
-        category: edited_category
+        category: edited_category,
+        date: DateTime.now(),
 
       );
 

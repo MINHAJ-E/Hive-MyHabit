@@ -45,6 +45,7 @@ addtoregularwork(HabitModel data) async {
     favDB.add(data);
   }
 }
+
 getallregularwork() async {
   final favDB = await Hive.openBox<HabitModel>('fav_db');
   regularwork.clear();
@@ -54,6 +55,11 @@ deleteregularwork(int id) async {
   final favDB = await Hive.openBox<HabitModel>('fav_db');
   favDB.deleteAt(id);
   regularwork.removeAt(id);
+  getallregularwork();
+}
+void addCheckregular(int id,HabitModel data) async {
+  final favDB = await Hive.openBox<HabitModel>('fav_db');
+  await favDB.putAt(id,data);
   getallregularwork();
 }
 resethabit(int id)async{
