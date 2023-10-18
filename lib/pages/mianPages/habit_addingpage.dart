@@ -127,7 +127,7 @@ class _HabitAddingState extends State<HabitAdding> {
                           controller: _habitfeedbackController,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'give small feedback',
+                            hintText: 'you can give Emoji related to your habit',
                           ),
                         ),
                       ),
@@ -197,101 +197,13 @@ class _HabitAddingState extends State<HabitAdding> {
                     const SizedBox(
                       height: 10,
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Padding(
-                    //       padding: const EdgeInsets.all(8.0),
-                    //       child: Row(
-                    //         children: [
-                    //           const Text(
-                    //             "Start date : ",
-                    //             style: TextStyle(
-                    //                 color: Colors.white,
-                    //                 fontSize: 20,
-                    //                 fontWeight: FontWeight.bold),
-                    //           ),
-                    //           Text(
-                    //             _formattDate(_dateTime), // Format date here
-                    //             style: const TextStyle(
-                    //                 fontSize: 20, color: Colors.white),
-                    //           ),
-                    //         ],
-                    //       ),
-                    // ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: GestureDetector(
-                        //     child: Container(
-                        //       height: 30,
-                        //       width: 55,
-                        //       decoration: BoxDecoration(
-                        //         color: Colors.amber,
-                        //         borderRadius: BorderRadius.circular(5),
-                        //       ),
-                        //       child: const Center(
-                        //         child: Icon(
-                        //           Icons.calendar_today,
-                        //           color: Colors.black,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //     onTap: () {
-                        //       _showDatePickerEnd();
-                        //     },
-                        //   ),
-                        // ),
+               
                       ],
                     ),
                     // const Divider(
                       // color: Colors.black,
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Padding(
-                    //       padding: const EdgeInsets.all(8.0),
-                    //       child: Row(
-                    //         children: [
-                    //           const Text(
-                    //             "End date  : ",
-                    //             style: TextStyle(
-                    //                 color: Colors.white,
-                    //                 fontSize: 20,
-                    //                 fontWeight: FontWeight.bold),
-                    //           ),
-                    //           Text(
-                    //             formattDate(_dateTime), // Format date here
-                    //             style: const TextStyle(
-                    //                 fontSize: 20, color: Colors.white),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ),
-                    //     Padding(
-                    //       padding: const EdgeInsets.all(8.0),
-                    //       child: GestureDetector(
-                    //         child: Container(
-                    //           height: 30,
-                    //           width: 55,
-                    //           decoration: BoxDecoration(
-                    //             color: Colors.amber,
-                    //             borderRadius: BorderRadius.circular(5),
-                    //           ),
-                    //           child: const Center(
-                    //             child: Icon(
-                    //               Icons.calendar_today,
-                    //               color: Colors.black,
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         onTap: () {
-                    //           _showDatePickerEnd();
-                    //         },
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
+                  
                     const Divider(
                       color: Colors.black,
                     ),
@@ -387,13 +299,24 @@ class _HabitAddingState extends State<HabitAdding> {
     feedback: _feedback,
     category: _category,
     taskcomplete:false,
-    date: DateTime.now() );
+    date: DateTime.now(),
+    isregular: false,
+  
+     );
   
   addhabit(habitt);
 
   setState(() {});
 
   Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const BottomBar()));
+     ScaffoldMessenger.of(context).showSnackBar(
+     const SnackBar(
+       margin: EdgeInsets.all(10),
+            backgroundColor: Colors.red,
+    behavior: SnackBarBehavior.floating,
+     content: Text("Your HAbIT is added ..."),
+      ),
+  );
 }
 
 

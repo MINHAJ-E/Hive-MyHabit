@@ -22,7 +22,10 @@ class _DrawerState extends State<Drawerrr> {
   @override
   Widget build(BuildContext context) {
     return Container(
-          color: Colors.amber,
+      width: 300,
+      height: 650,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.amber,),
+          
           child: ListView(
             children: [
               const DrawerHeader(
@@ -114,7 +117,7 @@ class _DrawerState extends State<Drawerrr> {
                 },
               ),
               const SizedBox(
-                height: 200,
+                height: 100,
               ),
               ListTile(
                 trailing: const Icon(Icons.logout_outlined),

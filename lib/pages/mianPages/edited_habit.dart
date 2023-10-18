@@ -320,6 +320,7 @@ class _UpdateStudentState extends State<UpdateStudent> {
         feedback: edited_feedback,
         category: edited_category,
         date: DateTime.now(),
+        isregular: false
 
       );
 

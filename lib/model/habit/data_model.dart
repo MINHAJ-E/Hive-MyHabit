@@ -26,8 +26,14 @@ class HabitModel {
  
  @HiveField(7)
  final DateTime date;
+ 
+ @HiveField(8)
+  bool isregular;
+ 
+ @HiveField(9)
+  DateTime? dateregular;
 
-  @HiveField(8)
+  @HiveField(10)
   int? id;
 
 
@@ -39,6 +45,8 @@ class HabitModel {
   required this.startdate,
   required this.enddate,
   required this.date,
+  required this.isregular,
+  this.dateregular,
   });
 }
 

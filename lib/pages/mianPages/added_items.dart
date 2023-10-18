@@ -26,11 +26,11 @@ class AddedItems extends StatelessWidget {
     return Scaffold(
       backgroundColor: bggrey,
       appBar: AppBar(
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
         ),
         backgroundColor: Colors.amber,
-        title: Text('ADDED ITEMS'),
+        title: const Text('ADDED ITEMS'),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -40,10 +40,10 @@ class AddedItems extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             
             children: [
-                SizedBox(height: 20),
-             Text("HAve a nice day...............",style: TextStyle(color: Colors.white),),
+                const SizedBox(height: 20),
+             const Text("HAve a nice day...............",style: TextStyle(color: Colors.white,fontSize: 20),),
               
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               CardItem(
                 title: 'Habit',
                 content: habit,
@@ -56,7 +56,7 @@ class AddedItems extends StatelessWidget {
                 isAlternate: false,
               ),
               CardItem(
-                title: 'feedback',
+                title: 'emojies',
                 content: feedback,
                 isAlternate: true,
               ),
@@ -71,7 +71,7 @@ class AddedItems extends StatelessWidget {
                 isAlternate: true,
               ),
               CardItem(
-                title: 'start date',
+                title: 'End date',
                 content: enddate,
                 isAlternate: false,
               ),
@@ -97,9 +97,9 @@ class CardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = isAlternate ? Colors.amber : Color.fromARGB(255, 41, 37, 36);
+    final bgColor = isAlternate ? Colors.amber : const Color.fromARGB(255, 41, 37, 36);
     final textColor =
-        isAlternate ? Color.fromARGB(255, 79, 24, 4) : Colors.white;
+        isAlternate ? const Color.fromARGB(255, 79, 24, 4) : Colors.white;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -107,7 +107,7 @@ class CardItem extends StatelessWidget {
       ),
       color: bgColor,
       child: Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         width: double.infinity,
         height: 100,
         child: Column(
@@ -116,7 +116,7 @@ class CardItem extends StatelessWidget {
             Center(
               child: Text(
                 title,
-                style:  TextStyle(
+                style:  const TextStyle(
                     fontSize: 15,
                   fontWeight: FontWeight.bold,color: Colors.white
                   
@@ -124,11 +124,11 @@ class CardItem extends StatelessWidget {
                
               ),
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Center(
               child: Text(
                 content,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,color: Colors.white
                 ),

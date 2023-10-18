@@ -17,39 +17,59 @@ class TodayScreen extends StatefulWidget {
   @override
   State<TodayScreen> createState() => _TodayScreenState();
 }
+
 class _TodayScreenState extends State<TodayScreen> {
   double width = 0.0;
   double height = 0.0;
   late ScrollController scrollController;
+  //Monthlist
   List<DateTime> currentMonthList = List.empty();
   DateTime currentDateTime = DateTime.now();
+    DateTime dateSelected = DateTime.now();
+
   List<String> myhabit = <String>[];
   List<HabitModel> carddata = [];
   TextEditingController controller = TextEditingController();
+    List<HabitModel> dailylist = [];
+
   @override
   void initState() {
     currentMonthList = date_util.DateUtils.daysInMonth(currentDateTime);
     currentMonthList.sort((a, b) => a.day.compareTo(b.day));
     currentMonthList = currentMonthList.toSet().toList();
-    scrollController =
-        ScrollController(initialScrollOffset: 70.0 * currentDateTime.day);
+
+    scrollController = ScrollController(initialScrollOffset: 70.0 * currentDateTime.day);
     getAllHabit();
-    searchedlist = habitListnotifier.value;
+    dateWise(currentDateTime );
+
+    // dailylist = habitListnotifier.value;
     super.initState();
   }
 
-  String _search = '';
-  List<HabitModel> searchedlist = [];
+  // String _search = '';
 
-  void searchResult() {
-    setState(() {
-      searchedlist = habitListnotifier.value
-          .where((incomingModel) =>
-              incomingModel.habit.toLowerCase().contains(_search.toLowerCase()))
-          .toList();
-    });
-  }
-//title view
+   void dateWise(DateTime selectedDate) {
+  setState(() {
+    dailylist = habitListnotifier.value
+        .where((incomingModel) =>
+            incomingModel.date.year == selectedDate.year &&
+            incomingModel.date.month == selectedDate.month &&
+            incomingModel.date.day == selectedDate.day)
+        .toList();
+  });
+}
+
+
+  // void searchResult() {
+  //   setState(() {
+  //     searchedlist = habitListnotifier.value
+  //         .where((incomingModel) =>
+  //             incomingModel.habit.toLowerCase().contains(_search.toLowerCase()))
+  //         .toList();
+  //   });
+  // }
+
+//title view month and year
   Widget titleView() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
@@ -79,15 +99,17 @@ class _TodayScreenState extends State<TodayScreen> {
     );
   }
 
-  Widget capsuleView(int index) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            currentDateTime = currentMonthList[index];
-          });
-        },
+ Widget capsuleView(int index) {
+  return Padding(
+    padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+    child: GestureDetector(
+      onTap: () {
+        setState(() {
+          currentDateTime = currentMonthList[index];
+          dateSelected = currentMonthList[index];
+        });
+        dateWise(currentDateTime); // Pass the selected date to the function
+      },
         child: Container(
           width: 80,
           height: 140,
@@ -152,7 +174,8 @@ class _TodayScreenState extends State<TodayScreen> {
   bool? isDone = false;
   bool isLongPressed = false;
   bool isSelected = false;
-
+  bool isFirstTime = true;
+  int selectedCardIndex = -1;
   TextEditingController textcontroller = TextEditingController();
 
   Widget build(BuildContext context) {
@@ -174,30 +197,31 @@ class _TodayScreenState extends State<TodayScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 15, top: 5),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
-                            height: 40,
-                            width: 260,
-                            decoration: BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: TextField(
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'search...',
-                                ),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _search = value;
-                                  });
-                                  searchResult();
-                                },
-                              ),
-                            ),
-                          ),
+                          // Container(
+                          //   height: 40,
+                          //   width: 260,
+                          //   decoration: BoxDecoration(
+                          //     color: Colors.amber,
+                          //     borderRadius: BorderRadius.circular(10),
+                          //   ),
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.only(left: 20),
+                          //     child: TextField(
+                          //       decoration: const InputDecoration(
+                          //         border: InputBorder.none,
+                          //         hintText: 'search...',
+                          //       ),
+                          //       onChanged: (value) {
+                          //         setState(() {
+                          //           _search = value;
+                          //         });
+                          //         searchResult();
+                          //       },
+                          //     ),
+                          //   ),
+                          // ),
                           Padding(
                             padding: const EdgeInsets.only(left: 20),
                             child: FloatingActionButton(
@@ -222,32 +246,50 @@ class _TodayScreenState extends State<TodayScreen> {
                                 List<HabitModel> habitList, Widget? child) {
                               return ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: searchedlist.length,
+                                itemCount: dailylist.length,
                                 // separatorBuilder:
                                 //     (BuildContext context, int index) =>
                                 //         const SizedBox(height: 0),
                                 itemBuilder: (BuildContext context, int index) {
-                                  HabitModel data = searchedlist[index];
+                                  HabitModel data = dailylist[index];
                                   return Container(
                                     width: 200,
                                     height: 100,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Slidable(
-                                        endActionPane: ActionPane(
-                                            motion: const DrawerMotion(),
-                                            children: [
-                                              SlidableAction(
-                                                onPressed: ((context) => {
-                                                      addtoregularwork(data),
-                                                    }),
-                                                backgroundColor: Colors.white70,
-                                                icon: Icons
-                                                    .accessibility_new_sharp,
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                            ]),
+                                        // endActionPane: ActionPane(
+                                        //     motion: const DrawerMotion(),
+                                        //     children: [
+                                        //      SlidableAction(
+                                        // onPressed: ((context) {
+                                        //   addtoregularwork(data);
+                                        //   // if (data.habit!=data.habit) {
+                                        //     ScaffoldMessenger.of(context).showSnackBar(
+                                        //       const SnackBar(
+                                        //         margin: EdgeInsets.all(10),
+                                        //         backgroundColor: Colors.red,
+                                        //         behavior: SnackBarBehavior.floating,
+                                        //         content: Text("Your HAbIT added to regular.."),
+                                        //       ),
+                                        //     );
+                                          
+                                        //   // } else {
+                                        //   //   ScaffoldMessenger.of(context).showSnackBar(
+                                        //   //     const SnackBar(
+                                        //   //       margin: EdgeInsets.all(10),
+                                        //   //       backgroundColor: Colors.green, 
+                                        //   //       behavior: SnackBarBehavior.floating,
+                                        //   //       content: Text("its already have in your regular list"),
+                                        //   //     ),
+                                        //   //   );
+                                        //   // }
+                                        // }),
+                                        // backgroundColor: Colors.white70,
+                                        // icon: Icons.accessibility_new_sharp,
+                                        // borderRadius: BorderRadius.circular(20),
+                                        // ),
+                                        //     ]),
                                         startActionPane: ActionPane(
                                           motion: const StretchMotion(),
                                           children: [
@@ -280,7 +322,7 @@ class _TodayScreenState extends State<TodayScreen> {
                                         ),
                                         child: GestureDetector(
                                           child: Card(
-                                     color: Colors.amber,
+                                            color: Colors.amber,
                                             child: SingleChildScrollView(
                                               child: ListTile(
                                                 onTap: () {
@@ -358,10 +400,14 @@ class _TodayScreenState extends State<TodayScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
+//         actions: [IconButton(
+//   onPressed: () {resethabit(selectedCardIndex);},
+//   icon: Icon(Icons.restore_from_trash_rounded,color: Colors.white,size: 30,),
+// )
+// ],
         backgroundColor: const Color.fromARGB(31, 73, 62, 62),
-
       ),
-      drawer: Drawerrr( ),
+      drawer: const Drawerrr(),
     );
   }
 
@@ -369,7 +415,7 @@ class _TodayScreenState extends State<TodayScreen> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return BottomSheettt();
+        return const BottomSheettt();
       },
     );
   }
