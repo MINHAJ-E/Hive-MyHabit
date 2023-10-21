@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           title: "MY HABIT",
 
           home: Screensplash(),
-         
+          
     );
   }
 }
