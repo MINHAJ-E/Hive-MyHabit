@@ -3,7 +3,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:my_habit_app/model/habit/data_model.dart';
 
 ValueNotifier<List<HabitModel>>habitListnotifier=ValueNotifier([]);
-List<HabitModel>regularwork = [];
+// List<HabitModel>regularwork = [];
 
 void addhabit(HabitModel value) async {
   final habitdb = await Hive.openBox<HabitModel>('student_db');
@@ -13,11 +13,13 @@ void addhabit(HabitModel value) async {
   habitListnotifier.notifyListeners();
 }
 
-void getAllHabit() async {
+Future<List<HabitModel>>getAllHabit() async {
   final habitdb = await Hive.openBox<HabitModel>('student_db');
+  final habits=habitdb.values.toList();
   habitListnotifier.value.clear();
   habitListnotifier.value.addAll(habitdb.values);
   habitListnotifier.notifyListeners();
+  return habits;
 }
 void deletehabit(int id) async {
   final habitdb = await Hive.openBox<HabitModel>('student_db');
@@ -38,40 +40,40 @@ void addCheck(int id,HabitModel data) async {
   await habitdb.putAt(id,data);
   getAllHabit();
 }
-addtoregularwork(HabitModel data) async {
-  final favDB = await Hive.openBox<HabitModel>('fav_db');
-  if (!regularwork.contains(data)) {
-    regularwork.add(data);
-    favDB.add(data);
-  }
-}
+// addtoregularwork(HabitModel data) async {
+//   final favDB = await Hive.openBox<HabitModel>('fav_db');
+//   if (!regularwork.contains(data)) {
+//     regularwork.add(data);
+//     favDB.add(data);
+//   }
+// }
 
-getallregularwork() async {
-  final favDB = await Hive.openBox<HabitModel>('fav_db');
-  regularwork.clear();
-  regularwork = favDB.values.toList();
-}
-deleteregularwork(int id) async {
-  final favDB = await Hive.openBox<HabitModel>('fav_db');
-  favDB.deleteAt(id);
-  regularwork.removeAt(id);
-  getallregularwork();
-}
-void addCheckregular(int id,HabitModel data) async {
-  final favDB = await Hive.openBox<HabitModel>('fav_db');
-  await favDB.putAt(id,data);
-  getallregularwork();
-}
+// getallregularwork() async {
+//   final favDB = await Hive.openBox<HabitModel>('fav_db');
+//   regularwork.clear();
+//   regularwork = favDB.values.toList();
+// }
+// deleteregularwork(int id) async {
+//   final favDB = await Hive.openBox<HabitModel>('fav_db');
+//   favDB.deleteAt(id);
+//   regularwork.removeAt(id);
+//   getallregularwork();
+// }
+// void addCheckregular(int id,HabitModel data) async {
+//   final favDB = await Hive.openBox<HabitModel>('fav_db');
+//   await favDB.putAt(id,data);
+//   getallregularwork();
+// }
 resethabit(int id)async{
 final habitdb = await Hive.openBox<HabitModel>('student_db');
 habitdb.clear();
 getAllHabit();
 }
-resetregular(int id)async{
-final favDB = await Hive.openBox<HabitModel>('fav_db');
-favDB.clear();
-getallregularwork();
-}
+// resetregular(int id)async{
+// final favDB = await Hive.openBox<HabitModel>('fav_db');
+// favDB.clear();
+// getallregularwork();
+// }
 // addDateToHive(DateTime date) async {
 //   var datedb = await Hive.openBox<HabitModel>('dates');
 //   await datedb.add(date as HabitModel);

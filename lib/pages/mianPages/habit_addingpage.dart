@@ -20,6 +20,7 @@ class _HabitAddingState extends State<HabitAdding> {
   TextEditingController _habitfeedbackController = TextEditingController();
   TextEditingController _startdateController = TextEditingController();
   TextEditingController _enddateController = TextEditingController();
+   final formkey = GlobalKey<FormState>();
 
   DateTime _startdateTime = DateTime.now();
   DateTime _enddateTime = DateTime.now();
@@ -62,209 +63,228 @@ class _HabitAddingState extends State<HabitAdding> {
           backgroundColor: bggreyisue,
         ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 80,
-                      width: 320,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextFormField(
-                          controller: _habitAddController,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Make your own Habit',
-                          ),
+          child: Form(
+              key: formkey,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 80,
+                        width: 320,
+                        decoration: BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 60,
-                      width: 320,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextFormField(
-                          controller: _habitNoteController,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'give small description',
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Container(
-                      height: 55,
-                      width: 320,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextFormField(
-                          controller: _habitfeedbackController,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'you can give Emoji related to your habit',
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: 55,
-                      width: 320,
-                    
-                      decoration: BoxDecoration(
-                        color:  Colors.amber,
-                        borderRadius: BorderRadius.circular(30),
-                         
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextFormField(
-                          controller: _startdateController,
-                          
-                          decoration:  InputDecoration(
-                            border: InputBorder.none,
-                            suffixIcon: IconButton(
-                              icon: const Icon(Icons.calendar_month),
-                              onPressed: () {
-                              _showDatePickerStart(); // Changed comma to semicolon here
-                              },
-                            ),
-                            hintText: 'Starting date',
-                            hintStyle: const TextStyle(color: Colors.white),
-                            
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20,),
-                    Container(
-                      height: 55,
-                      width: 320,
-                    
-                      decoration: BoxDecoration(
-                        color:  Colors.amber,
-                        borderRadius: BorderRadius.circular(30),
-                         
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextFormField(
-                          controller: _enddateController,
-                          
-                          decoration:  InputDecoration(
-                            border: InputBorder.none,
-                            suffixIcon: IconButton(
-                              icon: const Icon(Icons.calendar_month),
-                              onPressed: () {
-                              _showDatePickerEnd(); // Changed comma to semicolon here
-                              },
-                            ),
-                            hintText: 'End date',
-                            hintStyle: const TextStyle(color: Colors.white),
-                            
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-               
-                      ],
-                    ),
-                    // const Divider(
-                      // color: Colors.black,
-                    ),
-                  
-                    const Divider(
-                      color: Colors.black,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                         const Padding(
-                           padding: EdgeInsets.only(left: 30),
-                           child: Text(
-                             "Add category",
-                             style: TextStyle(
-                                 fontSize: 25,
-                                 color: Colors.white,
-                                 fontWeight: FontWeight.bold),
-                           ),
-                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 20),
-                              child: Container(
-                                height: 30,
-                                width: 70,
-                                decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: const Center(child: Text("category")),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: TextFormField(
+                            controller: _habitAddController,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Make your own Habit',
                               ),
+                            validator: (value){
+                               if (value == null || value.isEmpty) {
+                        return 'value is Empty';
+                      }
+                      return null;
+                            },
+                          ),
+                        ),  
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 70, 
+                        width: 320,
+                        decoration: BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: TextFormField(
+                            controller: _habitNoteController,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'give small description',
                             ),
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => alert(context),
-                              );
-                              // _showDatePickerEnd();
+                             validator: (value){
+                               if (value == null || value.isEmpty) {
+                        return 'value is Empty';
+                      }
+                      return null;
                             },
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          
-                          onAddHabitButtonClicked();
-                        });
-
-                        //  Navigator.pop(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.amber,
                       ),
-                      child: const Text("Add Habit"),
-                    )
-                  ],
-                ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      Container(
+                        height: 68,
+                        width: 320,
+                        decoration: BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: TextFormField(
+                            controller: _habitfeedbackController,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'you can give Emoji related to your habit',
+                            ),
+                             validator: (value){
+                               if (value == null || value.isEmpty) {
+                        return 'value is Empty';
+                      }
+                      return null;
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 55,
+                        width: 320,
+                          decoration: BoxDecoration(
+                          color:  Colors.amber,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: TextFormField(
+                            controller: _startdateController,
+                            
+                            decoration:  InputDecoration(
+                              border: InputBorder.none,
+                              suffixIcon: IconButton(
+                                icon: const Icon(Icons.calendar_month),
+                                onPressed: () {
+                                _showDatePickerStart(); // Changed comma to semicolon here
+                                },
+                              ),
+                              hintText: 'Starting date',
+                              hintStyle: const TextStyle(color: Colors.white),
+                              
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20,),
+                      Container(
+                        height: 55,
+                        width: 320,
+                        decoration: BoxDecoration(
+                          color:  Colors.amber,
+                          borderRadius: BorderRadius.circular(30),   
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: TextFormField(
+                            controller: _enddateController,  
+                            decoration:  InputDecoration(
+                              border: InputBorder.none,
+                              suffixIcon: IconButton(
+                                icon: const Icon(Icons.calendar_month),
+                                onPressed: () {
+                                _showDatePickerEnd(); // Changed comma to semicolon here
+                                },
+                              ),
+                              hintText: 'End date',
+                              hintStyle: const TextStyle(color: Colors.white),  
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                 
+                        ],
+                      ),
+                      // const Divider(
+                        // color: Colors.black,
+                      ),
+                    
+                      const Divider(
+                        color: Colors.black,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                           const Padding(
+                             padding: EdgeInsets.only(left: 30),
+                             child: Text(
+                               "Add category",
+                               style: TextStyle(
+                                   fontSize: 25,
+                                   color: Colors.white,
+                                   fontWeight: FontWeight.bold),
+                             ),
+                           ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: Container(
+                                  height: 30,
+                                  width: 70,
+                                  decoration: BoxDecoration(
+                                    color: Colors.amber,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: const Center(child: Text("category")),
+                                ),
+                              ),
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => alert(context),
+                                );
+                                // _showDatePickerEnd();
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                              if (formkey.currentState!.validate()) {
+                         onAddHabitButtonClicked();
+                      } else {
+                        print("data is empty");
+                      }
+                          
+                          });
+          
+                          //  Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.amber,
+                        ),
+                        child: const Text("Add Habit"),
+                      )
+                    ],
+                  ),
+          ),
               ),
   
           );
@@ -387,8 +407,7 @@ class _HabitAddingState extends State<HabitAdding> {
         ),
       ),
     );
-  }
-
+  }   
   Padding categoryMethod(
       {required String text,
       String? Categoryimage,
@@ -413,7 +432,7 @@ class _HabitAddingState extends State<HabitAdding> {
                 CircleAvatar(
                   child: Image.asset(
                     Categoryimage!,
-                    cacheHeight: 30, // Set the desired height
+                    cacheHeight: 30, // Set the desired height 
                     cacheWidth: 30,
                   ),
                 ),

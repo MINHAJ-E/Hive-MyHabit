@@ -1,221 +1,203 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
-import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/utils/colors_utils.dart';
-import 'package:my_habit_app/utils/date_utils.dart' as date_util;
-// import 'package:my_habit_app/widgets/calender.dart';
+import 'package:my_habit_app/db/functions/regularfunctions/dbregular_function.dart';
+import 'package:my_habit_app/model/regular/regular_model.dart';
 
 class RegularWork extends StatefulWidget {
-  // final String title;
-  const RegularWork({
-    Key? key,
-  }) : super(key: key);
+   RegularWork({super.key});
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<RegularWork> createState() => _RegularWorkState();
 }
 
-class _MyHomePageState extends State<RegularWork> {
-  double width = 0.0;
-  double height = 0.0;
-  late ScrollController scrollController;
-  List<DateTime> currentMonthList = List.empty();
-  DateTime currentDateTime = DateTime.now();
-  List<String> todos = <String>[];
-  TextEditingController controller = TextEditingController();
+class _RegularWorkState extends State<RegularWork> {
+      TextEditingController regularhabitcontroller = TextEditingController();
 
-  @override
-  void initState() {
-      getallregularwork();
-    currentMonthList = date_util.DateUtils.daysInMonth(currentDateTime);
-    currentMonthList.sort((a, b) => a.day.compareTo(b.day));
-    currentMonthList = currentMonthList.toSet().toList();
-    scrollController =
-        ScrollController(initialScrollOffset: 70.0 * currentDateTime.day);
-        
-    super.initState();
-   
-  }
-
-  Widget titleView() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-      child: Text(
-        '${date_util.DateUtils.months[currentDateTime.month - 1]} ${currentDateTime.year}',
-        style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
-      ),
-    );
-  }
-
-  Widget hrizontalCapsuleListView() {
-    return Container(
-      width: width,
-      height: 100,
-      child: ListView.builder(
-        controller: scrollController,
-        scrollDirection: Axis.horizontal,
-        physics: const ClampingScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: currentMonthList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return capsuleView(index);
-        },
-      ),
-    );
-  }
-
-  Widget capsuleView(int index) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            currentDateTime = currentMonthList[index];
-          });
-        },
-        child: Container(
-          width: 80,
-          height: 140,
-          decoration: BoxDecoration(
-            color: Colors.amber,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  currentMonthList[index].day.toString(),
-                  style: TextStyle(
-                      fontSize: 48,
-                      fontWeight: FontWeight.bold,
-                      color:
-                          (currentMonthList[index].day != currentDateTime.day)
-                              ? HexColor("465876")
-                              : Colors.white),
-                ),
-                Text(
-                  date_util
-                      .DateUtils.weekdays[currentMonthList[index].weekday - 1],
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color:
-                          (currentMonthList[index].day != currentDateTime.day)
-                              ? HexColor("465876")
-                              : Colors.white),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget topView() {
-    return Container(
-      height: height * 0.3,
-      width: width,
-      decoration: const BoxDecoration(
-        color: bggreyisue,
-        borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(20),
-          bottomLeft: Radius.circular(20),
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          titleView(),
-          hrizontalCapsuleListView(),
-        ],
-      ),
-    );
-  }
+  TextEditingController regularnotecontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-   
-    width = MediaQuery.of(context).size.width;
-    height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverToBoxAdapter(
-            child: topView(),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                final data = regularwork[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Slidable(
-                    startActionPane: ActionPane(
-                      motion: DrawerMotion(),
-                      children: [
-                        SlidableAction(
-                          onPressed: (context) {
-                            setState(() {
-                              // Assuming deleteregularwork is an asynchronous function
-                              // Make sure it's defined correctly
-                              deleteregularwork(index);
-                            });
-                          },
-                          backgroundColor: Colors.red,
-                          icon: Icons.delete,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ],
-                    ),
-                    child: Card(
-                      color: Colors.amber,
-                      child: ListTile(
-                        title: Center(
-                          child: Text(
-                            data.habit,
-                            style: const TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 26,
-                            ),
-                          ),
-                        ),
-                        subtitle: Center(
-                          child: Text(
-                            data.note,
-                            style: const TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        trailing: Checkbox(
-                          value: data.taskcomplete,
-                          onChanged: (newvalue) {
-                            setState(() {
-                              data.taskcomplete = newvalue!;
-                            });
+getAllregular();
 
-                            addCheckregular(index, data); 
-                          },
-                        ),
+    return Scaffold(
+      backgroundColor: Color.fromARGB(137, 0, 0, 0),
+      appBar: AppBar(
+        backgroundColor: Colors.amber,
+        title: const Center(
+          child: Text( 
+            'REGULAR WORK',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(0)),
+        ),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 15, top: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  height: 40,
+                  width: 260,
+                  decoration: BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Search...',
                       ),
+                      // onChanged: (value) {
+                      //   setState(() {
+                      //     _search = value;
+                      //   });
+                      //   searchResult();
+                      // },
                     ),
                   ),
-                );
-              },
-              childCount: regularwork.length,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => alert(context),
+                      );
+                    },
+                    backgroundColor: Colors.amber,
+                    mini: true,
+                    child: const Icon(Icons.add),
+                  ),
+                ),
+              ],
             ),
           ),
+          Expanded(
+            child: ValueListenableBuilder<List<RegularModel>>(
+              valueListenable: regularlistnotifier,
+              builder: (BuildContext context, List<RegularModel> todoList, _) {
+                return ListView.builder(
+                  itemCount: todoList.length,
+                  itemBuilder: (context, index) {
+                    final data = todoList[index];
+                    return Container(
+                      width: 200,
+                      height: 100,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Card(
+                          color: Colors.amber,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          elevation: 0,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListTile(
+                              title: Text(
+                                data.regular,
+                                style: const TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Text(
+                                data.note,
+                                style: const TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                               trailing: Checkbox(
+                                                  value: data.isDone,
+                                                  onChanged: (newvalue) {
+                                                    setState(() async {
+                                                      data.isDone = newvalue!;
+                                                      addCheck(index, data);
+                                                    });
+                                                  },
+                                                ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          )
         ],
       ),
-      backgroundColor: bggrey,
     );
+  }
+
+   AlertDialog alert(BuildContext context) {
+    return AlertDialog(
+      title: const Text('ADD REGULAR '),
+      content: Container(
+        height: 150,
+        child: Column(
+          children: [
+            TextField(
+              controller: regularhabitcontroller,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextField(
+              controller: regularnotecontroller,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            saved();
+            regularhabitcontroller.text = '';
+            regularnotecontroller.text = '';
+            Navigator.of(context).pop();
+          },
+          child: const Text('ADD'),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('CANCEL'),
+        ),
+      ],
+      elevation: 24.0,
+      backgroundColor: Colors.amber,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+    );
+  }
+
+  Future<void>saved()async{
+    final _regularhabit =regularhabitcontroller.text.trim();
+    final _regularnote =regularnotecontroller.text.trim();
+    if(_regularhabit.isEmpty||_regularnote.isEmpty){
+      return;
+    }
+    print('$_regularhabit $_regularnote');
+  final regularwork=RegularModel(regular: _regularhabit,note: _regularnote,isDone: false);
+
+    addregular(regularwork);
   }
 }

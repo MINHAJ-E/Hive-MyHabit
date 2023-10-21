@@ -1,57 +1,108 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
+import 'package:my_habit_app/helpers/colors.dart';
+import 'package:my_habit_app/model/habit/data_model.dart';
 // import 'package:my_habit_app/widgets/calender.dart';
 
-class HabitChart extends StatelessWidget {
+class HabitChart extends StatefulWidget {
   const HabitChart({super.key});
 
   @override
- Widget build(BuildContext context) {
- 
+  State<HabitChart> createState() => _HabitChartState();
+}
+
+class _HabitChartState extends State<HabitChart> {
+  @override
+  Widget build(BuildContext context) {
+    // final themeManager = Provider.of<ThemeManager>(context);
     return Scaffold(
       backgroundColor: bggrey,
       appBar: AppBar(
-        backgroundColor: bggreyisue,
-        title: Text('Habit Chart'),
-      ),
-      body: Center(
-        child: BarChart(),
-      ),
-    );
-  }
-}
+       
+        title: Text('Chart'),
+        backgroundColor: Colors.amber,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            // gradient: themeManager.primaryColorGradient,
+          ),)),
+      body: Column(
+        children: [
+          FutureBuilder<List<HabitModel>>(
+            future: getAllHabit(),
+            builder: (context, snapshot) {
+               if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Center(
+                  child: Text("'No task's available.'",style: TextStyle(color: Colors.white,fontSize: 25),));
+              } else {
+                int completedTasks =
+                    snapshot.data!.where((task) => task.taskcomplete).length;
+                int incompletedTasks =
+                    snapshot.data!.where((task) => !task.taskcomplete).length;
+                int totalTasks = completedTasks + incompletedTasks;
 
-class BarChart extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      width: 300,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Bar(color: Colors.blue, height: 300),
-          Bar(color: Colors.green, height: 300),
-          Bar(color: Colors.orange, height: 300),
-          Bar(color: Colors.red, height: 300),
+                double completed = (completedTasks / totalTasks) * 100;
+                double incompleted = (incompletedTasks / totalTasks) * 100;
+
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 60),
+                    child: Container(
+                      width: 350,
+                      height: 350,
+                      child: PieChart(
+                        PieChartData(
+                          sections: [
+                            PieChartSectionData(
+                              value: completed,
+                              color:Colors.amber,
+                              title: '${completed.toStringAsFixed(0)}%',titleStyle: TextStyle(color:Colors.white,fontSize: 30,fontWeight: FontWeight.w500),
+                              radius: 40, 
+                            ),
+                            PieChartSectionData(
+                              value: incompleted,
+                              color:Colors.white24,
+                              title: '${incompleted.toStringAsFixed(0)}%',titleStyle: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.w500),
+                              radius: 40, 
+                            ),
+                          ],
+                          sectionsSpace: 2,
+                          centerSpaceRadius: 90,
+                          startDegreeOffset: 90,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }
+            },
+          ),
+          SizedBox(height: 20,),
+          chartValues(color: Colors.amber, text: "Completed Task's"),
+          SizedBox(height: 40,),
+          chartValues(color:Colors.white24, text: "Incomplete Task's")
         ],
       ),
     );
   }
-}
 
-class Bar extends StatelessWidget {
-  final Color color;
-  final double height;
-
-  Bar({required this.color, required this.height});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: color,
-      width: 50,
-      height: height,
+  Row chartValues({required Color color, String? text}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          height: 20,
+          width: 20,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(7)),
+        ),
+        SizedBox(width: 15,),
+        Text(text!, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),)
+      ],
     );
   }
 }

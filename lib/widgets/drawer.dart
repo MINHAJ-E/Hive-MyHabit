@@ -155,7 +155,7 @@ class _DrawerState extends State<Drawerrr> {
           
             setState(() {
                     resethabit(selectedCardIndex);
-                    resetregular(selectedCardIndex);
+                    // resetregular(selectedCardIndex);
                   });
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (ctx) => const BottomBar()));

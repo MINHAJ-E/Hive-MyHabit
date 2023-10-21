@@ -363,8 +363,7 @@ class _TodayScreenState extends State<TodayScreen> {
                                                   value: data.taskcomplete,
                                                   onChanged: (newvalue) {
                                                     setState(() async {
-                                                      data.taskcomplete =
-                                                          newvalue!;
+                                                      data.taskcomplete = newvalue!;
                                                       addCheck(index, data);
                                                     });
                                                   },
