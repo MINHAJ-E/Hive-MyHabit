@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/main.dart';
+import 'package:my_habit_app/screens/today_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -14,6 +15,20 @@ class ScreenLogin extends StatelessWidget {
   final usernamecontroller = TextEditingController();
   // final passwordcontroller = TextEditingController();
   final formkey = GlobalKey<FormState>();
+  
+  get username =>   usernamecontroller.text;
+  
+  // void _login(BuildContext context) {
+  //   String name = usernamecontroller.text;
+  //   Navigator.pushReplacement(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => TodayScreen(name: name),
+  //     ),
+  //   );
+  // }
+  
+  Object get currentState =>formkey ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +55,7 @@ class ScreenLogin extends StatelessWidget {
                       padding: const EdgeInsets.all(20.0),
                       child: TextFormField(
                           controller: usernamecontroller,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             // fillColor: Colors.amber,
                               labelText: "   enter your Email",
                               border: InputBorder.none,
@@ -54,43 +69,13 @@ class ScreenLogin extends StatelessWidget {
                           }),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  // Container(
-                  //   height: 60,
-                  // decoration: BoxDecoration(
-                  //   color: Colors.amber,
-                  //   borderRadius: BorderRadius.circular(30)
-                  // ),
-                    
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(20.0),
-                  //     child: TextFormField(
-                  //         controller: passwordcontroller,
-                  //         maxLength: 10,
-                  //         obscureText: true,
-                  //         decoration: InputDecoration(
-                           
-                  //           labelText: "  enter password",
-                  //           border: InputBorder.none,
-                                
-                  //           // hintText: "Password",
-                  //           // helperText:"enter your password.",
-                  //         ),
-                  //         validator: (value) {
-                  //           if (value == null || value.isEmpty) {
-                  //             return 'value is empty';
-                  //           }
-                  //           return null;
-                  //         }),
-                  //   ),
-                  // ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                
+                 
                   ElevatedButton.icon(
-                    
+                    // &&username==currentState  
                       onPressed: () {
                         if (formkey.currentState!.validate()) {
                           checkLogin(context);
@@ -100,14 +85,14 @@ class ScreenLogin extends StatelessWidget {
                         
                       },
                       
-                      icon: Icon(Icons.check),
-                      label: Text("Log in"),style: ButtonStyle(
+                      icon: const Icon(Icons.check),
+                      label: const Text("Log in"),style: const ButtonStyle(
                         backgroundColor:MaterialStatePropertyAll(Colors.amber)
                         ),),
                       
                 ],
               ),
-            ),
+            ), 
           ),
         ),
       ),
@@ -115,20 +100,22 @@ class ScreenLogin extends StatelessWidget {
   }
 
   void checkLogin(BuildContext ctx) async {
-    final username = usernamecontroller.text;
+    String username = usernamecontroller.text;
     // final password = passwordcontroller.text;
    
-      final _sharedpref = await SharedPreferences.getInstance();
-      await _sharedpref.setBool(SAVE_KEY_NAME, true);
+      final sharedpref = await SharedPreferences.getInstance();
+      await sharedpref.setBool(SAVE_KEY_NAME, true);
 
       Navigator.of(ctx)
-          .pushReplacement(MaterialPageRoute(builder: (ctx1) => BottomBar()));
+          .pushReplacement(MaterialPageRoute(builder: (ctx1) =>  BottomBar()));
+      // Navigator.of(ctx)
+      //     .pushReplacement(MaterialPageRoute(builder: (ctx1) =>  TodayScreen(username:username)));
    
-      // ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
-      //     margin: EdgeInsets.all(10),
-      //     backgroundColor: Colors.red,
-      //     behavior: SnackBarBehavior.floating,
-      //     content: Text("username does not match")));
+      ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+          margin: EdgeInsets.all(10),
+          backgroundColor: Colors.amberAccent,
+          behavior: SnackBarBehavior.floating,
+          content: Text("successfully log in"))); 
   
   }
 }

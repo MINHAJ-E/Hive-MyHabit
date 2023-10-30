@@ -11,14 +11,14 @@ class PrivacyPolicy extends StatelessWidget {
       appBar: AppBar(
         // backgroundColor: bggrey,
         backgroundColor: Colors.amber,
-        title: Text(
+        title: const Text(
           "privacy Policy",
           style: TextStyle(
               fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white60),
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(15.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,11 +93,11 @@ class PrivacyPolicy extends StatelessWidget {
   Row servicePoints(String text3) {
     return Row(
       children: [
-        Icon(
+        const Icon(
           Icons.circle,
           size: 8,
         ),
-        SizedBox(
+        const SizedBox(
           width: 6,
         ),
         Text(text3),
@@ -106,7 +106,7 @@ class PrivacyPolicy extends StatelessWidget {
   }
 
   Text content(String text2) {
-    return Text(text2,style: TextStyle(color: Colors.white38),);
+    return Text(text2,style: const TextStyle(color: Colors.white38),);
   }
 
   SizedBox spacing(double height) {
@@ -118,7 +118,7 @@ class PrivacyPolicy extends StatelessWidget {
   Text headings(String text1) {
     return Text(
       text1,
-      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: Colors.white),
+      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: Colors.white),
     );
   }
 }

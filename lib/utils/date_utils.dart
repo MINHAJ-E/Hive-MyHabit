@@ -75,7 +75,7 @@ class DateUtils {
     var current = start;
     while (current.isBefore(end) || current.isAtSameMomentAs(end)) {
       yield current;
-      current = current.add(Duration(days: 1));
+      current = current.add(const Duration(days: 1));
     }
   }
 
@@ -114,10 +114,10 @@ class DateUtils {
   }
 
   static DateTime previousWeek(DateTime w) {
-    return w.subtract(Duration(days: 7));
+    return w.subtract(const Duration(days: 7));
   }
 
   static DateTime nextWeek(DateTime w) {
-    return w.add(Duration(days: 7));
+    return w.add(const Duration(days: 7));
   }
 }

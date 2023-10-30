@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_constructors
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
@@ -7,8 +7,8 @@ import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart'
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/habit/data_model.dart';
 import 'package:my_habit_app/pages/mianPages/habit_addingpage.dart';
-import 'package:my_habit_app/pages/mianPages/habit_category.dart';
 
+// ignore: must_be_immutable
 class UpdateStudent extends StatefulWidget {
   final String habit;
   final String note;
@@ -28,10 +28,6 @@ class UpdateStudent extends StatefulWidget {
 class _UpdateStudentState extends State<UpdateStudent> {
   TextEditingController habitController = TextEditingController();
   TextEditingController noteController = TextEditingController();
-
-  // final ImagePicker _picker = ImagePicker();
-  File? selectedimage;
-
   // final _formkey = GlobalKey<FormState>();
   @override
   void initState() {
@@ -40,6 +36,7 @@ class _UpdateStudentState extends State<UpdateStudent> {
     noteController = TextEditingController(text: widget.note);
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bggrey,
@@ -300,27 +297,18 @@ class _UpdateStudentState extends State<UpdateStudent> {
   }
 
   Future<void> update() async {
-    final edited_habit = habitController.text.trim();
-    final edited_note = noteController.text.trim();
-    final edited_category = noteController.text.trim();
-    final edited_feedback = noteController.text.trim();
+    final editedHabit = habitController.text.trim();
+    final editedNote = noteController.text.trim();
 
-    // final edited_image = selectedimage?.path;
-
-    if (edited_habit.isEmpty || edited_note.isEmpty||edited_category.isEmpty) {
+    if (editedHabit.isEmpty || editedNote.isEmpty) {
       return;
     } else {
       final updated = HabitModel(
-        // isDone: false,
         taskcomplete: false,
-        habit: edited_habit,
-        note: edited_note,
-        startdate: "HI",
-        enddate: "HI",
-        feedback: edited_feedback,
-        category: edited_category,
-        date: DateTime.now(),
-        isregular: false
+        habit: editedHabit,
+        note: editedNote,
+    
+       lastUpdatedDate: ""
 
       );
 

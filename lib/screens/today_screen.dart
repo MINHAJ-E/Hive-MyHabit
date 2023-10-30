@@ -1,19 +1,20 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
 import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/habit/data_model.dart';
 import 'package:my_habit_app/pages/mianPages/edited_habit.dart';
-import 'package:my_habit_app/pages/mianPages/added_items.dart';
 import 'package:my_habit_app/utils/colors_utils.dart';
 import 'package:my_habit_app/utils/date_utils.dart' as date_util;
 import 'package:my_habit_app/widgets/bottom_sheet.dart';
 import 'package:my_habit_app/widgets/drawer.dart';
 
 class TodayScreen extends StatefulWidget {
-  TodayScreen({Key? key, required}) : super(key: key);
+  const TodayScreen({
+    Key? key,
+  }) : super(key: key);
   @override
   State<TodayScreen> createState() => _TodayScreenState();
 }
@@ -25,49 +26,39 @@ class _TodayScreenState extends State<TodayScreen> {
   //Monthlist
   List<DateTime> currentMonthList = List.empty();
   DateTime currentDateTime = DateTime.now();
-    DateTime dateSelected = DateTime.now();
-
+  // DateTime dateSelected = DateTime.now();
   List<String> myhabit = <String>[];
   List<HabitModel> carddata = [];
   TextEditingController controller = TextEditingController();
-    List<HabitModel> dailylist = [];
-
+  List<HabitModel> searchedlist = [];
+  // List<HabitModel> habitList = [];
   @override
   void initState() {
     currentMonthList = date_util.DateUtils.daysInMonth(currentDateTime);
     currentMonthList.sort((a, b) => a.day.compareTo(b.day));
     currentMonthList = currentMonthList.toSet().toList();
 
-    scrollController = ScrollController(initialScrollOffset: 70.0 * currentDateTime.day);
-    getAllHabit();
-    dateWise(currentDateTime );
+    scrollController =
+        ScrollController(initialScrollOffset: 70.0 * currentDateTime.day);
 
-    // dailylist = habitListnotifier.value;
+    setState(() {
+      getAllHabit();
+      // dateWise(currentDateTime );
+    });
+    searchedlist = habitListnotifier.value;
     super.initState();
   }
 
-  // String _search = '';
+  String _search = '';
 
-   void dateWise(DateTime selectedDate) {
-  setState(() {
-    dailylist = habitListnotifier.value
-        .where((incomingModel) =>
-            incomingModel.date.year == selectedDate.year &&
-            incomingModel.date.month == selectedDate.month &&
-            incomingModel.date.day == selectedDate.day)
-        .toList();
-  });
-}
-
-
-  // void searchResult() {
-  //   setState(() {
-  //     searchedlist = habitListnotifier.value
-  //         .where((incomingModel) =>
-  //             incomingModel.habit.toLowerCase().contains(_search.toLowerCase()))
-  //         .toList();
-  //   });
-  // }
+  void searchResult() {
+    setState(() {
+      searchedlist = habitListnotifier.value
+          .where((incomingModel) =>
+              incomingModel.habit.toLowerCase().contains(_search.toLowerCase()))
+          .toList();
+    });
+  }
 
 //title view month and year
   Widget titleView() {
@@ -99,17 +90,17 @@ class _TodayScreenState extends State<TodayScreen> {
     );
   }
 
- Widget capsuleView(int index) {
-  return Padding(
-    padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-    child: GestureDetector(
-      onTap: () {
-        setState(() {
-          currentDateTime = currentMonthList[index];
-          dateSelected = currentMonthList[index];
-        });
-        dateWise(currentDateTime); // Pass the selected date to the function
-      },
+  Widget capsuleView(int index) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            currentDateTime = currentMonthList[index];
+            // dateSelected = currentMonthList[index];
+          });
+         
+        },
         child: Container(
           width: 80,
           height: 140,
@@ -170,7 +161,6 @@ class _TodayScreenState extends State<TodayScreen> {
       ),
     );
   }
-
   bool? isDone = false;
   bool isLongPressed = false;
   bool isSelected = false;
@@ -178,6 +168,7 @@ class _TodayScreenState extends State<TodayScreen> {
   int selectedCardIndex = -1;
   TextEditingController textcontroller = TextEditingController();
 
+  @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
@@ -199,29 +190,29 @@ class _TodayScreenState extends State<TodayScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          // Container(
-                          //   height: 40,
-                          //   width: 260,
-                          //   decoration: BoxDecoration(
-                          //     color: Colors.amber,
-                          //     borderRadius: BorderRadius.circular(10),
-                          //   ),
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.only(left: 20),
-                          //     child: TextField(
-                          //       decoration: const InputDecoration(
-                          //         border: InputBorder.none,
-                          //         hintText: 'search...',
-                          //       ),
-                          //       onChanged: (value) {
-                          //         setState(() {
-                          //           _search = value;
-                          //         });
-                          //         searchResult();
-                          //       },
-                          //     ),
-                          //   ),
-                          // ),
+                          Container(
+                            height: 40,
+                            width: 260,
+                            decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: TextField(
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'search...',
+                                ),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _search = value;
+                                  });
+                                  searchResult();
+                                },
+                              ),
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(left: 20),
                             child: FloatingActionButton(
@@ -243,76 +234,64 @@ class _TodayScreenState extends State<TodayScreen> {
                           return ValueListenableBuilder<List<HabitModel>>(
                             valueListenable: habitListnotifier,
                             builder: (BuildContext ctx,
-                                List<HabitModel> habitList, Widget? child) {
+                                List<HabitModel> habitlist, Widget? child) {
                               return ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: dailylist.length,
-                                // separatorBuilder:
-                                //     (BuildContext context, int index) =>
-                                //         const SizedBox(height: 0),
+                                itemCount: searchedlist.length,
+                                //  > 4 ? 4 : dailylist.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  HabitModel data = dailylist[index];
+                                  HabitModel data = searchedlist[index];
                                   return Container(
                                     width: 200,
                                     height: 100,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Slidable(
-                                        // endActionPane: ActionPane(
-                                        //     motion: const DrawerMotion(),
-                                        //     children: [
-                                        //      SlidableAction(
-                                        // onPressed: ((context) {
-                                        //   addtoregularwork(data);
-                                        //   // if (data.habit!=data.habit) {
-                                        //     ScaffoldMessenger.of(context).showSnackBar(
-                                        //       const SnackBar(
-                                        //         margin: EdgeInsets.all(10),
-                                        //         backgroundColor: Colors.red,
-                                        //         behavior: SnackBarBehavior.floating,
-                                        //         content: Text("Your HAbIT added to regular.."),
-                                        //       ),
-                                        //     );
-                                          
-                                        //   // } else {
-                                        //   //   ScaffoldMessenger.of(context).showSnackBar(
-                                        //   //     const SnackBar(
-                                        //   //       margin: EdgeInsets.all(10),
-                                        //   //       backgroundColor: Colors.green, 
-                                        //   //       behavior: SnackBarBehavior.floating,
-                                        //   //       content: Text("its already have in your regular list"),
-                                        //   //     ),
-                                        //   //   );
-                                        //   // }
-                                        // }),
-                                        // backgroundColor: Colors.white70,
-                                        // icon: Icons.accessibility_new_sharp,
-                                        // borderRadius: BorderRadius.circular(20),
-                                        // ),
-                                        //     ]),
                                         startActionPane: ActionPane(
                                           motion: const StretchMotion(),
                                           children: [
                                             SlidableAction(
-                                              onPressed: ((context) =>
-                                                  {deletehabit(index)}),
+                                              onPressed: (context) {
+                                                // setState(() {
+                                                setState(() {
+                                                  // deletehabit(index);
+
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        alert(context, index),
+                                                  );
+                                                });
+
+                                                // });
+                                              },
                                               backgroundColor: Colors.red,
                                               icon: Icons.delete,
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                             ),
                                             SlidableAction(
-                                              onPressed: ((context) => {
-                                                    Navigator.of(context)
-                                                        .push(MaterialPageRoute(
-                                                      builder: (ctx) =>
-                                                          UpdateStudent(
-                                                        habit: data.habit,
-                                                        note: data.note,
-                                                        index: index,
-                                                      ),
-                                                    ))
-                                                  }),
+                                              onPressed: (context) {
+                                                Navigator.of(context)
+                                                    .push(MaterialPageRoute(
+                                                  builder: (ctx) =>
+                                                      UpdateStudent(
+                                                    habit: data.habit,
+                                                    note: data.note,
+                                                    index: index,
+                                                  ),
+                                                ));
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                        const SnackBar(
+                                                  margin: EdgeInsets.all(10),
+                                                  backgroundColor: Colors.red,
+                                                  behavior:
+                                                      SnackBarBehavior.floating,
+                                                  content: Text(
+                                                      "your task is edited"),
+                                                ));
+                                              },
                                               backgroundColor: Colors.white,
                                               borderRadius:
                                                   BorderRadius.circular(20),
@@ -325,20 +304,6 @@ class _TodayScreenState extends State<TodayScreen> {
                                             color: Colors.amber,
                                             child: SingleChildScrollView(
                                               child: ListTile(
-                                                onTap: () {
-                                                  Navigator.of(context)
-                                                      .push(MaterialPageRoute(
-                                                    builder: (ctx) =>
-                                                        AddedItems(
-                                                      habit: data.habit,
-                                                      note: data.note,
-                                                      feedback: data.feedback,
-                                                      category: data.category,
-                                                      startdate: data.startdate,
-                                                      enddate: data.enddate,
-                                                    ),
-                                                  ));
-                                                },
                                                 title: Center(
                                                   child: Text(
                                                     ' ${data.habit}',
@@ -363,8 +328,11 @@ class _TodayScreenState extends State<TodayScreen> {
                                                   value: data.taskcomplete,
                                                   onChanged: (newvalue) {
                                                     setState(() async {
-                                                      data.taskcomplete = newvalue!;
+                                                      data.taskcomplete =
+                                                          newvalue!;
+                                                
                                                       addCheck(index, data);
+                                                    
                                                     });
                                                   },
                                                 ),
@@ -393,20 +361,55 @@ class _TodayScreenState extends State<TodayScreen> {
       appBar: AppBar(
         toolbarHeight: 70,
         title: const Text(
-          "Today",
+          "DAILY HABITS",
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
-//         actions: [IconButton(
-//   onPressed: () {resethabit(selectedCardIndex);},
-//   icon: Icon(Icons.restore_from_trash_rounded,color: Colors.white,size: 30,),
-// )
-// ],
         backgroundColor: const Color.fromARGB(31, 73, 62, 62),
       ),
       drawer: const Drawerrr(),
+    );
+  }
+
+  AlertDialog alert(BuildContext context, int index) {
+    return AlertDialog(
+      title: const Text(
+        'ARe you sure for  Delete your task',
+        style: TextStyle(color: Colors.white),
+      ),
+      // content: Text("ARe you sure for rest your every thing"),
+      actions: [
+        TextButton(
+          onPressed: () {
+            setState(() {
+              deletehabit(index);
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  margin: EdgeInsets.all(10),
+                  backgroundColor: Color.fromARGB(255, 213, 216, 19),
+                  behavior: SnackBarBehavior.floating,
+                  content: Text("Your HAbIT is DELETED"),
+                ),
+              );
+            });
+          },
+          child: const Text('delete'),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('CANCEL'),
+        ),
+      ],
+      elevation: 24.0,
+      backgroundColor: Colors.black54,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
     );
   }
 

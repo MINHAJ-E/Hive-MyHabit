@@ -1,12 +1,15 @@
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
 import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
+// import 'package:my_habit_app/db/functions/regularfunctions/dbregular_function.dart';
 import 'package:my_habit_app/pages/drawerPages/about.dart';
 import 'package:my_habit_app/pages/drawerPages/contact_us.dart';
 import 'package:my_habit_app/pages/drawerPages/privacy_policy.dart';
-import 'package:my_habit_app/screens/logIn_Screens/app_firstscreen.dart';
+// import 'package:my_habit_app/screens/logIn_Screens/app_firstscreen.dart';
+import 'package:my_habit_app/screens/logIn_Screens/logIn_Screen.dart';
+// import 'package:my_habit_app/screens/logIn_Screens/splash_screen.dart';
 // import 'package:my_habit_app/pages/logIn_Screens/app_firstscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,7 +44,7 @@ class _DrawerState extends State<Drawerrr> {
                             'assets/gym symbol.png'), 
                       ),
                       SizedBox( height: 10),
-                      Text( "MYHABIT", style: TextStyle(
+                      Text( "MYDAILY", style: TextStyle(
                             fontSize: 30, fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -122,12 +125,13 @@ class _DrawerState extends State<Drawerrr> {
               ListTile(
                 trailing: const Icon(Icons.logout_outlined),
                 title: const Text(
-                  "Logout",
+                  "Exit",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
-                  signout(context);
-                    SystemNavigator.pop();
+                  SystemNavigator.pop();
+                  // signout(context);
+                    // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>ScreenLogin()));
                 },
               
               ),
@@ -137,17 +141,17 @@ class _DrawerState extends State<Drawerrr> {
   }
 
    signout(BuildContext ctx) async {
-    final _sharedpref = await SharedPreferences.getInstance();
-    await _sharedpref.clear();
+    final sharedpref = await SharedPreferences.getInstance();
+    await sharedpref.clear();
     Navigator.of(ctx).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (ctx1) => const AppFirstScreen()),
+      MaterialPageRoute(builder: (ctx1) =>  ScreenLogin()),
       (route) => false,
     );
   }
 
   AlertDialog alert(BuildContext context) {
     return AlertDialog(
-      title: Text('ARe you sure for rest your every thing',style: TextStyle(color: Colors.white),),
+      title: const Text('ARe you sure for rest your every thing',style: TextStyle(color: Colors.white),),
       // content: Text("ARe you sure for rest your every thing"),
       actions: [
         TextButton(
@@ -158,15 +162,15 @@ class _DrawerState extends State<Drawerrr> {
                     // resetregular(selectedCardIndex);
                   });
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (ctx) => const BottomBar()));
+                      MaterialPageRoute(builder: (ctx) =>  ScreenLogin()));
           },
-          child: Text('RESET'),
+          child: const Text('RESET'),
         ),
         TextButton(
           onPressed: () {
            SystemNavigator.pop();
           },
-          child: Text('CANCEL'),
+          child: const Text('CANCEL'),
         ),
       ],
       elevation: 24.0,

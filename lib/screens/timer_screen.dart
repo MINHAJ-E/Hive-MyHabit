@@ -1,119 +1,3 @@
-// import 'dart:async';
-
-// import 'package:flutter/material.dart';
-// import 'package:my_habit_app/helpers/colors.dart';
-
-// class TimerScreen extends StatefulWidget {
-//   const TimerScreen({Key? key});
-
-//   @override
-//   _TimerScreenState createState() => _TimerScreenState();
-// }
-
-// class _TimerScreenState extends State<TimerScreen> {
-//   late Timer _timer;
-//   bool _isActive = false;
-//   DateTime _startTime = DateTime.now();
-
-//   String getFormattedTime() {
-//     Duration difference = DateTime.now().difference(_startTime);
-//     int milliseconds = difference.inMilliseconds;
-//     int seconds = (milliseconds / 1000).truncate();
-//     int minutes = (seconds / 60).truncate();
-//     int hours = (minutes / 60).truncate();
-
-//     seconds = seconds % 60;
-//     minutes = minutes % 60;
-
-//     return '$hours:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-//   }
-
-//   void _startTimer() {
-//     _isActive = true;
-//     _startTime = DateTime.now();
-//     _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-//       setState(() {});
-//     });
-//   }
-
-//   void _stopTimer() {
-//     _isActive = false;
-//     _timer.cancel();
-//   }
-
-//   void _resetTimer() {
-//     _startTime = DateTime.now();
-//     setState(() {});
-//   }
-
-//   @override
-//   void dispose() {
-//     _timer.cancel(); // cancel the timer when the widget is disposed
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-      
-//       backgroundColor: bggrey,
-//       appBar: AppBar(
-//         backgroundColor: Colors.amber,
-//         title: Center(child: const Text('TIMER',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
-//       ),
-//       body: Container(
-//         decoration: BoxDecoration(  
-//            image: DecorationImage(
-//               image: AssetImage('assetsfoottball2.jpg'), // Replace with your own image path
-//               fit: BoxFit.cover,
-//         ),
-//         ),
-//         child: Center(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: <Widget>[
-//               Text(
-//                 getFormattedTime(),
-//                 style: const TextStyle(
-//                     fontSize: 64.0,
-//                     fontWeight: FontWeight.bold,
-//                     color: Colors.white70),
-//               ),
-//               const SizedBox(height: 30),
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: <Widget>[
-//                   ElevatedButton(
-//                     onPressed: _isActive ? null : _startTimer,
-//                     style: ElevatedButton.styleFrom(
-//                       primary: Colors.amber, // Set your primary color here
-//                     ),
-//                     child: const Text('Start', style: TextStyle(fontSize: 18.0)),
-//                   ),
-//                   const SizedBox(width: 20),
-//                   ElevatedButton(
-//                     onPressed: _isActive ? _stopTimer : null,style: ElevatedButton.styleFrom(
-//                       primary: Colors.amber, // Set your primary color here
-//                     ),
-//                     child: const Text('Stop', style: TextStyle(fontSize: 18.0)),
-//                   ),
-//                   const SizedBox(width: 20),
-//                   ElevatedButton(
-//                     onPressed: _resetTimer,style: ElevatedButton.styleFrom(
-//                       primary: Colors.amber // Set your primary color here
-//                     ),
-//                     child: const Text('Reset', style: TextStyle(fontSize: 18.0)),
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 
@@ -125,7 +9,7 @@ class TimerScreen extends StatefulWidget {
 }
 
 class _TimerScreenState extends State<TimerScreen> {
-  static const CountDownDuration = Duration(minutes: 10);
+  static const CountDownDuration = Duration(minutes: 0);
   Duration duration = CountDownDuration;
   Timer? timer;
 
@@ -140,7 +24,7 @@ class _TimerScreenState extends State<TimerScreen> {
 
   void addTime() {
     setState(() {
-      duration = Duration(seconds: duration.inSeconds - 1);
+      duration = Duration(seconds: duration.inSeconds + 1);
       if (duration.inSeconds <= 0) {
         timer?.cancel();
       }
@@ -148,11 +32,11 @@ class _TimerScreenState extends State<TimerScreen> {
   }
 
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
+    timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
   }
 
   @override
-  void dispose() {
+  void dispose() {   
     timer?.cancel();
     super.dispose();
   }
@@ -160,12 +44,17 @@ class _TimerScreenState extends State<TimerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(backgroundColor: Colors.amber,  automaticallyImplyLeading: false, toolbarHeight: 80,
+
+      title: const Center(child: Text("STOPWATCH",style: TextStyle(fontWeight: FontWeight.bold ),)),
+      ),
+      backgroundColor: const Color.fromARGB(221, 34, 33, 33),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             buildTime(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             buildButtons(),
           ],
         ),
@@ -184,18 +73,30 @@ class _TimerScreenState extends State<TimerScreen> {
                 onPressed: () {
                   timer?.cancel();
                 },
-                child: Text("Stop"),
+                style: ElevatedButton.styleFrom(
+    primary: Colors.amber, // Set your desired color here
+  ),
+                child: const Text("Stop"),
+                
               ),
               const SizedBox(width: 12),
-              ElevatedButton(
-                onPressed: reset,
-                child: Text("Reset"),
-              ),
+             ElevatedButton(
+  onPressed: reset,
+  style: ElevatedButton.styleFrom(
+    primary: Colors.amber, // Set your desired color here
+  ),
+  child: const Text("Reset"),
+)
+
+              
             ],
           )
         : ElevatedButton(
             onPressed: startTimer,
-            child: Text("START TIMER"),
+            child: const Text("START STOPWATCH"),
+            style: ElevatedButton.styleFrom(
+    primary: Colors.amber, // Set your desired color here
+  ),
           );
   }
 
@@ -225,21 +126,21 @@ class _TimerScreenState extends State<TimerScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.amber,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
               time,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
                 fontSize: 72,
               ),
             ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           Text(header),
         ],
       );

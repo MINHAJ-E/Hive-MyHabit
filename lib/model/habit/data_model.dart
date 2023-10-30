@@ -9,45 +9,26 @@ class HabitModel {
   @HiveField(1)
   final String note;
 
+
   @HiveField(2)
-  final String category;
-
-  @HiveField(3)
-  final String feedback;
-
-  @HiveField(4)
   late bool taskcomplete;
 
-  @HiveField(5)
-  final String startdate;
+ 
+ @HiveField(3)
+ String lastUpdatedDate;
 
-  @HiveField(6)
-  final String enddate;
- 
- @HiveField(7)
- final DateTime date;
- 
- @HiveField(8)
-  bool isregular;
- 
- @HiveField(9)
-  DateTime? dateregular;
 
-  @HiveField(10)
+  @HiveField(4)
   int? id;
 
 
-  HabitModel({required this.habit, 
+  HabitModel({
+  required this.habit, 
   required this.note,
-  required this.category,
-  required this.feedback,
   required this.taskcomplete,
-  required this.startdate,
-  required this.enddate,
-  required this.date,
-  required this.isregular,
-  this.dateregular,
+  required this.lastUpdatedDate ,
   });
+
 }
 
 

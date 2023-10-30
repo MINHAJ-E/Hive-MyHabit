@@ -13,7 +13,7 @@ class AboutPage extends StatelessWidget {
           // backgroundColor: bggreyisue,
           backgroundColor: Colors.amber,
           // backgroundColor: themeManager.primaryColor,
-          title: Text('About'),
+          title: const Text('About'),
         ),
         body: Padding(
           padding: const EdgeInsets.only(left: 20,right: 20),
@@ -21,9 +21,9 @@ class AboutPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
+                const Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(18.0),
+                    padding: EdgeInsets.all(18.0),
                     child: CircleAvatar(
                       radius: 50,
                       child: Icon(
@@ -35,7 +35,7 @@ class AboutPage extends StatelessWidget {
                   ),
                 ),
                 makeSpace(40),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
@@ -46,7 +46,7 @@ class AboutPage extends StatelessWidget {
                   ],
                 ),
                 makeSpace(40),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
@@ -59,7 +59,7 @@ class AboutPage extends StatelessWidget {
                 makeSpace(40),
                 hedings('Description:'),
                 makeSpace(10),
-                Text(
+                const Text(
                     "Todo App is a powerful and user-friendly to-do list app designed to help you stay organized and boost productivity. Whether you're managing personal tasks, work projects, or a combination of both, our app is here to simplify your life.",style: TextStyle(color: Colors.white54),),
                 makeSpace(10),
                 hedings('Features:'),
@@ -70,28 +70,28 @@ class AboutPage extends StatelessWidget {
                 featuresAdd(text1: 'Dark Mode:',text2:'Reduce eye strain and conserve battery life with our dark mode.' ),
                 featuresAdd(text1: 'Privacy and Security:',text2: 'Rest assured that your data is secure and private.'),
                 makeSpace(10),
-                Text(
+                const Text(
                       'Contact:',
                       style: TextStyle(fontWeight: FontWeight.w700,color: Colors.white54),
                     ),
                     makeSpace(10),
-                    Text('Have questions, feedback, or need assistance? Contact our support team at stranger99980@gmail.com',style: TextStyle(color: Colors.white54),),
+                    const Text('Have questions, feedback, or need assistance? Contact our support team at stranger99980@gmail.com',style: TextStyle(color: Colors.white54),),
                   makeSpace(15),
-                  Text(
+                  const Text(
                       'Privacy Policy',
                       style: TextStyle(fontWeight: FontWeight.w700,color: Colors.white54),
                     ),
                     makeSpace(10),
-                    Text('Read our privacy policy page to learn how we protect your data and respect your privacy.',style: TextStyle(color: Colors.white54),),
+                    const Text('Read our privacy policy page to learn how we protect your data and respect your privacy.',style: TextStyle(color: Colors.white54),),
                     makeSpace(15),
-                  Text(
+                  const Text(
                       'Rate and Review:',
                       style: TextStyle(fontWeight: FontWeight.w700,color: Colors.white54),
                     ),
                     makeSpace(10),
-                    Text('Enjoying Todo App? Help us grow by rating and reviewing the app on the App Store or Google Play.',style: TextStyle(color: Colors.white54),),
+                    const Text('Enjoying Todo App? Help us grow by rating and reviewing the app on the App Store or Google Play.',style: TextStyle(color: Colors.white54),),
                     makeSpace(25),
-                    Text("Thank you for choosing Todo App to simplify your task management and organization. We're committed to making your life easier, one task at a time.",style: TextStyle(color: Colors.white54),),
+                    const Text("Thank you for choosing Todo App to simplify your task management and organization. We're committed to making your life easier, one task at a time.",style: TextStyle(color: Colors.white54),),
                     makeSpace(25),
                 
               ],
@@ -106,15 +106,15 @@ class AboutPage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.circle,size: 6,),
-                      SizedBox(width: 10,),
-                      Text(text1,style: TextStyle(fontWeight: FontWeight.w600,color: Colors.white54),),
+                      const Icon(Icons.circle,size: 6,),
+                      const SizedBox(width: 10,),
+                      Text(text1,style: const TextStyle(fontWeight: FontWeight.w600,color: Colors.white54),),
                     ],
                   ),
                   makeSpace(5),
                   Padding(
                     padding: const EdgeInsets.only(left: 16),
-                    child: Text(text2!,style: TextStyle(color: Colors.white54),),
+                    child: Text(text2!,style: const TextStyle(color: Colors.white54),),
                     
                   ),
                   makeSpace(8),
@@ -125,7 +125,7 @@ class AboutPage extends StatelessWidget {
   Text hedings(String text) {
     return Text(
                 text,
-                style: TextStyle(fontWeight: FontWeight.w700,color: Colors.white54),
+                style: const TextStyle(fontWeight: FontWeight.w700,color: Colors.white54),
               );
   }
 

@@ -34,6 +34,7 @@ dependencies:
   fl_chart: ^0.63.0
   flutter:
     sdk: flutter
+  flutter_heatmap_calendar: ^1.0.5
   flutter_slidable: ^3.0.0
   hive_flutter: ^1.1.0
   intl: ^0.18.1

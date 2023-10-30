@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:my_habit_app/model/habit/data_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 ValueNotifier<List<HabitModel>>habitListnotifier=ValueNotifier([]);
-// List<HabitModel>regularwork = [];
+
 
 void addhabit(HabitModel value) async {
   final habitdb = await Hive.openBox<HabitModel>('student_db');
@@ -40,42 +42,42 @@ void addCheck(int id,HabitModel data) async {
   await habitdb.putAt(id,data);
   getAllHabit();
 }
-// addtoregularwork(HabitModel data) async {
-//   final favDB = await Hive.openBox<HabitModel>('fav_db');
-//   if (!regularwork.contains(data)) {
-//     regularwork.add(data);
-//     favDB.add(data);
+// void addCheck(int id, HabitModel data) async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   DateTime lastCheckedDate = DateTime.parse(prefs.getString('lastCheckedDate$id') ?? DateTime.now().toString());
+
+//   final habitdb = await Hive.openBox<HabitModel>('student_db');
+  
+//   if (DateTime.now().isAfter(lastCheckedDate.add(Duration(days: 1)))) {
+//     data.taskcomplete = false; 
+//     prefs.setBool('isChecked$id', false);
 //   }
+  
+//   await habitdb.putAt(id, data);
+//   prefs.setString('lastCheckedDate$id', DateTime.now().toString());
+
+//   getAllHabit();
 // }
 
-// getallregularwork() async {
-//   final favDB = await Hive.openBox<HabitModel>('fav_db');
-//   regularwork.clear();
-//   regularwork = favDB.values.toList();
+// void addCheck(int id, HabitModel data) async {
+//   final habitdb = await Hive.openBox<HabitModel>('student_db');
+
+//   DateTime now = DateTime.now();
+//   String formattedDate = "${now.year}-${now.month}-${now.day}";
+
+//   if (data.lastUpdatedDate != formattedDate) {
+    
+//     data.taskcomplete = false;
+//     data.lastUpdatedDate = formattedDate;
+//   }
+
+//   await habitdb.putAt(id, data);
+//   getAllHabit();
 // }
-// deleteregularwork(int id) async {
-//   final favDB = await Hive.openBox<HabitModel>('fav_db');
-//   favDB.deleteAt(id);
-//   regularwork.removeAt(id);
-//   getallregularwork();
-// }
-// void addCheckregular(int id,HabitModel data) async {
-//   final favDB = await Hive.openBox<HabitModel>('fav_db');
-//   await favDB.putAt(id,data);
-//   getallregularwork();
-// }
+
+
 resethabit(int id)async{
 final habitdb = await Hive.openBox<HabitModel>('student_db');
 habitdb.clear();
 getAllHabit();
 }
-// resetregular(int id)async{
-// final favDB = await Hive.openBox<HabitModel>('fav_db');
-// favDB.clear();
-// getallregularwork();
-// }
-// addDateToHive(DateTime date) async {
-//   var datedb = await Hive.openBox<HabitModel>('dates');
-//   await datedb.add(date as HabitModel);
-// }
-

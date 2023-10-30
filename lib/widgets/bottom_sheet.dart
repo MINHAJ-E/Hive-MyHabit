@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/pages/mianPages/habit_addingpage.dart';
 
@@ -16,7 +16,7 @@ class BottomSheettt extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                  "choose your daily Hbits",
+                  "choose your daily Habit",
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,

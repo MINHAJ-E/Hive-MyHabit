@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/screens/chart_screen.dart';
-import 'package:my_habit_app/screens/regular_screen.dart';
+import 'package:my_habit_app/screens/checked_unchecked.dart';
 import 'package:my_habit_app/screens/timer_screen.dart';
 import 'package:my_habit_app/screens/today_screen.dart';
 
@@ -38,10 +38,10 @@ class _BottomBarState extends State<BottomBar> {
         type: BottomNavigationBarType.fixed,
         onTap: _navigationbottombar,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.today), label: 'Today'),
-          BottomNavigationBarItem(icon: Icon(Icons.accessibility_new_sharp), label: 'Regular'),
+          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.done_all_outlined), label: 'Done'),
           BottomNavigationBarItem(icon: Icon(Icons.bar_chart_rounded), label: 'Chart'),
-          BottomNavigationBarItem(icon: Icon(Icons.timer), label: 'Timer'),
+          BottomNavigationBarItem(icon: Icon(Icons.timer), label: 'Stopwatch'),
         ],
       ),
     );

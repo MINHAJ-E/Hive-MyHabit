@@ -11,14 +11,14 @@ class ContactUsPage extends StatelessWidget {
       appBar: AppBar(
         // backgroundColor: bggrey,
         backgroundColor: Colors.amber,
-        title: Text(
+        title: const Text(
           "Contact US",
           style: TextStyle(
               fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white60),
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(15.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,11 +69,11 @@ class ContactUsPage extends StatelessWidget {
   Row servicePoints(String text3) {
     return Row(
       children: [
-        Icon(
+        const Icon(
           Icons.circle,
           size: 8,
         ),
-        SizedBox(
+        const SizedBox(
           width: 6,
         ),
         Text(text3),
@@ -84,7 +84,7 @@ class ContactUsPage extends StatelessWidget {
   Text content(String text2) {
     return Text(
       text2,
-      style: TextStyle(color: Colors.white38),
+      style: const TextStyle(color: Colors.white38),
     );
   }
 
@@ -97,7 +97,7 @@ class ContactUsPage extends StatelessWidget {
   Text headings(String text1) {
     return Text(
       text1,
-      style: TextStyle(
+      style: const TextStyle(
           fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
     );
   }
