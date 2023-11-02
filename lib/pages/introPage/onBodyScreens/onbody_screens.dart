@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 // import 'package:flutter/material.dart';
 // import 'package:my_habit_app/bottombar/bottom_bar.dart';
 // import 'package:my_habit_app/pages/introPage/intro_page_1.dart';

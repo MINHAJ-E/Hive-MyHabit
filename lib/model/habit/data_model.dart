@@ -15,7 +15,7 @@ class HabitModel {
 
  
  @HiveField(3)
- String lastUpdatedDate;
+ DateTime? lastUpdatedDate;
 
 
   @HiveField(4)
@@ -30,5 +30,3 @@ class HabitModel {
   });
 
 }
-
-

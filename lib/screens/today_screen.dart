@@ -41,14 +41,16 @@ class _TodayScreenState extends State<TodayScreen> {
     scrollController =
         ScrollController(initialScrollOffset: 70.0 * currentDateTime.day);
 
-    setState(() {
+    
       getAllHabit();
       // dateWise(currentDateTime );
-    });
+   
     searchedlist = habitListnotifier.value;
     super.initState();
   }
-
+bool isSameDay(DateTime date1, DateTime date2) {
+  return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
+}
   String _search = '';
 
   void searchResult() {
@@ -235,7 +237,7 @@ class _TodayScreenState extends State<TodayScreen> {
                             valueListenable: habitListnotifier,
                             builder: (BuildContext ctx,
                                 List<HabitModel> habitlist, Widget? child) {
-                              return ListView.builder(
+                              return  searchedlist.isNotEmpty? ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: searchedlist.length,
                                 //  > 4 ? 4 : dailylist.length,
@@ -324,18 +326,31 @@ class _TodayScreenState extends State<TodayScreen> {
                                                         color: bggrey),
                                                   ),
                                                 ),
-                                                trailing: Checkbox(
-                                                  value: data.taskcomplete,
-                                                  onChanged: (newvalue) {
-                                                    setState(() async {
-                                                      data.taskcomplete =
-                                                          newvalue!;
-                                                
-                                                      addCheck(index, data);
-                                                    
-                                                    });
-                                                  },
-                                                ),
+                                                trailing:Checkbox(
+  value: data.lastUpdatedDate == null || 
+         !isSameDay(data.lastUpdatedDate!, DateTime.now()) 
+         ? false : data.taskcomplete,
+  onChanged: (newvalue) {
+    setState(() async {
+      DateTime now = DateTime.now();
+      if (data.lastUpdatedDate == null || 
+          !isSameDay(data.lastUpdatedDate!, now)) {
+        data.taskcomplete = newvalue!;
+        data.lastUpdatedDate = now;
+        addCheck(index, data);
+      } else {
+        setState(() {
+          data.taskcomplete = newvalue!;
+        });
+        updateCheck(index, data);
+      }
+    });
+  },
+),
+
+
+
+
                                               ),
                                             ),
                                           ),
@@ -344,7 +359,9 @@ class _TodayScreenState extends State<TodayScreen> {
                                     ),
                                   );
                                 },
-                              );
+                              ):const Center(child: Text('your  is empty',
+                     style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,
+                  color: Colors.white),),);
                             },
                           );
                         },

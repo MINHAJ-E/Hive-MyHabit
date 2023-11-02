@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
-// import 'package:my_habit_app/pages/introPage/onBodyScreens/onBody_Screens.dart';
-// import 'package:my_habit_app/screens/today_screen.dart';
-// import 'package:my_habit_app/pages/logIn_Screens/splash_screen.dart';
 
 class AppFirstScreen extends StatefulWidget {
   const AppFirstScreen({super.key});
@@ -21,6 +18,13 @@ class _AppFirstScreenState extends State<AppFirstScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
+         // child: Lottie.network("https://lottie.host/42efeb3d-e79b-4a1b-b038-35dcbaf19236/8iPK8QNDBh.json",fit: BoxFit.cover),
+        // child: Image.network(
+        //   'https://media.tenor.com/FBeNVFjn-EkAAAAC/ben-redblock-loading.gif',
+        //   fit: BoxFit.none, // Set BoxFit.cover to make the image cover the entire screen
+        //   width: MediaQuery.of(context).size.width,
+        //   height: MediaQuery.of(context).size.height,
+        // ),`
         child: Image.asset(
           'assets/firstAppimage.jpg',
           fit: BoxFit.cover, // Set BoxFit.cover to make the image cover the entire screen

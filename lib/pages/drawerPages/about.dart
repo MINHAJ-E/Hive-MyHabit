@@ -26,11 +26,11 @@ class AboutPage extends StatelessWidget {
                     padding: EdgeInsets.all(18.0),
                     child: CircleAvatar(
                       radius: 50,
+                      backgroundColor: Colors.blueGrey,
                       child: Icon(
                         Icons.sports_basketball_rounded,
                         size: 30,
                       ),
-                      backgroundColor: Colors.blueGrey,
                     ),
                   ),
                 ),

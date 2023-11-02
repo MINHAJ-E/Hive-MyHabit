@@ -181,7 +181,7 @@ class _UpdateStudentState extends State<UpdateStudent> {
                       //  Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.amber,
+                        backgroundColor: Colors.amber,
                       ),
                       child: const Text("Edited Habit"),
                     )
@@ -308,7 +308,7 @@ class _UpdateStudentState extends State<UpdateStudent> {
         habit: editedHabit,
         note: editedNote,
     
-       lastUpdatedDate: ""
+       lastUpdatedDate: DateTime.now()
 
       );
 

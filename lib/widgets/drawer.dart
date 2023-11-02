@@ -1,16 +1,11 @@
-// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
 import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
-// import 'package:my_habit_app/db/functions/regularfunctions/dbregular_function.dart';
 import 'package:my_habit_app/pages/drawerPages/about.dart';
 import 'package:my_habit_app/pages/drawerPages/contact_us.dart';
 import 'package:my_habit_app/pages/drawerPages/privacy_policy.dart';
-// import 'package:my_habit_app/screens/logIn_Screens/app_firstscreen.dart';
 import 'package:my_habit_app/screens/logIn_Screens/logIn_Screen.dart';
-// import 'package:my_habit_app/screens/logIn_Screens/splash_screen.dart';
-// import 'package:my_habit_app/pages/logIn_Screens/app_firstscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Drawerrr extends StatefulWidget {
@@ -129,6 +124,7 @@ class _DrawerState extends State<Drawerrr> {
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
+                  // exit(0);
                   SystemNavigator.pop();
                   // signout(context);
                     // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>ScreenLogin()));
@@ -143,6 +139,7 @@ class _DrawerState extends State<Drawerrr> {
    signout(BuildContext ctx) async {
     final sharedpref = await SharedPreferences.getInstance();
     await sharedpref.clear();
+    // ignore: use_build_context_synchronously
     Navigator.of(ctx).pushAndRemoveUntil(
       MaterialPageRoute(builder: (ctx1) =>  ScreenLogin()),
       (route) => false,

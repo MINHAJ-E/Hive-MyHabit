@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/habit/data_model.dart';
-import 'package:my_habit_app/pages/mianPages/edited_habit.dart';
 
 class CheckedTasksPage extends StatefulWidget {
   final List<HabitModel> checkedTasks;
 
-  CheckedTasksPage({required this.checkedTasks});
+  const CheckedTasksPage({super.key, required this.checkedTasks});
 
   @override
   State<CheckedTasksPage> createState() => _CheckedTasksPageState();
@@ -18,13 +16,13 @@ class _CheckedTasksPageState extends State<CheckedTasksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 63, 59, 59),
+      backgroundColor: const Color.fromARGB(255, 63, 59, 59),
       appBar: AppBar(
-        title: Center(child: Text('Checked',style: TextStyle(fontWeight: FontWeight.bold),)),
+        title: const Center(child: Text('Checked',style: TextStyle(fontWeight: FontWeight.bold),)),
         backgroundColor: Colors.amber,
         automaticallyImplyLeading: false,
       ),
-      body:  Container(
+      body:  SizedBox(
                       height: 560,
                       child: Builder(
                         builder: (context) {
@@ -41,7 +39,7 @@ class _CheckedTasksPageState extends State<CheckedTasksPage> {
                                     //  > 4 ? 4 : dailylist.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   HabitModel data = checkedTaskss[index];
-                                  return Container(
+                                  return SizedBox(
                                     width: 200,
                                     height: 100,
                                     child: Padding(
@@ -78,7 +76,7 @@ class _CheckedTasksPageState extends State<CheckedTasksPage> {
                                     ),
                                   );
                                 },
-                              ):Center(child: Text('you are great',
+                              ):const Center(child: Text('you are great',
       style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white),),);
                             },
                           );

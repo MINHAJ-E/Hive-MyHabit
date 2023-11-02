@@ -20,7 +20,7 @@ class HabitModelAdapter extends TypeAdapter<HabitModel> {
       habit: fields[0] as String,
       note: fields[1] as String,
       taskcomplete: fields[2] as bool,
-      lastUpdatedDate: fields[3] as String,
+      lastUpdatedDate: fields[3] as DateTime?,
     )..id = fields[4] as int?;
   }
 

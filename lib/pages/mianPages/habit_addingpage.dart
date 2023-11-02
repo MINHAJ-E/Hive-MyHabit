@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
 import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
@@ -119,7 +120,9 @@ class _HabitAddingState extends State<HabitAdding> {
                                 if (formkey.currentState!.validate()) {
                            onAddHabitButtonClicked();
                         } else {
-                          print("data is empty");
+                          
+                            // print("data is empty");
+                          
                         }
                             
                             });
@@ -127,7 +130,7 @@ class _HabitAddingState extends State<HabitAdding> {
                             //  Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.amber,
+                            backgroundColor: Colors.amber,
                           ),
                           child: const Text("Add Habit"),
                         )
@@ -146,8 +149,8 @@ class _HabitAddingState extends State<HabitAdding> {
  Future<void> onAddHabitButtonClicked() async {
   final habit = _habitAddController.text.trim();
   final note = _habitNoteController.text.trim();
-  DateTime now = DateTime.now();
-String formattedDate = "${now.year}-${now.month}-${now.day}";
+  // DateTime now = DateTime.now();
+// String formattedDate = "${now.year}-${now.month}-${now.day}";
 
 
   if (habit.isEmpty ||
@@ -162,7 +165,7 @@ String formattedDate = "${now.year}-${now.month}-${now.day}";
     note: note, 
 
     taskcomplete:false,
-    lastUpdatedDate: '',
+    lastUpdatedDate: DateTime.now(),
    
      );
   

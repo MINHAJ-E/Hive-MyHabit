@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
-// import 'package:my_habit_app/db/functions/regularfunctions/dbregular_function.dart';
-import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/habit/data_model.dart';
 import 'package:my_habit_app/pages/mianPages/checked.dart';
-// import 'package:my_habit_app/model/regular/regular_model.dart';
-import 'package:my_habit_app/pages/mianPages/edited_habit.dart';
 import 'package:my_habit_app/pages/mianPages/unchecked.dart';
-import 'package:my_habit_app/widgets/bottom_sheet.dart';
 
 class RegularWork extends StatefulWidget {
   const RegularWork({super.key});
@@ -18,7 +12,7 @@ class RegularWork extends StatefulWidget {
 }
 
 class _RegularWorkState extends State<RegularWork> {
-  String _search = '';
+   final String _search = '';
   List<HabitModel> searchedlist = [];
 
   @override
@@ -56,23 +50,20 @@ double width = 0.0;
             automaticallyImplyLeading: false,
             
           ),
-          body: Column(
+          body: const Column(
             children: [
-              Container(
-                // color: Color.fromARGB(100, 100, 231, 198),
-                child: TabBar(
-                  tabs: [
-                    Tab(
-                      text: 'Checked',
-                    ),
-                    Tab(
-                      text: 'UnChecked',
-                    ),
-                
-                  ],
-                  indicatorColor: Colors.blue,
-                  // unselectedLabelColor: Colors.green,
-                ),
+              TabBar(
+                tabs: [
+                  Tab(
+                    text: 'Checked',
+                  ),
+                  Tab(
+                    text: 'UnChecked',
+                  ),
+              
+                ],
+                indicatorColor: Colors.blue,
+                // unselectedLabelColor: Colors.green,
               ),
               Expanded(
                 child: TabBarView(children: [

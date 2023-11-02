@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/habit/data_model.dart';
-import 'package:my_habit_app/pages/mianPages/edited_habit.dart';
+
 
 class UncheckedTasksPage extends StatefulWidget {
   final List<HabitModel> uncheckedTasks;
 
-  UncheckedTasksPage({required this.uncheckedTasks});
+  const UncheckedTasksPage({super.key, required this.uncheckedTasks});
 
   @override
   State<UncheckedTasksPage> createState() => _UncheckedTasksPageState();
@@ -18,13 +17,13 @@ class _UncheckedTasksPageState extends State<UncheckedTasksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 63, 59, 59),
+      backgroundColor: const Color.fromARGB(255, 63, 59, 59),
       appBar: AppBar(
-        title:Center(child: Text('UnChecked',style: TextStyle(fontWeight: FontWeight.bold),)),
+        title:const Center(child: Text('UnChecked',style: TextStyle(fontWeight: FontWeight.bold),)),
         backgroundColor: Colors.amber,
         automaticallyImplyLeading: false,
       ),
-      body: Container(
+      body: SizedBox(
                       height: 560,
                       child: Builder(
                         builder: (context) {
@@ -42,7 +41,7 @@ class _UncheckedTasksPageState extends State<UncheckedTasksPage> {
                                     //  > 4 ? 4 : dailylist.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   HabitModel data = uncheckedTaskss[index];
-                                  return Container(
+                                  return SizedBox(
                                     width: 200,
                                     height: 100,
                                     child: Padding(
@@ -78,7 +77,7 @@ class _UncheckedTasksPageState extends State<UncheckedTasksPage> {
                                     ),
                                   );
                                 },
-                              ):Center(child: Text('you are great',
+                              ):const Center(child: Text('you are great',
       style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white),),);
                             },
                           );

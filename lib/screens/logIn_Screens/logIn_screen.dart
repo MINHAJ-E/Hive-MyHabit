@@ -1,9 +1,9 @@
+// ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/main.dart';
-import 'package:my_habit_app/screens/today_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -80,7 +80,7 @@ class ScreenLogin extends StatelessWidget {
                         if (formkey.currentState!.validate()) {
                           checkLogin(context);
                         } else {
-                          print("data is empty");
+                          // print("data is empty");
                         }
                         
                       },
@@ -100,18 +100,20 @@ class ScreenLogin extends StatelessWidget {
   }
 
   void checkLogin(BuildContext ctx) async {
-    String username = usernamecontroller.text;
+    // String username = usernamecontroller.text;
     // final password = passwordcontroller.text;
    
       final sharedpref = await SharedPreferences.getInstance();
       await sharedpref.setBool(SAVE_KEY_NAME, true);
 
+      // ignore: use_build_context_synchronously
       Navigator.of(ctx)
-          .pushReplacement(MaterialPageRoute(builder: (ctx1) =>  BottomBar()));
+          .pushReplacement(MaterialPageRoute(builder: (ctx1) =>  const BottomBar()));
       // Navigator.of(ctx)
       //     .pushReplacement(MaterialPageRoute(builder: (ctx1) =>  TodayScreen(username:username)));
    
-      ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
           margin: EdgeInsets.all(10),
           backgroundColor: Colors.amberAccent,
           behavior: SnackBarBehavior.floating,

@@ -9,6 +9,7 @@ class TimerScreen extends StatefulWidget {
 }
 
 class _TimerScreenState extends State<TimerScreen> {
+  // ignore: constant_identifier_names
   static const CountDownDuration = Duration(minutes: 0);
   Duration duration = CountDownDuration;
   Timer? timer;
@@ -74,7 +75,7 @@ class _TimerScreenState extends State<TimerScreen> {
                   timer?.cancel();
                 },
                 style: ElevatedButton.styleFrom(
-    primary: Colors.amber, // Set your desired color here
+    backgroundColor: Colors.amber, // Set your desired color here
   ),
                 child: const Text("Stop"),
                 
@@ -83,7 +84,7 @@ class _TimerScreenState extends State<TimerScreen> {
              ElevatedButton(
   onPressed: reset,
   style: ElevatedButton.styleFrom(
-    primary: Colors.amber, // Set your desired color here
+    backgroundColor: Colors.amber, // Set your desired color here
   ),
   child: const Text("Reset"),
 )
@@ -93,10 +94,10 @@ class _TimerScreenState extends State<TimerScreen> {
           )
         : ElevatedButton(
             onPressed: startTimer,
-            child: const Text("START STOPWATCH"),
             style: ElevatedButton.styleFrom(
-    primary: Colors.amber, // Set your desired color here
+    backgroundColor: Colors.amber, // Set your desired color here
   ),
+            child: const Text("START STOPWATCH"),
           );
   }
 
