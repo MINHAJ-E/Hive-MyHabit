@@ -44,7 +44,7 @@ class ContactUsPage extends StatelessWidget {
               headings('Buisiness inquiries'),
               spacing(5),
               content(
-                  "For partnership opportunities, advertising, or any business-related inquiries, please contact our business development team:"),
+                  "For partnership opportunities, advertising, or any business-related inquiries, please contact our business development team:minhajelayodath@gmail.com"),
               spacing(10),
               headings('Press and Media'),
               spacing(5),
@@ -55,9 +55,9 @@ class ContactUsPage extends StatelessWidget {
                 headings('Social Meadias'),
                content('Connect with us on social media for updates, tips, and community discussions:'),
                content('EMAIL:-minhajelayodath@gmail.com'),
-               content('instagram :-minhajabdulla'),
-               content('LINKDIN :- Minhaj'),
-               content('FACEBOOK :- Minhaj'),
+               content('instagram :-minhaj_abdulla__'),
+               content('LINKDIN :- Minhaj E'),
+               content('git hub :- MINHAJ-E'),
 
             ],
           ),

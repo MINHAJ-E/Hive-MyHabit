@@ -2,9 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:my_habit_app/main.dart';
 import 'package:my_habit_app/model/habit/data_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 ValueNotifier<List<HabitModel>>habitListnotifier=ValueNotifier([]);

@@ -75,13 +75,13 @@ class _DrawerState extends State<Drawerrr> {
               ListTile(
                 leading: const Icon(Icons.privacy_tip),
                 title: const Text(
-                  "Privacy policy",
+                  "Terms Conditions",
                   style: TextStyle(fontSize: 20),
                 ),
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (ctx) => const PrivacyPolicy(),
+                      builder: (ctx) =>  TermsConditions(),
                     ),
                   );
                 },

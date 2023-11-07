@@ -182,156 +182,145 @@ bool isSameDay(DateTime date1, DateTime date2) {
             child: topView(),
           ),
           SliverToBoxAdapter(
-            child: Expanded(
-              // Wrap your Column with Expanded to make it scrollable
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15, top: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            height: 40,
-                            width: 260,
-                            decoration: BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: TextField(
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'search...',
-                                ),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _search = value;
-                                  });
-                                  searchResult();
-                                },
-                              ),
-                            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, top: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          height: 40,
+                          width: 260,
+                          decoration: BoxDecoration(
+                            color: Colors.amber,
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          Padding(
+                          child: Padding(
                             padding: const EdgeInsets.only(left: 20),
-                            child: FloatingActionButton(
-                              onPressed: () {
-                                bottomsheet(context);
+                            child: TextField(
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'search...',
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  _search = value;
+                                });
+                                searchResult();
                               },
-                              backgroundColor: Colors.amber,
-                              mini: true,
-                              child: const Icon(Icons.add),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: FloatingActionButton(
+                            onPressed: () {
+                              bottomsheet(context);
+                            },
+                            backgroundColor: Colors.amber,
+                            mini: true,
+                            child: const Icon(Icons.add),
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      height: 440,
-                      child: Builder(
-                        builder: (context) {
-                          return ValueListenableBuilder<List<HabitModel>>(
-                            valueListenable: habitListnotifier,
-                            builder: (BuildContext ctx,
-                                List<HabitModel> habitlist, Widget? child) {
-                              return  searchedlist.isNotEmpty? ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: searchedlist.length,
-                                //  > 4 ? 4 : dailylist.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  HabitModel data = searchedlist[index];
-                                  return Container(
-                                    width: 200,
-                                    height: 100,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Slidable(
-                                        startActionPane: ActionPane(
-                                          motion: const StretchMotion(),
-                                          children: [
-                                            SlidableAction(
-                                              onPressed: (context) {
-                                                // setState(() {
-                                                setState(() {
-                                                  // deletehabit(index);
+                  ),
+                  Container(
+                    height: 440,
+                    child: Builder(
+                      builder: (context) {
+                        return ValueListenableBuilder<List<HabitModel>>(
+                          valueListenable: habitListnotifier,
+                          builder: (BuildContext ctx,
+                              List<HabitModel> habitlist, Widget? child) {
+                            return  searchedlist.isNotEmpty? ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: searchedlist.length,
+                              //  > 4 ? 4 : dailylist.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                HabitModel data = searchedlist[index];
+                                return Container(
+                                  width: 200,
+                                  height: 100,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Slidable(
+                                      startActionPane: ActionPane(
+                                        motion: const StretchMotion(),
+                                        children: [
+                                          SlidableAction(
+                                            onPressed: (context) {
+                                              // setState(() {
+                                              setState(() {
+                                                // deletehabit(index);
 
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (context) =>
-                                                        alert(context, index),
-                                                  );
-                                                });
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      alert(context, index),
+                                                );
+                                              });
 
-                                                // });
-                                              },
-                                              backgroundColor: Colors.red,
-                                              icon: Icons.delete,
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            SlidableAction(
-                                              onPressed: (context) {
-                                                Navigator.of(context)
-                                                    .push(MaterialPageRoute(
-                                                  builder: (ctx) =>
-                                                      UpdateStudent(
-                                                    habit: data.habit,
-                                                    note: data.note,
-                                                    index: index,
-                                                  ),
-                                                ));
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                        const SnackBar(
-                                                  margin: EdgeInsets.all(10),
-                                                  backgroundColor: Colors.red,
-                                                  behavior:
-                                                      SnackBarBehavior.floating,
-                                                  content: Text(
-                                                      "your task is edited"),
-                                                ));
-                                              },
-                                              backgroundColor: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              icon: Icons.edit,
-                                            )
-                                          ],
-                                        ),
-                                        child: GestureDetector(
-                                          child: Card(
-                                            color: Colors.amber,
-                                            child: SingleChildScrollView(
-                                              child: ListTile(
-                                                title: Center(
-                                                  child: Text(
-                                                    ' ${data.habit}',
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontStyle:
-                                                          FontStyle.italic,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 23,
-                                                    ),
+                                              // });
+                                            },
+                                            backgroundColor: Colors.red,
+                                            icon: Icons.delete,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          SlidableAction(
+                                            onPressed: (context) {
+                                              Navigator.of(context)
+                                                  .push(MaterialPageRoute(
+                                                builder: (ctx) =>
+                                                    UpdateStudent(
+                                                  habit: data.habit,
+                                                  note: data.note,
+                                                  index: index,
+                                                ),
+                                              ));
+                                             
+                                            },
+                                            backgroundColor: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            icon: Icons.edit,
+                                          )
+                                        ],
+                                      ),
+                                      child: GestureDetector(
+                                        child: Card(
+                                          color: Colors.amber,
+                                          child: SingleChildScrollView(
+                                            child: ListTile(
+                                              title: Center(
+                                                child: Text(
+                                                  ' ${data.habit}',
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontStyle:
+                                                        FontStyle.italic,
+                                                    fontWeight:
+                                                        FontWeight.bold,
+                                                    fontSize: 23,
                                                   ),
                                                 ),
-                                                subtitle: Center(
-                                                  child: Text(
-                                                    ' ${data.note}',
-                                                    style: const TextStyle(
-                                                        color: bggrey),
-                                                  ),
+                                              ),
+                                              subtitle: Center(
+                                                child: Text(
+                                                  ' ${data.note}',
+                                                  style: const TextStyle(
+                                                      color: bggrey),
                                                 ),
-                                                trailing:Checkbox(
+                                              ),
+                                              trailing:Checkbox(
   value: data.lastUpdatedDate == null || 
          !isSameDay(data.lastUpdatedDate!, DateTime.now()) 
          ? false : data.taskcomplete,
   onChanged: (newvalue) {
-    setState(() async {
+    setState(()  {
       DateTime now = DateTime.now();
       if (data.lastUpdatedDate == null || 
           !isSameDay(data.lastUpdatedDate!, now)) {
@@ -351,24 +340,23 @@ bool isSameDay(DateTime date1, DateTime date2) {
 
 
 
-                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  );
-                                },
-                              ):const Center(child: Text('your  is empty',
-                     style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,
-                  color: Colors.white),),);
-                            },
-                          );
-                        },
-                      ),
+                                  ),
+                                );
+                              },
+                            ):const Center(child: Text('your  list is empty',
+                   style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,
+                color: Colors.white),),);
+                          },
+                        );
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -393,7 +381,7 @@ bool isSameDay(DateTime date1, DateTime date2) {
   AlertDialog alert(BuildContext context, int index) {
     return AlertDialog(
       title: const Text(
-        'ARe you sure for  Delete your task',
+        'Are you sure for  Delete your task',
         style: TextStyle(color: Colors.white),
       ),
       // content: Text("ARe you sure for rest your every thing"),
@@ -406,7 +394,7 @@ bool isSameDay(DateTime date1, DateTime date2) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   margin: EdgeInsets.all(10),
-                  backgroundColor: Color.fromARGB(255, 213, 216, 19),
+                  backgroundColor: Colors.red,
                   behavior: SnackBarBehavior.floating,
                   content: Text("Your HAbIT is DELETED"),
                 ),

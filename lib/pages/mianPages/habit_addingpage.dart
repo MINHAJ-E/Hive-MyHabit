@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
 import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
@@ -51,7 +51,7 @@ class _HabitAddingState extends State<HabitAdding> {
                               controller: _habitAddController,
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'Add DAILYroutines ',
+                                hintText: 'Add daily habits ',
                                 ),
                               validator: (value){
                                  if (value == null || value.isEmpty) {
@@ -177,7 +177,7 @@ class _HabitAddingState extends State<HabitAdding> {
      ScaffoldMessenger.of(context).showSnackBar(
      const SnackBar(
        margin: EdgeInsets.all(10),
-            backgroundColor: Color.fromARGB(255, 213, 216, 19),
+            backgroundColor: Colors.green,
     behavior: SnackBarBehavior.floating,
      content: Text("Your HAbIT is added ..."),
       ),

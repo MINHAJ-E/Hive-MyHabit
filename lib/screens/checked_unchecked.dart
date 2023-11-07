@@ -42,7 +42,7 @@ double width = 0.0;
     height = MediaQuery.of(context).size.height;
 
  return DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           backgroundColor:Colors.amber,
           appBar: AppBar(

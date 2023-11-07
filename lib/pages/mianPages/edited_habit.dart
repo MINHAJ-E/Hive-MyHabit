@@ -64,7 +64,7 @@ class _UpdateStudentState extends State<UpdateStudent> {
                           controller: habitController,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'Make your own Habit',
+                            hintText: 'edit your  Habit',
                           ),
                         ),
                       ),
@@ -90,7 +90,7 @@ class _UpdateStudentState extends State<UpdateStudent> {
                           decoration: const InputDecoration(
                             
                             border: InputBorder.none,
-                            hintText: 'give small description',
+                            hintText: 'edit  description',
                           ),
                         ),
                       ),
@@ -98,77 +98,7 @@ class _UpdateStudentState extends State<UpdateStudent> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                          "starting date",  //  _formattDate(_dateTime), // Format date here
-                      style: const TextStyle(fontSize: 25, color: Colors.white),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            child: Container(
-                              height: 30,
-                              width: 55,
-                              decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.calendar_today,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            onTap: () {
-                              // _showDatePickerEnd();
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Divider(
-                      color: Colors.black,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                         "endiong datre" ,  // _formattDate(_dateTime), // Format date here
-                      style: const TextStyle(fontSize: 25, color: Colors.white),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            child: Container(
-                              height: 30,
-                              width: 55,
-                              decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.calendar_today,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            onTap: () {
-                              // _showDatePickerStart();
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+                  
                     const SizedBox(height: 20,),
                     ElevatedButton(
                       onPressed: () {
@@ -311,7 +241,16 @@ class _UpdateStudentState extends State<UpdateStudent> {
        lastUpdatedDate: DateTime.now()
 
       );
-
+ ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                      const SnackBar(
+                                                margin: EdgeInsets.all(10),
+                                                backgroundColor: Colors.green,
+                                                behavior:
+                                                    SnackBarBehavior.floating,
+                                                content: Text(
+                                                    "your task is edited"),
+                                              ));
       editList(widget.index, updated);
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => BottomBar()));

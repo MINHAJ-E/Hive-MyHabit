@@ -35,7 +35,7 @@ class _CheckedTasksPageState extends State<CheckedTasksPage> {
                               return  checkedTaskss.isNotEmpty? ListView.builder(
                                 shrinkWrap: true,
                                 itemCount:
-                                    checkedTaskss.length,
+                                    checkedTaskss.length,   
                                     //  > 4 ? 4 : dailylist.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   HabitModel data = checkedTaskss[index];
@@ -76,7 +76,7 @@ class _CheckedTasksPageState extends State<CheckedTasksPage> {
                                     ),
                                   );
                                 },
-                              ):const Center(child: Text('you are great',
+                              ):const Center(child: Text('Do Anything',
       style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white),),);
                             },
                           );

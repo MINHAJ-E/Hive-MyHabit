@@ -24,14 +24,12 @@ class AboutPage extends StatelessWidget {
                 const Center(
                   child: Padding(
                     padding: EdgeInsets.all(18.0),
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.blueGrey,
-                      child: Icon(
-                        Icons.sports_basketball_rounded,
-                        size: 30,
-                      ),
-                    ),
+//                     child:CircleAvatar(
+//   radius: 50,
+//   backgroundColor: Colors.amber,
+//   backgroundImage: AssetImage("assets/gym_symbol.png"),
+// )
+
                   ),
                 ),
                 makeSpace(40),
@@ -60,14 +58,14 @@ class AboutPage extends StatelessWidget {
                 hedings('Description:'),
                 makeSpace(10),
                 const Text(
-                    "Todo App is a powerful and user-friendly to-do list app designed to help you stay organized and boost productivity. Whether you're managing personal tasks, work projects, or a combination of both, our app is here to simplify your life.",style: TextStyle(color: Colors.white54),),
+                    "Myhabit is a powerful and user-friendly habit list app designed to help you stay organized and boost productivity. Whether you're managing personal tasks, work projects, or a combination of both, our app is here to simplify your life.",style: TextStyle(color: Colors.white54),),
                 makeSpace(10),
                 hedings('Features:'),
                 makeSpace(10),
-                featuresAdd(text1: 'Create and Manage Tasks:',text2: 'Quickly add, edit, and organize your to-do items with ease.',),
+                featuresAdd(text1: 'Create and Manage Tasks:',text2: 'Quickly add, edit, and organize your habit items with ease.',),
                 featuresAdd(text1: 'Task Completion:',text2: 'Mark tasks as completed to track your progress.'),
                 featuresAdd(text1: 'Task Notes:',text2: 'Add notes to tasks for additional details.'),
-                featuresAdd(text1: 'Dark Mode:',text2:'Reduce eye strain and conserve battery life with our dark mode.' ),
+                // featuresAdd(text1: 'Dark Mode:',text2:'Reduce eye strain and conserve battery life with our dark mode.' ),
                 featuresAdd(text1: 'Privacy and Security:',text2: 'Rest assured that your data is secure and private.'),
                 makeSpace(10),
                 const Text(
@@ -75,23 +73,18 @@ class AboutPage extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.w700,color: Colors.white54),
                     ),
                     makeSpace(10),
-                    const Text('Have questions, feedback, or need assistance? Contact our support team at stranger99980@gmail.com',style: TextStyle(color: Colors.white54),),
+                    const Text('Have questions, feedback, or need assistance? Contact our support team at minhajelayodath@gmail.com',style: TextStyle(color: Colors.white54),),
                   makeSpace(15),
-                  const Text(
-                      'Privacy Policy',
-                      style: TextStyle(fontWeight: FontWeight.w700,color: Colors.white54),
-                    ),
-                    makeSpace(10),
-                    const Text('Read our privacy policy page to learn how we protect your data and respect your privacy.',style: TextStyle(color: Colors.white54),),
-                    makeSpace(15),
+               
+                    // makeSpace(15),
                   const Text(
                       'Rate and Review:',
                       style: TextStyle(fontWeight: FontWeight.w700,color: Colors.white54),
                     ),
                     makeSpace(10),
-                    const Text('Enjoying Todo App? Help us grow by rating and reviewing the app on the App Store or Google Play.',style: TextStyle(color: Colors.white54),),
+                    const Text('Enjoying MYHABIT App? Help us grow by rating and reviewing the app on the App Store or Google Play.',style: TextStyle(color: Colors.white54),),
                     makeSpace(25),
-                    const Text("Thank you for choosing Todo App to simplify your task management and organization. We're committed to making your life easier, one task at a time.",style: TextStyle(color: Colors.white54),),
+                    const Text("Thank you for choosing MYHABIT App to simplify your task management and organization. We're committed to making your life easier, one task at a time.",style: TextStyle(color: Colors.white54),),
                     makeSpace(25),
                 
               ],
