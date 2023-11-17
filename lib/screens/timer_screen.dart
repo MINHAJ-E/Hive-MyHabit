@@ -46,7 +46,7 @@ class _TimerScreenState extends State<TimerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.amber,  automaticallyImplyLeading: false, toolbarHeight: 80,
-
+    
       title: const Center(child: Text("STOPWATCH",style: TextStyle(fontWeight: FontWeight.bold ),)),
       ),
       backgroundColor: const Color.fromARGB(221, 34, 33, 33),

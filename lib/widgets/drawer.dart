@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
-import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
+import 'package:my_habit_app/db/dbhabit_functions.dart';
 import 'package:my_habit_app/pages/drawerPages/about.dart';
 import 'package:my_habit_app/pages/drawerPages/contact_us.dart';
 import 'package:my_habit_app/pages/drawerPages/privacy_policy.dart';
@@ -81,7 +81,7 @@ class _DrawerState extends State<Drawerrr> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (ctx) =>  TermsConditions(),
+                      builder: (ctx) =>  const TermsConditions(),
                     ),
                   );
                 },

@@ -1,7 +1,10 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:my_habit_app/model/habit/data_model.dart';
-import 'package:my_habit_app/screens/logIn_Screens/app_firstscreen.dart';
+import 'package:my_habit_app/model/data_model.dart';
+// import 'package:my_habit_app/model/habit/data_model.dart';
+import 'package:my_habit_app/screens/logIn_Screens/app_firstscreen.dart';  
 
 
 const SAVE_KEY_NAME = 'USER logged IN';

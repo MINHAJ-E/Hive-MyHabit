@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
-import 'package:my_habit_app/model/habit/data_model.dart';
+import 'package:my_habit_app/db/dbhabit_functions.dart';
+import 'package:my_habit_app/model/data_model.dart';
+// import 'package:my_habit_app/model/habit/data_model.dart';
 import 'package:my_habit_app/pages/mianPages/checked.dart';
 import 'package:my_habit_app/pages/mianPages/unchecked.dart';
 
@@ -48,6 +49,7 @@ double width = 0.0;
           appBar: AppBar(
             backgroundColor: Colors.amber,
             automaticallyImplyLeading: false,
+            elevation: 0,
             
           ),
           body: const Column(
@@ -73,7 +75,7 @@ double width = 0.0;
                  CheckedTasksPage(checkedTasks: [ ],),
                  //second Tab
                  UncheckedTasksPage(uncheckedTasks: [],),
-
+        
                  
                   // Container(
                   //   child: Center(

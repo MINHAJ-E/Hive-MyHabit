@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 import 'package:my_habit_app/bottombar/bottom_bar.dart';
-import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
+import 'package:my_habit_app/db/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/model/habit/data_model.dart';
+import 'package:my_habit_app/model/data_model.dart';
+// import 'package:my_habit_app/model/habit/data_model.dart';
 
 class HabitAdding extends StatefulWidget {
   const HabitAdding({super.key});

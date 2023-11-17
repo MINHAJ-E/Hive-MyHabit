@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
+import 'package:my_habit_app/db/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/model/habit/data_model.dart';
+import 'package:my_habit_app/model/data_model.dart';
+// import 'package:my_habit_app/model/habit/data_model.dart';
 
 class CheckedTasksPage extends StatefulWidget {
   final List<HabitModel> checkedTasks;
@@ -46,6 +47,9 @@ class _CheckedTasksPageState extends State<CheckedTasksPage> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Card(
                                         color: Colors.amber,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
                                         child: SingleChildScrollView(
                                           child: ListTile(
                                           

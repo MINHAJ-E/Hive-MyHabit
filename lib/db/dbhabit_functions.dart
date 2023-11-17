@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:my_habit_app/model/habit/data_model.dart';
+import 'package:my_habit_app/model/data_model.dart';
+// import 'package:my_habit_app/model/habit/data_model.dart';
 
 
 ValueNotifier<List<HabitModel>>habitListnotifier=ValueNotifier([]);
@@ -40,10 +41,6 @@ Future<void>editList(index,HabitModel value)async {
 }
 
 
-void updateCheck(int id, HabitModel data) async {
-  final habitdb = await Hive.openBox<HabitModel>('student_db');
-  await habitdb.putAt(id, data);
-}
 
 void addCheck(int id, HabitModel data) async {
   final habitdb = await Hive.openBox<HabitModel>('student_db');
@@ -67,6 +64,10 @@ void addCheck(int id, HabitModel data) async {
 //   getAllHabit(); // Assuming getAllHabit() is a synchronous function
 // }
 
+void updateCheck(int id, HabitModel data) async {
+  final habitdb = await Hive.openBox<HabitModel>('student_db');
+  await habitdb.putAt(id, data);
+}
 
 
 

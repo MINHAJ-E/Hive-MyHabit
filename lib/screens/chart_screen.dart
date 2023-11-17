@@ -1,9 +1,10 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/animation.dart';
-import 'package:my_habit_app/db/functions/habitfunctions/dbhabit_functions.dart';
+import 'package:my_habit_app/db/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/model/habit/data_model.dart';
+import 'package:my_habit_app/model/data_model.dart';
+// import 'package:my_habit_app/model/habit/data_model.dart';
 
 
 class HabitChart extends StatefulWidget {
@@ -103,7 +104,7 @@ class _HabitChartState extends State<HabitChart> {
             const SizedBox(height: 40,),
             chartValues(color:Colors.white24, text: "Incomplete Task's"),
             const SizedBox(height: 20,),
-   
+     
           ],
         ),
       ),
