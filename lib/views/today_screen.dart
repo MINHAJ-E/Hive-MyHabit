@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:my_habit_app/controller/calender_controller.dart';
+import 'package:my_habit_app/controller/dialogbox_controller.dart';
 import 'package:my_habit_app/db/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/data_model.dart';
 // import 'package:my_habit_app/model/habit/data_model.dart';
-import 'package:my_habit_app/pages/mianPages/edited_habit.dart';
+import 'package:my_habit_app/views/edited_habit.dart';
 import 'package:my_habit_app/utils/date_utils.dart' as date_util;
 import 'package:my_habit_app/widgets/bottom_sheet.dart';
 import 'package:my_habit_app/widgets/drawer.dart';
-import 'package:my_habit_app/widgets/methods.dart';
 
 class TodayScreen extends StatefulWidget {
   const TodayScreen({Key? key,}) : super(key: key);
@@ -27,6 +28,7 @@ class _TodayScreenState extends State<TodayScreen> {
     searchedlist = habitListnotifier.value;
     super.initState();
   }
+  List<HabitModel> searchedlist = [];
   bool isSameDay(DateTime date1, DateTime date2) {
   return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
 }
@@ -52,7 +54,7 @@ class _TodayScreenState extends State<TodayScreen> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(
-            child: topView(),
+            child: topView(context),
           ),
           SliverToBoxAdapter(
             child: SingleChildScrollView(

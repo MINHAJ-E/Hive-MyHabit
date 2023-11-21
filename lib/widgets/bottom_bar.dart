@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'package:my_habit_app/screens/chart_screen.dart';
-import 'package:my_habit_app/screens/checked_unchecked.dart';
-import 'package:my_habit_app/screens/timer_screen.dart';
-import 'package:my_habit_app/screens/today_screen.dart';
+import 'package:my_habit_app/views/chart_screen.dart';
+import 'package:my_habit_app/widgets/checked_unchecked.dart';
+import 'package:my_habit_app/views/timer_screen.dart';
+import 'package:my_habit_app/views/today_screen.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);

@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:my_habit_app/controller/chart_controller.dart';
 // import 'package:flutter/animation.dart';
 import 'package:my_habit_app/db/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
@@ -111,21 +112,6 @@ class _HabitChartState extends State<HabitChart> {
     );
   }
 
-  Row chartValues({required Color color, String? text}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          height: 20,
-          width: 20,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(7)),
-        ),
-        const SizedBox(width: 15,),
-        Text(text!, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),)
-      ],
-    );
-  }
+ 
 }
 

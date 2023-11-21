@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_habit_app/bottombar/bottom_bar.dart';
+import 'package:my_habit_app/widgets/bottom_bar.dart';
 
 class AppFirstScreen extends StatefulWidget {
   const AppFirstScreen({super.key});

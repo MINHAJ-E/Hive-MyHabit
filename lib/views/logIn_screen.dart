@@ -1,10 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:my_habit_app/bottombar/bottom_bar.dart';
+import 'package:my_habit_app/controller/login_controller.dart';
 import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/main.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ScreenLogin extends StatelessWidget {
@@ -18,15 +16,7 @@ class ScreenLogin extends StatelessWidget {
   
   get username =>   usernamecontroller.text;
   
-  // void _login(BuildContext context) {
-  //   String name = usernamecontroller.text;
-  //   Navigator.pushReplacement(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => TodayScreen(name: name),
-  //     ),
-  //   );
-  // }
+ 
   
   Object get currentState =>formkey ;
   @override
@@ -99,25 +89,4 @@ class ScreenLogin extends StatelessWidget {
     ));
   }
 
-  void checkLogin(BuildContext ctx) async {
-    // String username = usernamecontroller.text;
-    // final password = passwordcontroller.text;
-   
-      final sharedpref = await SharedPreferences.getInstance();
-      await sharedpref.setBool(SAVE_KEY_NAME, true);
-
-      // ignore: use_build_context_synchronously
-      Navigator.of(ctx)
-          .pushReplacement(MaterialPageRoute(builder: (ctx1) =>  const BottomBar()));
-      // Navigator.of(ctx)
-      //     .pushReplacement(MaterialPageRoute(builder: (ctx1) =>  TodayScreen(username:username)));
-   
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
-          margin: EdgeInsets.all(10),
-          backgroundColor: Colors.amberAccent,
-          behavior: SnackBarBehavior.floating,
-          content: Text("successfully log in"))); 
-  
-  }
 }

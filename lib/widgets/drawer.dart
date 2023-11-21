@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_habit_app/bottombar/bottom_bar.dart';
+import 'package:my_habit_app/widgets/bottom_bar.dart';
 import 'package:my_habit_app/db/dbhabit_functions.dart';
-import 'package:my_habit_app/pages/drawerPages/about.dart';
-import 'package:my_habit_app/pages/drawerPages/contact_us.dart';
-import 'package:my_habit_app/pages/drawerPages/privacy_policy.dart';
-import 'package:my_habit_app/screens/logIn_Screens/logIn_Screen.dart';
+import 'package:my_habit_app/views/about.dart';
+import 'package:my_habit_app/views/contact_us.dart';
+import 'package:my_habit_app/views/logIn_screen.dart';
+import 'package:my_habit_app/views/privacy_policy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Drawerrr extends StatefulWidget {

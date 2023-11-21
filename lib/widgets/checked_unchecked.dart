@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/db/dbhabit_functions.dart';
 import 'package:my_habit_app/model/data_model.dart';
+import 'package:my_habit_app/views/checked.dart';
+import 'package:my_habit_app/views/unchecked.dart';
 // import 'package:my_habit_app/model/habit/data_model.dart';
-import 'package:my_habit_app/pages/mianPages/checked.dart';
-import 'package:my_habit_app/pages/mianPages/unchecked.dart';
 
 class RegularWork extends StatefulWidget {
   const RegularWork({super.key});
