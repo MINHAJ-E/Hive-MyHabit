@@ -38,7 +38,7 @@ class _AppFirstScreenState extends State<AppFirstScreen> {
   Future<void> gotoLogin(context) async {
     await Future.delayed(const Duration(seconds: 2));
     Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (ctx) => const BottomBar()));
+        .pushReplacement(MaterialPageRoute(builder: (ctx) =>  BottomBar()));
   }
 }
 

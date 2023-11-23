@@ -1,42 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:my_habit_app/db/dbhabit_functions.dart';
 import 'package:my_habit_app/model/data_model.dart';
-import 'package:my_habit_app/views/checked.dart';
-import 'package:my_habit_app/views/unchecked.dart';
+import 'package:my_habit_app/views/pages/checked.dart';
+import 'package:my_habit_app/views/pages/unchecked.dart';
 // import 'package:my_habit_app/model/habit/data_model.dart';
 
-class RegularWork extends StatefulWidget {
-  const RegularWork({super.key});
-
-  @override
-  State<RegularWork> createState() => _RegularWorkState();
-}
-
-class _RegularWorkState extends State<RegularWork> {
-   final String _search = '';
-  List<HabitModel> searchedlist = [];
-
-  @override
-  void initState() {
-    super.initState();
-
-    getAllHabit();
-    searchedlist = habitListnotifier.value;
-  }
-
-  void searchResult() {
-    setState(() {
-      searchedlist = habitListnotifier.value
-          .where((incomigModel) => incomigModel.habit
-              .toLowerCase()
-              .contains(_search.toLowerCase()))
-          .toList();
-    });
-  }
+// ignore: must_be_immutable
+class RegularWork extends StatelessWidget {
+   RegularWork({super.key});
 
 double width = 0.0;
+
   double height = 0.0;
+
   List<HabitModel> dailylist = [];
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;

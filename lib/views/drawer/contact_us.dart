@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_habit_app/controller/contactus_controller.dart';
+import 'package:my_habit_app/views/drawer/widgets/contactus_controller.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 
 class ContactUsPage extends StatelessWidget {

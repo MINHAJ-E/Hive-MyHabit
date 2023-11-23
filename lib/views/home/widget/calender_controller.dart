@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/helpers/colors.dart';
-import 'package:my_habit_app/model/data_model.dart';
-import 'package:my_habit_app/utils/colors_utils.dart';
-import 'package:my_habit_app/utils/date_utils.dart' as date_util;
+import 'package:my_habit_app/services/utils/colors_utils.dart';
+import 'package:my_habit_app/services/utils/date_utils.dart' as date_util;
 
 double width = 0.0;
 double height = 0.0;
@@ -30,7 +29,7 @@ Widget titleView() {
 }
 
 Widget hrizontalCapsuleListView(BuildContext context) {
-  double screenWidth = MediaQuery.of(context).size.width;
+  // double screenWidth = MediaQuery.of(context).size.width;
   double screenHeight = MediaQuery.of(context).size.height;
   return SizedBox(
     // screenWidth * 0.9,

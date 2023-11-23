@@ -1,24 +1,17 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:my_habit_app/controller/chart_controller.dart';
-// import 'package:flutter/animation.dart';
-import 'package:my_habit_app/db/dbhabit_functions.dart';
+import 'package:my_habit_app/views/pages/widget/chart_controller.dart';
+import 'package:my_habit_app/services/db/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/data_model.dart';
-// import 'package:my_habit_app/model/habit/data_model.dart';
+import 'package:provider/provider.dart';
 
 
-class HabitChart extends StatefulWidget {
+class HabitChart extends StatelessWidget {
   const HabitChart({super.key});
 
   @override
-  State<HabitChart> createState() => _HabitChartState();
-}
-
-class _HabitChartState extends State<HabitChart> {
-  @override
   Widget build(BuildContext context) {
-    // final themeManager = Provider.of<ThemeManager>(context);
     return Scaffold(
       backgroundColor: bggrey,
       appBar: AppBar(
@@ -35,14 +28,14 @@ class _HabitChartState extends State<HabitChart> {
         automaticallyImplyLeading: false,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
-            // gradient: themeManager.primaryColorGradient,
+  
           ),)),
       body: SingleChildScrollView(
         child: Column(
           children: [
         
             FutureBuilder<List<HabitModel>>(
-              future: getAllHabit(),
+              future:Provider.of<DBProvider>(context, listen: false). getAllHabit(),
               builder: (context, snapshot) {
                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return const Center(
@@ -111,7 +104,5 @@ class _HabitChartState extends State<HabitChart> {
       ),
     );
   }
-
- 
 }
 

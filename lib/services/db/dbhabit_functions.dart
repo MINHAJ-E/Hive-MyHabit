@@ -3,26 +3,27 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:my_habit_app/model/data_model.dart';
-// import 'package:my_habit_app/model/habit/data_model.dart';
 
+class DBProvider extends ChangeNotifier{
 
-ValueNotifier<List<HabitModel>>habitListnotifier=ValueNotifier([]);
-
+// ValueNotifier<List<HabitModel>>habitListnotifier=ValueNotifier([]);
+ List<HabitModel> searchedlist = [];
 
 void addhabit(HabitModel value) async {
   final habitdb = await Hive.openBox<HabitModel>('student_db');
   final id =await habitdb.add(value);
   value.id = id;
-  habitListnotifier.value.add(value);
-  habitListnotifier.notifyListeners();
+  // value.add(value);
+  getAllHabit();
+  notifyListeners();
 }
 
 Future<List<HabitModel>>getAllHabit() async {
   final habitdb = await Hive.openBox<HabitModel>('student_db');
   final habits=habitdb.values.toList();
-  habitListnotifier.value.clear();
-  habitListnotifier.value.addAll(habitdb.values);
-  habitListnotifier.notifyListeners();
+  searchedlist.clear();
+  searchedlist.addAll(habitdb.values);
+  notifyListeners();
   return habits;
 }
 void deletehabit(int id) async {
@@ -32,9 +33,9 @@ void deletehabit(int id) async {
 }
 Future<void>editList(index,HabitModel value)async {
  final habitdb = await Hive.openBox<HabitModel>('student_db');
- habitListnotifier.value.clear();
- habitListnotifier.value.addAll(habitdb.values);
- habitListnotifier.notifyListeners();
+ searchedlist.clear();
+ searchedlist.addAll(habitdb.values);
+notifyListeners();
  habitdb.putAt(index, value);
  getAllHabit();
  
@@ -92,4 +93,5 @@ resethabit(int id)async{
 final habitdb = await Hive.openBox<HabitModel>('student_db');
 habitdb.clear();
 getAllHabit();
+}
 }

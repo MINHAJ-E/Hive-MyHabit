@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_habit_app/widgets/bottom_bar.dart';
-import 'package:my_habit_app/db/dbhabit_functions.dart';
-import 'package:my_habit_app/views/about.dart';
-import 'package:my_habit_app/views/contact_us.dart';
-import 'package:my_habit_app/views/logIn_screen.dart';
-import 'package:my_habit_app/views/privacy_policy.dart';
+import 'package:my_habit_app/services/db/dbhabit_functions.dart';
+import 'package:my_habit_app/views/drawer/about.dart';
+import 'package:my_habit_app/views/drawer/contact_us.dart';
+import 'package:my_habit_app/views/loginscreen/logIn_screen.dart';
+import 'package:my_habit_app/views/drawer/privacy_policy.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Drawerrr extends StatefulWidget {
-  const Drawerrr ({super.key});
+class Drawerrr extends StatelessWidget {
+   Drawerrr ({super.key});
 
-  @override
-  State<Drawerrr> createState() => _DrawerState();
-}
-
-class _DrawerState extends State<Drawerrr> {
    int selectedCardIndex = -1;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -54,7 +51,7 @@ class _DrawerState extends State<Drawerrr> {
                 ),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => const BottomBar(),
+                    builder: (ctx) =>  BottomBar(),
                   ));
                 },
               ),
@@ -154,10 +151,10 @@ class _DrawerState extends State<Drawerrr> {
         TextButton(
           onPressed: () {
           
-            setState(() {
-                    resethabit(selectedCardIndex);
+            
+                   Provider.of<DBProvider>(context, listen: false). resethabit(selectedCardIndex);
                     // resetregular(selectedCardIndex);
-                  });
+              
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (ctx) =>  ScreenLogin()));
           },

@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:my_habit_app/db/dbhabit_functions.dart';
+import 'package:my_habit_app/services/db/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/data_model.dart';
+import 'package:provider/provider.dart';
 // import 'package:my_habit_app/model/habit/data_model.dart';
 
-class CheckedTasksPage extends StatefulWidget {
+class CheckedTasksPage extends StatelessWidget {
   final List<HabitModel> checkedTasks;
 
   const CheckedTasksPage({super.key, required this.checkedTasks});
 
-  @override
-  State<CheckedTasksPage> createState() => _CheckedTasksPageState();
-}
-
-class _CheckedTasksPageState extends State<CheckedTasksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,17 +19,14 @@ class _CheckedTasksPageState extends State<CheckedTasksPage> {
         backgroundColor: Colors.amber,
         automaticallyImplyLeading: false,
       ),
-      body:  SizedBox(
-                      height: 560,
-                      child: Builder(
-                        builder: (context) {
-                          return ValueListenableBuilder<List<HabitModel>>(
-                            valueListenable: habitListnotifier,
-                            builder: (BuildContext ctx,
-                                List<HabitModel> habitList, Widget? child) {
-                                  final checkedTaskss =
-                  habitList.where((taskss) => taskss.taskcomplete).toList();
-                              return  checkedTaskss.isNotEmpty? ListView.builder(
+       body: SizedBox(
+        height: 560,
+        child: Consumer<DBProvider>(
+          builder: (context, dbProvider, _) {
+            final checkedTaskss =
+                dbProvider.searchedlist.where((taskss) => taskss.taskcomplete).toList();
+            return checkedTaskss.isNotEmpty
+                ? ListView.builder(
                                 shrinkWrap: true,
                                 itemCount:
                                     checkedTaskss.length,   
@@ -83,10 +76,8 @@ class _CheckedTasksPageState extends State<CheckedTasksPage> {
                               ):const Center(child: Text('Do Anything',
       style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white),),);
                             },
-                          );
-                        },
-                      ),
-                    ),
-    );
-  }
-}
+        )) );
+ } }
+                     
+   
+  

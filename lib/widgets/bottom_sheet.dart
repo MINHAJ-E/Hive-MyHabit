@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_habit_app/views/habit_addingpage.dart';
+import 'package:my_habit_app/views/adding/habit_addingpage.dart';
 
 
 class BottomSheettt extends StatelessWidget {
@@ -33,7 +33,7 @@ class BottomSheettt extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (ctx) => const HabitAdding()),
+                              builder: (ctx) => HabitAdding()),
                         );
                       },
                       child: Container(

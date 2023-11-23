@@ -3,9 +3,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/widgets/bottom_bar.dart';
-import 'package:my_habit_app/db/dbhabit_functions.dart';
+import 'package:my_habit_app/services/db/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/data_model.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class UpdateStudent extends StatefulWidget {
@@ -102,10 +103,10 @@ class _UpdateStudentState extends State<UpdateStudent> {
                     ElevatedButton(
                       onPressed: () {
                         
-                        setState(() {
+                        // setState(() {
                           // saved();
                           update();
-                        });
+                        // });
                        
                       //  Navigator.pop(context);
                       },
@@ -148,7 +149,7 @@ class _UpdateStudentState extends State<UpdateStudent> {
                                                 content: Text(
                                                     "your task is edited"),
                                               ));
-      editList(widget.index, updated);
+    Provider.of<DBProvider>(context, listen: false).  editList(widget.index, updated);
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => BottomBar()));
     }

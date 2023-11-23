@@ -1,70 +1,41 @@
-import 'dart:async';
+
+// ignore_for_file: invalid_use_of_visible_for_testing_member
+
 import 'package:flutter/material.dart';
+import 'package:my_habit_app/controller/timer_provider.dart';
+import 'package:provider/provider.dart';
 
-class TimerScreen extends StatefulWidget {
-  const TimerScreen({Key? key}) : super(key: key);
 
-  @override
-  State<TimerScreen> createState() => _TimerScreenState();   
-}
-
-class _TimerScreenState extends State<TimerScreen> {
-  // ignore: constant_identifier_names
-  static const CountDownDuration = Duration(minutes: 0);
-  Duration duration = CountDownDuration;
-  Timer? timer;
-
-  void reset() {
-    if (timer != null && timer!.isActive) {
-      timer!.cancel();
-    }
-    setState(() {
-      duration = CountDownDuration;
-    });
-  }
-
-  void addTime() {
-    setState(() {
-      duration = Duration(seconds: duration.inSeconds + 1);
-      if (duration.inSeconds <= 0) {
-        timer?.cancel();
-      }
-    });
-  }
-
-  void startTimer() {
-    timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
-  }
-
-  @override
-  void dispose() {   
-    timer?.cancel();
-    super.dispose();
-  }
+class TimerScreenContent extends StatelessWidget {
+  const TimerScreenContent({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var timerModel = Provider.of<TimerProvider>(context, listen: true);
+
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.amber,  automaticallyImplyLeading: false, toolbarHeight: 80,
-    
-      title: const Center(child: Text("STOPWATCH",style: TextStyle(fontWeight: FontWeight.bold ),)),
+      appBar: AppBar(
+        backgroundColor: Colors.amber,
+        automaticallyImplyLeading: false,
+        toolbarHeight: 80,
+        title: const Center(child: Text("STOPWATCH", style: TextStyle(fontWeight: FontWeight.bold),)),
       ),
       backgroundColor: const Color.fromARGB(221, 34, 33, 33),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            buildTime(),
+            buildTime(timerModel),
             const SizedBox(height: 20),
-            buildButtons(),
+            buildButtons(timerModel),
           ],
         ),
       ),
     );
   }
 
-  Widget buildButtons() {
-    final isRunning = timer != null && timer!.isActive;
+  Widget buildButtons(TimerProvider timerModel) {
+    final isRunning = timerModel.timer != null && timerModel.timer!.isActive;
 
     return isRunning
         ? Row(
@@ -72,40 +43,39 @@ class _TimerScreenState extends State<TimerScreen> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  timer?.cancel();
+                  timerModel.timer?.cancel();
+                  // ignore: invalid_use_of_protected_member
+                  timerModel.notifyListeners();
                 },
                 style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.amber, // Set your desired color here
-  ),
+                  backgroundColor: Colors.amber,
+                ),
                 child: const Text("Stop"),
-                
               ),
               const SizedBox(width: 12),
-             ElevatedButton(
-  onPressed: reset,
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.amber, // Set your desired color here
-  ),
-  child: const Text("Reset"),
-)
-
-              
+              ElevatedButton(
+                onPressed: timerModel.reset,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.amber,
+                ),
+                child: const Text("Reset"),
+              ),
             ],
           )
         : ElevatedButton(
-            onPressed: startTimer,
+            onPressed: timerModel.startTimer,
             style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.amber, // Set your desired color here
-  ),
+              backgroundColor: Colors.amber,
+            ),
             child: const Text("START STOPWATCH"),
           );
   }
 
-  Widget buildTime() {
+  Widget buildTime(TimerProvider timerModel) {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
-    final hours = twoDigits(duration.inHours);
-    final minutes = twoDigits(duration.inMinutes.remainder(60));
-    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    final hours = twoDigits(timerModel.duration.inHours);
+    final minutes = twoDigits(timerModel.duration.inMinutes.remainder(60));
+    final seconds = twoDigits(timerModel.duration.inSeconds.remainder(60));
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -146,3 +116,4 @@ class _TimerScreenState extends State<TimerScreen> {
         ],
       );
 }
+

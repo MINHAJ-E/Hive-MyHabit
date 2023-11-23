@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 import 'package:my_habit_app/widgets/bottom_bar.dart';
-import 'package:my_habit_app/db/dbhabit_functions.dart';
+import 'package:my_habit_app/services/db/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/data_model.dart';
+import 'package:provider/provider.dart';
 // import 'package:my_habit_app/model/habit/data_model.dart';
 
-class HabitAdding extends StatefulWidget {
-  const HabitAdding({super.key});
+class HabitAdding extends StatelessWidget {
+   HabitAdding({super.key});
 
-  @override
-  State<HabitAdding> createState() => _HabitAddingState();
-}
-
-class _HabitAddingState extends State<HabitAdding> {
   final TextEditingController _habitAddController = TextEditingController();
+
   final TextEditingController _habitNoteController = TextEditingController();
 
    final formkey = GlobalKey<FormState>();
@@ -117,16 +114,15 @@ class _HabitAddingState extends State<HabitAdding> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            setState(() {
                                 if (formkey.currentState!.validate()) {
-                           onAddHabitButtonClicked();
+                           onAddHabitButtonClicked(context);
                         } else {
                           
                             // print("data is empty");
                           
                         }
                             
-                            });
+                        
             
                             //  Navigator.pop(context);
                           },
@@ -145,14 +141,9 @@ class _HabitAddingState extends State<HabitAdding> {
         
   }
 
-
-
- Future<void> onAddHabitButtonClicked() async {
+ Future<void> onAddHabitButtonClicked(context) async {
   final habit = _habitAddController.text.trim();
   final note = _habitNoteController.text.trim();
-  // DateTime now = DateTime.now();
-// String formattedDate = "${now.year}-${now.month}-${now.day}";
-
 
   if (habit.isEmpty ||
    note.isEmpty 
@@ -164,17 +155,14 @@ class _HabitAddingState extends State<HabitAdding> {
   final habitt = HabitModel(
     habit: habit, 
     note: note, 
-
     taskcomplete:false,
     lastUpdatedDate: DateTime.now(),
    
      );
   
-  addhabit(habitt);
+Provider.of<DBProvider>(context, listen: false).  addhabit(habitt);
 
-  setState(() {});
-
-  Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const BottomBar()));
+  Navigator.of(context).push(MaterialPageRoute(builder: (ctx) =>  BottomBar()));
      ScaffoldMessenger.of(context).showSnackBar(
      const SnackBar(
        margin: EdgeInsets.all(10),
@@ -184,5 +172,4 @@ class _HabitAddingState extends State<HabitAdding> {
       ),
   );
 }
-
 }
