@@ -1,4 +1,3 @@
-// ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -6,9 +5,9 @@ import 'package:my_habit_app/model/data_model.dart';
 
 class DBProvider extends ChangeNotifier{
 
-// ValueNotifier<List<HabitModel>>habitListnotifier=ValueNotifier([]);
  List<HabitModel> searchedlist = [];
-
+ List<HabitModel>result = [];
+  List<HabitModel> habitList = [];
 void addhabit(HabitModel value) async {
   final habitdb = await Hive.openBox<HabitModel>('student_db');
   final id =await habitdb.add(value);
@@ -40,58 +39,38 @@ notifyListeners();
  getAllHabit();
  
 }
-
-
-
 void addCheck(int id, HabitModel data) async {
   final habitdb = await Hive.openBox<HabitModel>('student_db');
   await habitdb.putAt(id, data);
   getAllHabit();
 }
-// void addCheck(int id, HabitModel data) async {
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   DateTime lastCheckedDate = DateTime.parse(prefs.getString('lastCheckedDate$id') ?? DateTime.now().toString());
-
-//   if (DateTime.now().isAfter(lastCheckedDate.add(const Duration(days: 1)))) {
-//     data.taskcomplete = false; 
-//     prefs.setBool('isChecked$id', false);
-//   }
-
-//   prefs.setString('lastCheckedDate$id', DateTime.now().toString());
-
-//   // Set the boolean value associated with SAVE_KEY_CHECK
-//   await prefs.setBool(SAVE_KEY_CHECK, true);
-
-//   getAllHabit(); // Assuming getAllHabit() is a synchronous function
-// }
-
 void updateCheck(int id, HabitModel data) async {
   final habitdb = await Hive.openBox<HabitModel>('student_db');
   await habitdb.putAt(id, data);
 }
-
-
-
-// void addCheck(int id, HabitModel data) async {
-//   final habitdb = await Hive.openBox<HabitModel>('student_db');
-
-//   DateTime now = DateTime.now();
-//   String formattedDate = "${now.year}-${now.month}-${now.day}";
-
-//   if (data.lastUpdatedDate != formattedDate) {
-    
-//     data.taskcomplete = false;
-//     data.lastUpdatedDate = formattedDate;
-//   }
-
-//   await habitdb.putAt(id, data);
-//   getAllHabit();
-// }
-
-
 resethabit(int id)async{
 final habitdb = await Hive.openBox<HabitModel>('student_db');
 habitdb.clear();
 getAllHabit();
+}
+
+
+  loadhabit(){
+    searchedlist=habitList;
+    
+  }
+
+void filterCustomerList(String query) {
+  if (query.isEmpty) {
+    result=habitList;
+  }else{
+ result= habitList
+      .where((incomingModel) =>
+          incomingModel.habit.toLowerCase().contains(query.toLowerCase())
+          )
+      .toList();
+  }
+  searchedlist = result;
+  notifyListeners();
 }
 }

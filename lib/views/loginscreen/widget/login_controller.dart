@@ -13,7 +13,7 @@ void checkLogin(BuildContext ctx) async {
 
       // ignore: use_build_context_synchronously
       Navigator.of(ctx)
-          .pushReplacement(MaterialPageRoute(builder: (ctx1) =>   BottomBar()));
+          .pushReplacement(MaterialPageRoute(builder: (ctx1) =>   const BottomBar()));
       // Navigator.of(ctx)
       //     .pushReplacement(MaterialPageRoute(builder: (ctx1) =>  TodayScreen(username:username)));
    

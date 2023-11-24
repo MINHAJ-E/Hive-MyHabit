@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class TimerProvider extends ChangeNotifier {
+  // ignore: constant_identifier_names
   static const CountDownDuration = Duration(minutes: 0);
   Duration duration = CountDownDuration;
   Timer? timer;
@@ -33,5 +34,8 @@ class TimerProvider extends ChangeNotifier {
   void dispose() {
     timer?.cancel();
     super.dispose();
+  }
+  startwatch(timerModel){
+      timerModel.notifyListeners();
   }
 }

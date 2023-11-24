@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:my_habit_app/views/pages/widget/chart_controller.dart';
-import 'package:my_habit_app/services/db/dbhabit_functions.dart';
+import 'package:my_habit_app/controller/db/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/data_model.dart';
 import 'package:provider/provider.dart';

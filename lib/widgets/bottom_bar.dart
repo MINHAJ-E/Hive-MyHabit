@@ -7,20 +7,9 @@ import 'package:my_habit_app/widgets/checked_unchecked.dart';
 import 'package:provider/provider.dart';
 // import 'your_provider_file.dart'; // Import the file where BottomProvider is defined
 
+
 class BottomBar extends StatelessWidget {
   const BottomBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => BottomProvider(),
-      child: BottomBarContent(),
-    );
-  }
-}
-
-class BottomBarContent extends StatelessWidget {
-  const BottomBarContent({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
 import 'package:my_habit_app/widgets/bottom_bar.dart';
-import 'package:my_habit_app/services/db/dbhabit_functions.dart';
+import 'package:my_habit_app/controller/db/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/data_model.dart';
 import 'package:provider/provider.dart';
-// import 'package:my_habit_app/model/habit/data_model.dart';
 
 class HabitAdding extends StatelessWidget {
    HabitAdding({super.key});
@@ -162,7 +160,7 @@ class HabitAdding extends StatelessWidget {
   
 Provider.of<DBProvider>(context, listen: false).  addhabit(habitt);
 
-  Navigator.of(context).push(MaterialPageRoute(builder: (ctx) =>  BottomBar()));
+  Navigator.of(context).push(MaterialPageRoute(builder: (ctx) =>  const BottomBar()));
      ScaffoldMessenger.of(context).showSnackBar(
      const SnackBar(
        margin: EdgeInsets.all(10),

@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:my_habit_app/views/home/widget/calender_controller.dart';
 import 'package:my_habit_app/views/home/widget/dialogbox_controller.dart';
-import 'package:my_habit_app/services/db/dbhabit_functions.dart';
+import 'package:my_habit_app/controller/db/dbhabit_functions.dart';
 import 'package:my_habit_app/helpers/colors.dart';
 import 'package:my_habit_app/model/data_model.dart';
 import 'package:my_habit_app/controller/checkbox_priveder.dart';
-import 'package:my_habit_app/controller/search_provider.dart';
 import 'package:my_habit_app/views/edit/edited_habit.dart';
 import 'package:my_habit_app/services/utils/date_utils.dart' as date_util;
 import 'package:my_habit_app/widgets/bottom_sheet.dart';
@@ -30,10 +29,13 @@ class _TodayScreenState extends State<TodayScreen> {
     scrollController =
         ScrollController(initialScrollOffset: 70.0 * currentDateTime.day);
     Provider.of<DBProvider>(context, listen: false). getAllHabit();
-    Provider.of<SearchProvider>(context, listen: false).  searchedlist =Provider.of<DBProvider>(context, listen: false).searchedlist;
+     Provider.of<DBProvider>(context,listen: false). loadhabit();
+    // Provider.of<DBProvider>(context, listen: false).  searchedlist =Provider.of<DBProvider>(context, listen: false).searchedlist;
     super.initState();
   }
-
+void filterCustomersList(String query) {
+    Provider.of<DBProvider>(context,listen: false).filterCustomerList(query);
+  }
   // List<HabitModel> searchedlist = [];
   bool isSameDay(DateTime date1, DateTime date2) {
     return date1.year == date2.year &&
@@ -97,10 +99,13 @@ class _TodayScreenState extends State<TodayScreen> {
                                   border: InputBorder.none,
                                   hintText: 'search...',
                                 ),
-                             onChanged: (value) {
-  Provider.of<SearchProvider>(context, listen: false).setSearch(value);
-  Provider.of<SearchProvider>(context, listen: false).searchResult(value);
-},
+ onChanged: (query) {
+ filterCustomersList(query);
+}
+
+
+  
+
                               ),
                             ),
                           ),
@@ -122,17 +127,17 @@ class _TodayScreenState extends State<TodayScreen> {
                       height: 440,
                       child: Builder(
                         builder: (context) {
-                          return Consumer<DBProvider>(builder: (context, value, child) {
-                            
+                          return Consumer<DBProvider>(builder: (context, dbpro, child) {
+                            // var dbpro= Provider.of<DBProvider>(context,listen: false);
                           
-                              return   Provider.of<SearchProvider>(context). searchedlist.isNotEmpty
+                              return  dbpro. searchedlist.isNotEmpty
                                   ? ListView.builder(
                                       shrinkWrap: true,
-                                      itemCount:  Provider.of<SearchProvider>(context). searchedlist.length,
+                                      itemCount:  dbpro. searchedlist.length,
                                       //  > 4 ? 4 : dailylist.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        HabitModel data =  Provider.of<SearchProvider>(context). searchedlist[index];
+                                        HabitModel data = dbpro. searchedlist[index];
                                         return SizedBox(
                                           width: 200,
                                           height: 100,
@@ -161,9 +166,7 @@ class _TodayScreenState extends State<TodayScreen> {
                                                   ),
                                                   SlidableAction(
                                                     onPressed: (context) {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                              MaterialPageRoute(
+                                                      Navigator.of(context).push(MaterialPageRoute(
                                                         builder: (ctx) =>
                                                             UpdateStudent(
                                                           habit: data.habit,
@@ -172,11 +175,8 @@ class _TodayScreenState extends State<TodayScreen> {
                                                         ),
                                                       ));
                                                     },
-                                                    backgroundColor:
-                                                        Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
+                                                    backgroundColor:Colors.white,
+                                                    borderRadius:BorderRadius.circular(20),
                                                     icon: Icons.edit,
                                                   )
                                                 ],
@@ -185,9 +185,7 @@ class _TodayScreenState extends State<TodayScreen> {
                                                 child: Card(
                                                   color: Colors.amber,
                                                   shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10)),
+                                                      borderRadius:BorderRadius.circular(10)),
                                                   child: SingleChildScrollView(
                                                     child: ListTile(
                                                         title: Center(
@@ -202,17 +200,16 @@ class _TodayScreenState extends State<TodayScreen> {
                                                         subtitle: Center(
                                                           child: Text( ' ${data.note}',
                                                             style: const TextStyle(
-                                                                    color: bggrey),
+                                                            color: bggrey),
                                                           ),
                                                         ),
                                                         trailing: Checkbox(
                                                           value: data.lastUpdatedDate == null||!isSameDay(data
-                                                                          .lastUpdatedDate!, DateTime.now())
+                                                              .lastUpdatedDate!, DateTime.now())
                                                               ? false
                                                               : data.taskcomplete,
                                                           onChanged:
-                                                              (newvalue) {
-                                                          
+                                                              (newvalue) {                                                          
                                                               DateTime now =  DateTime .now();
                                                               if (data.lastUpdatedDate ==  null ||
                                                                   !isSameDay(
@@ -221,13 +218,10 @@ class _TodayScreenState extends State<TodayScreen> {
                                                                 data.lastUpdatedDate = now;
                                                               Provider.of<DBProvider>(context, listen: false).  addCheck(index, data);
                                                               } else {
-                                                              
-                                                               checkrovider.checkk(data,newvalue); 
-                                                               
+                                                               checkrovider.checkk(data,newvalue);  
                                                               Provider.of<DBProvider>(context, listen: false).  updateCheck(
                                                                     index, data);
-                                                              }
-                                                           
+                                                              }                                                        
                                                           },
                                                         )),
                                                   ),
@@ -259,12 +253,7 @@ class _TodayScreenState extends State<TodayScreen> {
     ]),
      drawer:  Drawerrr(),
     );
-    
-      
-     
-    
   }
-
   bottomsheet(BuildContext context) {
     showModalBottomSheet(
       context: context,

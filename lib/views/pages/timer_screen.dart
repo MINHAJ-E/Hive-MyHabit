@@ -11,7 +11,7 @@ class TimerScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var timerModel = Provider.of<TimerProvider>(context, listen: true);
+    // var timerModel = Provider.of<TimerProvider>(context, listen: true);
 
     return Scaffold(
       appBar: AppBar(
@@ -22,20 +22,21 @@ class TimerScreenContent extends StatelessWidget {
       ),
       backgroundColor: const Color.fromARGB(221, 34, 33, 33),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            buildTime(timerModel),
-            const SizedBox(height: 20),
-            buildButtons(timerModel),
-          ],
+        child: Consumer<TimerProvider>(builder: (context, dbpro, child) => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buildTime(dbpro),
+              const SizedBox(height: 20),
+              buildButtons(dbpro),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget buildButtons(TimerProvider timerModel) {
-    final isRunning = timerModel.timer != null && timerModel.timer!.isActive;
+  Widget buildButtons(dbpro) {
+    final isRunning = dbpro.timer != null && dbpro.timer!.isActive;
 
     return isRunning
         ? Row(
@@ -43,9 +44,8 @@ class TimerScreenContent extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  timerModel.timer?.cancel();
-                  // ignore: invalid_use_of_protected_member
-                  timerModel.notifyListeners();
+                  dbpro.timer?.cancel();
+                  dbpro.startwatch(dbpro);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber,
@@ -54,7 +54,7 @@ class TimerScreenContent extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               ElevatedButton(
-                onPressed: timerModel.reset,
+                onPressed: dbpro.reset,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber,
                 ),
@@ -63,7 +63,7 @@ class TimerScreenContent extends StatelessWidget {
             ],
           )
         : ElevatedButton(
-            onPressed: timerModel.startTimer,
+            onPressed: dbpro.startTimer,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.amber,
             ),
@@ -71,11 +71,11 @@ class TimerScreenContent extends StatelessWidget {
           );
   }
 
-  Widget buildTime(TimerProvider timerModel) {
+  Widget buildTime(dbpro) {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
-    final hours = twoDigits(timerModel.duration.inHours);
-    final minutes = twoDigits(timerModel.duration.inMinutes.remainder(60));
-    final seconds = twoDigits(timerModel.duration.inSeconds.remainder(60));
+    final hours = twoDigits(dbpro.duration.inHours);
+    final minutes = twoDigits(dbpro.duration.inMinutes.remainder(60));
+    final seconds = twoDigits(dbpro.duration.inSeconds.remainder(60));
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
