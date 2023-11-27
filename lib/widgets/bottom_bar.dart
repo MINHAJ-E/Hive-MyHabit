@@ -39,7 +39,7 @@ class BottomBar extends StatelessWidget {
 }
 
 final List<Widget> _pages = [
-  const TodayScreen(),
+   const TodayScreen(),
   RegularWork(),
   const HabitChart(),
   const TimerScreenContent(),

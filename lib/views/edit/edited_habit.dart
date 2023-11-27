@@ -27,8 +27,9 @@ class UpdateStudent extends StatefulWidget {
 
 class _UpdateStudentState extends State<UpdateStudent> {
   TextEditingController habitController = TextEditingController();
+
   TextEditingController noteController = TextEditingController();
-  // final _formkey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -39,12 +40,12 @@ class _UpdateStudentState extends State<UpdateStudent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bggrey,
-      appBar: AppBar(
-        backgroundColor:bggreyisue,
-        title: Text('EDIT detailes'),
-      ),
-      body: SingleChildScrollView(
+        backgroundColor: bggrey,
+        appBar: AppBar(
+          backgroundColor: bggreyisue,
+          title: Text('EDIT detailes'),
+        ),
+        body: SingleChildScrollView(
           child: Column(
             children: [
               Padding(
@@ -88,7 +89,6 @@ class _UpdateStudentState extends State<UpdateStudent> {
                         child: TextFormField(
                           controller: noteController,
                           decoration: const InputDecoration(
-                            
                             border: InputBorder.none,
                             hintText: 'edit  description',
                           ),
@@ -98,17 +98,12 @@ class _UpdateStudentState extends State<UpdateStudent> {
                     const SizedBox(
                       height: 10,
                     ),
-                  
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     ElevatedButton(
                       onPressed: () {
-                        
-                        // setState(() {
-                          // saved();
-                          update();
-                        // });
-                       
-                      //  Navigator.pop(context);
+                        update(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.amber,
@@ -120,11 +115,10 @@ class _UpdateStudentState extends State<UpdateStudent> {
               ),
             ],
           ),
-        )
-    );
+        ));
   }
 
-  Future<void> update() async {
+  Future<void> update(context) async {
     final editedHabit = habitController.text.trim();
     final editedNote = noteController.text.trim();
 
@@ -132,26 +126,20 @@ class _UpdateStudentState extends State<UpdateStudent> {
       return;
     } else {
       final updated = HabitModel(
-        taskcomplete: false,
-        habit: editedHabit,
-        note: editedNote,
-    
-       lastUpdatedDate: DateTime.now()
-
-      );
- ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                      const SnackBar(
-                                                margin: EdgeInsets.all(10),
-                                                backgroundColor: Colors.green,
-                                                behavior:
-                                                    SnackBarBehavior.floating,
-                                                content: Text(
-                                                    "your task is edited"),
-                                              ));
-    Provider.of<DBProvider>(context, listen: false).  editList(widget.index, updated);
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => BottomBar()));
+          taskcomplete: false,
+          habit: editedHabit,
+          note: editedNote,
+          lastUpdatedDate: DateTime.now());
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        margin: EdgeInsets.all(10),
+        backgroundColor: Colors.green,
+        behavior: SnackBarBehavior.floating,
+        content: Text("your task is edited"),
+      ));
+      Provider.of<DBProvider>(context, listen: false)
+          .editList(widget.index, updated);
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => BottomBar()));
     }
   }
 }

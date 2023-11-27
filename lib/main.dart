@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:my_habit_app/controller/add_habit.provider.dart';
 import 'package:my_habit_app/model/data_model.dart';
 import 'package:my_habit_app/controller/bottom_provider.dart';
 import 'package:my_habit_app/controller/checkbox_priveder.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CheckProvider(),),
         ChangeNotifierProvider(create: (context) => TimerProvider(),),
         ChangeNotifierProvider(create: (context) => DBProvider(),),
+        // ChangeNotifierProvider(create: (context) => AddHabit(),),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,

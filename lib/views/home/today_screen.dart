@@ -27,33 +27,25 @@ class _TodayScreenState extends State<TodayScreen> {
     currentMonthList.sort((a, b) => a.day.compareTo(b.day));
     currentMonthList = currentMonthList.toSet().toList();
     scrollController =
-        ScrollController(initialScrollOffset: 70.0 * currentDateTime.day);
+    ScrollController(initialScrollOffset: 70.0 * currentDateTime.day);
     Provider.of<DBProvider>(context, listen: false). getAllHabit();
-     Provider.of<DBProvider>(context,listen: false). loadhabit();
-    // Provider.of<DBProvider>(context, listen: false).  searchedlist =Provider.of<DBProvider>(context, listen: false).searchedlist;
+    Provider.of<DBProvider>(context,listen: false). loadhabit(); 
     super.initState();
   }
-void filterCustomersList(String query) {
-    Provider.of<DBProvider>(context,listen: false).filterCustomerList(query);
+  void filterList(String query) {
+    Provider.of<DBProvider>(context,listen: false).filterList(query);
   }
-  // List<HabitModel> searchedlist = [];
   bool isSameDay(DateTime date1, DateTime date2) {
     return date1.year == date2.year &&
         date1.month == date2.month &&
         date1.day == date2.day;
   }
-
-
-
   bool? isDone = false;
-  // bool isLongPressed = false;
-  // bool isSelected = false;
-  // bool isFirstTime = true;
-  // int selected Index = -1;
   TextEditingController textcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+      
     var checkrovider =Provider.of<CheckProvider>(context);
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
@@ -99,13 +91,9 @@ void filterCustomersList(String query) {
                                   border: InputBorder.none,
                                   hintText: 'search...',
                                 ),
- onChanged: (query) {
- filterCustomersList(query);
-}
-
-
-  
-
+                                  onChanged: (query) {
+                                  filterList(query);
+                                  }
                               ),
                             ),
                           ),
@@ -128,9 +116,7 @@ void filterCustomersList(String query) {
                       child: Builder(
                         builder: (context) {
                           return Consumer<DBProvider>(builder: (context, dbpro, child) {
-                            // var dbpro= Provider.of<DBProvider>(context,listen: false);
-                          
-                              return  dbpro. searchedlist.isNotEmpty
+                             return  dbpro. searchedlist.isNotEmpty
                                   ? ListView.builder(
                                       shrinkWrap: true,
                                       itemCount:  dbpro. searchedlist.length,
@@ -148,15 +134,13 @@ void filterCustomersList(String query) {
                                                 motion: const StretchMotion(),
                                                 children: [
                                                   SlidableAction(
-                                                    onPressed: (context) {
-                                                      
+                                                    onPressed: (context) {                                                      
                                                         showDialog(
                                                           context: context,
                                                           builder: (context) =>
                                                               alert(context,
                                                                   index),
-                                                        );
-                                                    
+                                                        );                                                   
                                                     },
                                                     backgroundColor: Colors.red,
                                                     icon: Icons.delete,
